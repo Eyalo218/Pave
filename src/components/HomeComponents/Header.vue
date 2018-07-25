@@ -8,6 +8,8 @@
           <router-link to="">Log in</router-link>
         </div>
       </div>
+        <h1>explore and share walks around the world</h1>
+        <input />
     </section>
 </template>
 
@@ -26,13 +28,19 @@ export default {
     background-size: cover;
     background-position: center;
     height: 100vh;
+
   }
 .home-nav-bar{
-  padding: 2rem;
+  padding: 1.5rem;
+  .logo{
+    font-family: 'chalk-duster';
+    font-size: 2rem;
+  }
 }
 .links-container{
-width: 20%;
-font-family: 'roboto-regular';
+  font-size: 1.2rem;
+  width: 300px;
+font-family: 'roboto-medium';
   a {
     color: white;
   }
