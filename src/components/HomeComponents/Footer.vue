@@ -1,5 +1,10 @@
 <template>
-    <section>
+    <section class="flex">
+      <ul class="flex space-between">
+        <li><a href="#">About</a></li>
+        <li><a href="#">Privecy Policy</a></li>
+        <li><a href="#">Log In</a></li>
+      </ul>
     </section>
 </template>
 
@@ -10,5 +15,22 @@ export default {
   components: {}
 }
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+section{
+  height: 175px;
+  background-color: #383633;
+  color:#44809e;
+  align-items: center;
+  
+}
+
+ul{
+  width: 25%;
+  margin-left:3rem;
+  li{
+  }
+  a{
+    color:#44809e;
+  }
+}
 </style>

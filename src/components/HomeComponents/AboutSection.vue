@@ -43,7 +43,7 @@ section{
 
 .img{
     width: 50%;
-    height: 185px;
+    height: 200px;
     background-position: center;
 }
 
@@ -63,11 +63,19 @@ section{
 .info{
     width: 40%;
 }
+
 h1{
     margin-bottom: 1.5rem;
+    font-family: 'roboto-medium';
+    font-size: 1.70rem;
 }
+
+p{
+    font-size: 1.25rem;
+}
+
 .temp{
-    margin-bottom:2rem;
+    margin-bottom:3.5rem;
 
 }
 </style>
