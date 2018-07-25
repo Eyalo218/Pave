@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "../../../public/css/helpers.css";
   .header{
     margin: 0;
