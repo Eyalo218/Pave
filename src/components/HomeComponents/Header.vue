@@ -1,5 +1,8 @@
 <template>
-    <section>
+    <section class="header">
+      <div class="home-nav-bar">
+<div class=""></div>
+      </div>
     </section>
 </template>
 
