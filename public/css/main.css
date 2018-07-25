@@ -18,24 +18,22 @@
 /* General --------------- */
 
 body {
-    font-family: 'roboto-bold'
+    font-family: 'roboto-bold';
+    color: #383633;
+}
+
+h1{
+    margin: 0;
+    padding:0;
+}
+
+p{
+    margin: 0;
+    padding:0;
 }
 
 
 /* helpers --------------- */
-
-.flex{
-    display: flex;
-}
-
-.col-reverse{
-    flex-direction: column-reverse;
-}
-
-.hidden{
-    display: hidden
-}
-
 
 
 
