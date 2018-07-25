@@ -6,7 +6,7 @@
 <script>
 
 export default {
-  name: 'AboutHome',
+  name: 'AboutSection',
   components: {}
 }
 </script>
