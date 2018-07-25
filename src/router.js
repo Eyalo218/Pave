@@ -2,6 +2,9 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import About from './views/About.vue'
+import Explore from './views/Explore.vue'
+import HowItWorks from './views/HowItWorks.vue'
+import signUp from './views/SignUp.vue'
 
 Vue.use(Router)
 
@@ -16,6 +19,27 @@ export default new Router({
       path: '/about',
       name: 'about',
       component: About
-    }
+    },
+    {
+      path: '/explore',
+      name: 'explore',
+      component: Explore
+    },
+    {
+      path: '/explore',
+      name: 'explore',
+      component: Explore
+    },
+    {
+      path: '/how',
+      name: 'howItWorks',
+      component: HowItWorks
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: signUp
+    },
+    
   ]
 })
