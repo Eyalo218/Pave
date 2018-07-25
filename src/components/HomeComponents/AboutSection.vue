@@ -1,5 +1,6 @@
 <template>
     <section>
+<<<<<<< HEAD
         <div>
             <div>
                 <h1>Plan faster, Easily</h1>
@@ -21,10 +22,13 @@
             </div>
             <div class="img"></div>
         </div>
+=======
+>>>>>>> 750d1ec55bd63f54277c6f9b7765ed7b537a6563
     </section>
 </template>
 
 <script>
+<<<<<<< HEAD
 export default {
 
 }
@@ -32,4 +36,13 @@ export default {
 
 <style>
 
+=======
+
+export default {
+  name: 'AboutSection',
+  components: {}
+}
+</script>
+<style lang="scss">
+>>>>>>> 750d1ec55bd63f54277c6f9b7765ed7b537a6563
 </style>
