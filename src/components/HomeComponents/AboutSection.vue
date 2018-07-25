@@ -34,6 +34,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../../public/css/helpers.css';
+@import '../../../public/css/main.css';
 
 section{
     width:95%;
