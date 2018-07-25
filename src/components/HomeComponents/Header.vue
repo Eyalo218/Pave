@@ -20,7 +20,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 @import "../../../public/css/helpers.css";
   .header{
     margin: 0;
@@ -28,10 +28,10 @@ export default {
     background-size: cover;
     background-position: center;
     height: 100vh;
-
+    margin-bottom: 4rem;
   }
 .home-nav-bar{
-  padding: 1.5rem;
+  padding: 2rem;
   .logo{
     font-family: 'chalk-duster';
     font-size: 2rem;
@@ -40,7 +40,7 @@ export default {
 .links-container{
   font-size: 1.2rem;
   width: 300px;
-font-family: 'roboto-medium';
+    font-family: 'roboto-bold';
   a {
     color: white;
   }
