@@ -18,5 +18,9 @@
 /* General --------------- */
 
 body {
-  font-family: 'roboto-bold'
+  font-family: 'roboto-bold';
+}
+
+ul {
+  list-style-type: none;
 }
