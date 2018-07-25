@@ -32,10 +32,10 @@ export default {
 }
 .links-container{
 width: 20%;
+font-family: 'roboto-regular';
   a {
     color: white;
   }
 }
-
 
 </style>

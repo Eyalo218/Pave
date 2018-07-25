@@ -14,18 +14,13 @@
   src: url('../../fonts/roboto//Roboto-Regular.ttf'); /* IE9 Compat Modes */
 }
 
-/* header */
-a{
-  text-decoration: none;
-  color:black;
-}
-
-/* header */
-
-
 /* General --------------- */
 
 body {
   font-family: 'roboto-bold';
   margin: 0;
+}
+a{
+  text-decoration: none;
+  color:black;
 }
