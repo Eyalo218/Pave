@@ -14,7 +14,6 @@
   src: url('../../fonts/roboto//Roboto-Regular.ttf'); /* IE9 Compat Modes */
 }
 
-
 /* General --------------- */
 
 body {
@@ -23,4 +22,10 @@ body {
 
 ul {
   list-style-type: none;
+  margin: 0;
+}
+
+a{
+  text-decoration: none;
+  color:black;
 }
