@@ -5,6 +5,7 @@ import About from './views/About.vue'
 import Explore from './views/Explore.vue'
 import HowItWorks from './views/HowItWorks.vue'
 import signUp from './views/SignUp.vue'
+// import 
 
 Vue.use(Router)
 
@@ -26,11 +27,6 @@ export default new Router({
       component: Explore
     },
     {
-      path: '/explore',
-      name: 'explore',
-      component: Explore
-    },
-    {
       path: '/how',
       name: 'howItWorks',
       component: HowItWorks
@@ -40,6 +36,10 @@ export default new Router({
       name: 'signup',
       component: signUp
     },
-    
+    {
+      path: '/:tripId?',
+      name: 'signup',
+      component: signUp
+    },
   ]
 })
