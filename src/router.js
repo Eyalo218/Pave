@@ -5,6 +5,7 @@ import About from './views/About.vue'
 import Explore from './views/Explore.vue'
 import HowItWorks from './views/HowItWorks.vue'
 import signUp from './views/SignUp.vue'
+import tripDetails from './views/tripDetails.vue'
 // import 
 
 Vue.use(Router)
@@ -38,8 +39,8 @@ export default new Router({
     },
     {
       path: '/:tripId?',
-      name: 'signup',
-      component: signUp
+      name: 'tripDetails',
+      component: tripDetails
     },
   ]
 })
