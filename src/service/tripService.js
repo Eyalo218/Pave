@@ -1,13 +1,12 @@
 const USERS_URL = 'http://localhost:3000/trips'
+import axios from 'axios'
 
 
 function query() {
 
     return axios.get(`${USERS_URL}`)
             .then(res => {
-                return {
-                    trips: res.data
-                }
+                return res.data
             })
 }
 
