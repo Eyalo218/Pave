@@ -2,9 +2,9 @@
     <section>
         <div class="list-container" v-if="trips">
         <ul>
-            <li class="h-list-item">
+            <li v-for="trip in tripsForDisplay" class="h-list-item" @click="toDetails(trip._id)">
                 <div><img class="item-img" src="../../../public/img/home/home-list-demo.jpeg"></div>
-                <div class="location">Red Deer, AL</div>
+                <div class="location">{{trip.title}}</div>
                 <div class="reviews">Reviews<img class="review-dot" src="../../../public/img/home/dot-and-circle.svg"/></div>
                 <div class="country">Canada</div>
             </li>
@@ -26,10 +26,17 @@ export default {
     created() {
       this.loadTrips()
     },
-    computed:{},
+    computed:{
+      tripsForDisplay() {
+          return this.$store.getters.tripsForDisplay
+      },
+    },
     methods:{
         loadTrips() {
             this.$store.dispatch({type:'loadTrips'})
+        },
+        toDetails(tripId) {
+            this.$router.push(`/trip/${tripId}`)
         }
     }
 }
