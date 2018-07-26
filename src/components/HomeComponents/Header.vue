@@ -3,9 +3,9 @@
       <div class="home-nav-bar flex space-between">
         <div class="logo">Pave</div>
         <div class="links-container flex space-between">
-          <router-link to="">How it works</router-link>
-          <router-link to="">Sign up</router-link>
-          <router-link to="">Log in</router-link>
+          <router-link :to="'/how'">How it works</router-link>
+          <router-link :to="'/signup'">Sign up</router-link>
+          <router-link :to="'/login'">Log in</router-link>
         </div>
       </div>
       <div class="title-input-container">

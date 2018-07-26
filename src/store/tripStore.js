@@ -10,7 +10,6 @@ export default {
   mutations: {
       loadTrips(state, {trips}) {
           state.trips = trips
-          console.log('trips', state.trips)
       },
   },
   getters: {

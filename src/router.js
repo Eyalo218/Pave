@@ -6,6 +6,8 @@ import Explore from './views/Explore.vue'
 import HowItWorks from './views/HowItWorks.vue'
 import signUp from './views/SignUp.vue'
 import tripDetails from './views/TripDetails.vue'
+import Profile from './views/Profile.vue'
+import Login from './views/Login.vue'
 // import 
 
 Vue.use(Router)
@@ -33,6 +35,11 @@ export default new Router({
       component: HowItWorks
     },
     {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    },
+    {
       path: '/signup',
       name: 'signup',
       component: signUp
@@ -41,6 +48,11 @@ export default new Router({
       path: '/trips/:tripId?',
       name: 'tripDetails',
       component: tripDetails
+    },
+    {
+      path: 'profile/:userId?',
+      name: 'Profile',
+      component: Profile
     },
   ]
 })

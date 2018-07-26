@@ -1,23 +1,24 @@
 <template>
     <section>
-        <div class="list-container" v-if="trips">
-        <ul>
-            <li v-for="trip in tripsForDisplay" class="h-list-item" @click="toDetails(trip._id)">
-                <div><img class="item-img" src="../../../public/img/home/home-list-demo.jpeg"></div>
-                <div class="location">{{trip.title}}</div>
-                <div class="reviews">Reviews<img class="review-dot" src="../../../public/img/home/dot-and-circle.svg"/></div>
-                <div class="country">Canada</div>
-            </li>
-        </ul>
+        <div class="list-container">
+            <ul>
+                <li v-for="trip in tripsForDisplay">
+                    <Preview :trip="trip"></Preview>
+                </li>
+            </ul>
         </div>
     </section>
 </template>
 
 <script>
 
+import Preview from './Preview'
+
 export default {
-    name: 'ListHome',
-    components:{},
+    name: 'ListExplore',
+    components:{
+        Preview,
+    },
     data(){
         return {
           trips: null,
