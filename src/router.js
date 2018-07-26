@@ -38,7 +38,7 @@ export default new Router({
       component: signUp
     },
     {
-      path: '/trip/:tripId?',
+      path: '/trips/:tripId?',
       name: 'tripDetails',
       component: tripDetails
     },

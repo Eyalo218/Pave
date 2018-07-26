@@ -1,9 +1,20 @@
 <template>
-    <trip-map></trip-map>
+    <section>
+        lalala
+        <div class="flex">
+            <div class="map">
+                <trip-map></trip-map>
+            </div>
+            <div class="photos">
+                <photo-display></photo-display>
+            </div>
+        </div>
+    </section>
 </template>
 
 <script>
 import tripMap from '@/components/DetailsComponents/Map.vue'
+import photoDisplay from '@/components/DetailsComponents/PhotoDisplay.vue'
 
 export default {
 
@@ -12,9 +23,14 @@ created(){
 },
 components:{
    tripMap,
+   photoDisplay
 }
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
+.map, .photos{
+    width:50%
+}
+
 </style>

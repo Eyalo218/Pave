@@ -2,7 +2,7 @@
     <section class="flex">
       <ul class="flex space-between">
         <li><a href="#">About</a></li>
-        <li><a href="#">Privecy Policy</a></li>
+        <li><a href="#">Privacy Policy</a></li>
         <li><a href="#">Log In</a></li>
       </ul>
     </section>
@@ -27,8 +27,6 @@ section{
 ul{
   width: 25%;
   margin-left:3rem;
-  li{
-  }
   a{
     color:#44809e;
   }

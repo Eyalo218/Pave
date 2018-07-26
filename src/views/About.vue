@@ -68,7 +68,6 @@ padding-top: 1.5rem;
   border-radius: 50%;
   width: 25%;
   height:250px;
-  
   background-position: center;
   margin-right:2rem;
 }
