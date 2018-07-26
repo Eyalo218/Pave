@@ -5,7 +5,7 @@ import About from './views/About.vue'
 import Explore from './views/Explore.vue'
 import HowItWorks from './views/HowItWorks.vue'
 import signUp from './views/SignUp.vue'
-import tripDetails from './views/tripDetails.vue'
+import tripDetails from './views/TripDetails.vue'
 // import 
 
 Vue.use(Router)

@@ -40,7 +40,10 @@ export default {
       currentPlace: null
     };
   },
+created(){
+console.log('map created');
 
+},
   mounted() {
     this.geolocate();
   },
