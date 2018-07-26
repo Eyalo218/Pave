@@ -28,6 +28,7 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
   name: "GoogleMap",
   data() {
@@ -40,10 +41,10 @@ export default {
       currentPlace: null
     };
   },
-created(){
-console.log('map created');
-
-},
+  created() {
+    console.log("map created");
+    axios.get()
+  },
   mounted() {
     this.geolocate();
   },
