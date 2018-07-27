@@ -53,10 +53,20 @@ function setLatLng(lat, lng, googleObj) {
     )
 }
 
+function getBounds(markers, googleObj) {
+    let bounds = new googleObj.maps.LatLngBounds();
+    
+    markers.forEach(marker => {
+        bounds.extend(setLatLng(marker.cords.lat, marker.cords.lng, googleObj))
+    });
+    return bounds;
+}
+
 export default {
     getIconUrl,
     setWayPoint,
     getDirecService,
     getDirecRender,
-    setLatLng
+    setLatLng,
+    getBounds
 }
