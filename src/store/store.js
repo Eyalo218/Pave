@@ -11,11 +11,14 @@ export default new Vuex.Store({
         markerModule
     },
     state: {
+        currFilter: '',
         users: [],
         reviews: []
     },
     mutations: {
-
+        setFilter(state, { searchedText }) {
+            state.currFilter = searchedText;
+        }
     },
     actions: {}
 })

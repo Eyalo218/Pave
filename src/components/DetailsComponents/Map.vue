@@ -41,26 +41,14 @@ export default {
     this.setCurrTrip();
   },
   computed: {
-    googleMapsObj() {
+    google() {
       return gmapApi();
     },
     markersForDisplay() {
       return this.$store.getters.markersForDisplay;
     },
     setWayPts() {
-      let wayPts = [];
-      this.markersForDisplay.forEach((marker, idx) => {
-        if (idx === 0 || idx === this.markersForDisplay.length - 1) return;
-        wayPts.push(
-          googleService.setWayPoint(
-            marker.cords.lat,
-            marker.cords.lng,
-            this.googleMapsObj
-          )
-        );
-      });
-      console.log(wayPts);
-      return wayPts;
+      return googleService.getWayPts(this.markersForDisplay, this.google);
     }
   },
   methods: {
@@ -78,7 +66,6 @@ export default {
       let currTripId = this.$route.params.tripId;
       this.$store.dispatch({ type: "setCurrTrip", currTripId }).then(() => {
         this.trip = this.$store.state.tripModule.currTrip;
-        console.log("curr trip: ", this.trip);
         this.setPave();
       });
     },
@@ -87,7 +74,7 @@ export default {
       console.log(this.$refs.map);
       //   this.$refs.marker.$markerObject.setAnimation(google.maps.Animation.BOUNCE)
       this.$refs[`marker${index}`][0].$markerObject.setAnimation(
-        this.googleMapsObj.maps.Animation.BOUNCE
+        this.google.maps.Animation.BOUNCE
       );
       setTimeout(() => {
         this.$refs[`marker${index}`][0].$markerObject.setAnimation(null);
@@ -97,14 +84,15 @@ export default {
       //     googleService.setLatLng(
       //       currMarker.cords.lat,
       //       currMarker.cords.lat,
-      //       this.googleMapsObj
+      //       this.google
       //     )
       //   );
       //   this.$refs.map.$mapObject.getCenter().lat();
       //   this.$refs.map.$mapObject.getCenter().lng();
 
       this.$refs.map.$mapObject.panBy(
-        (this.$refs.map.$mapObject.getCenter().lat() - currMarker.cords.lat)*428,
+        (this.$refs.map.$mapObject.getCenter().lat() - currMarker.cords.lat) *
+          428,
         this.$refs.map.$mapObject.getCenter().lng() - currMarker.cords.lng
       );
 
@@ -118,42 +106,25 @@ export default {
       this.dest = markers[markers.length - 1];
     },
     setBounds() {
-      return googleService.getBounds(
-        this.markersForDisplay,
-        this.googleMapsObj
-      );
+      return googleService.getBounds(this.markersForDisplay, this.google);
     },
     setRoutes() {
-      var directionsService = googleService.getDirecService(this.googleMapsObj);
-      var directionsDisplay = googleService.getDirecRender(this.googleMapsObj);
+      var directionsService = googleService.getDirecService(this.google);
+      var directionsDisplay = googleService.getDirecRender(this.google);
       directionsDisplay.setMap(this.$refs.map.$mapObject);
-      // BUGS:
-      // ONLY ONE AND TWO WAYPTS-NEED TO FIX
-      var pave = {
-        origin: googleService.setLatLng(
-          this.origin.cords.lat,
-          this.origin.cords.lng,
-          this.googleMapsObj
-        ),
-        destination: googleService.setLatLng(
-          this.dest.cords.lat,
-          this.dest.cords.lng,
-          this.googleMapsObj
-        ),
-        waypoints: this.setWayPts,
-        optimizeWaypoints: true,
-        travelMode: this.googleMapsObj.maps.TravelMode.WALKING
-      };
-      directionsService.route(pave, (response, status) => {
+      let request = googleService.getRequest(
+        this.origin,
+        this.dest,
+        this.setWayPts,
+        this.google
+      );
+      directionsService.route(request, (response, status) => {
         if (status == "OK") {
-          console.log(this.googleMapsObj.maps);
-
           directionsDisplay.setDirections(response);
+          this.$refs.map.fitBounds(this.setBounds());
+          this.$refs.map.panToBounds(this.setBounds());
         }
       });
-      //   this.$refs.map.$children[0].animation = 'BOUNCE';
-      this.$refs.map.fitBounds(this.setBounds());
-      this.$refs.map.panToBounds(this.setBounds());
     },
     geolocate() {
       navigator.geolocation.getCurrentPosition(position => {
