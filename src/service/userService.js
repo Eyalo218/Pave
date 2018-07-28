@@ -1,4 +1,15 @@
 const USERS_URL = 'http://localhost:3000/users'
+import axios from 'axios'
+
+function signup(userDetails) {
+    console.log('front-end service got user signup ', userDetails)
+    return axios.post(`${USERS_URL}/signup`, userDetails)
+        .then(res => res.data)
+        .catch(err => console.log('Problem talking to server', err))
+
+}
+
+
 
 
 function query() {
@@ -30,10 +41,6 @@ function editUser(userId) {
 }
 
 export default {
-    query,
-    getById,
-    deleteUser,
-    addUser,
-    editUser
+    signup,
 }
 

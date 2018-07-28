@@ -15,8 +15,18 @@
 </template>
 
 <script>
-export default {
 
+import {eventBus, LOGGED_IN} from '../service/eventBus.js'
+
+
+export default {
+    created(){
+        eventBus.$on(LOGGED_IN, (user) => {
+            console.log('LoggeD' ,user);
+        })
+    },
+    methods: {},
+    mounted(){}
 }
 </script>
 

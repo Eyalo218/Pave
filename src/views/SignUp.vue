@@ -3,9 +3,10 @@
         <div class="container flex column">
             <div class="logo">Pave</div>
             <div><h3>Explore and share <span class="walks">walks</span></h3><h3>around the world</h3></div>
-            <form class="form flex column">
-                <input type="text" placeholder="Email">
-                <input type="text" placeholder="Password">
+            <form @submit.prevent="login" class="form flex column">
+                <input type="text" v-model="signupDetails.email" placeholder="Email">
+                <input type="text" v-model="signupDetails.name" placeholder="Name">
+                <input type="text" v-model="signupDetails.password" placeholder="Password">
                 <button class="submit-btn">Continue</button>
                 <p class="terms">By continuing, you agree to Pave's <span class="bold">Terms of Service, Privacy Policy</span></p>
             </form>
@@ -15,7 +16,31 @@
 </template>
 
 <script>
+import userService from '../service/userService.js'
+import {eventBus, LOGGED_IN} from '../service/eventBus.js'
+
 export default {
+    data(){
+        return{
+            signupDetails: {
+                name: '',
+                email: '',
+                password: ''
+            }
+        }
+    },
+    created(){},
+    computed: {},
+    methods: {
+        login() {
+            userService.signup(this.signupDetails)
+                .then(user => {
+                    eventBus.$emit(LOGGED_IN, user);
+                    console.log(user)
+                    this.$router.push('/explore')
+                })
+        },
+    },
 
 }
 </script>

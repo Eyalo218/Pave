@@ -16,6 +16,7 @@ Vue.use(VueGoogleMaps, {
 
 Vue.config.productionTip = false
 
+
 new Vue({
   router,
   store,
