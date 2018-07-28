@@ -15,22 +15,32 @@
 </template>
 
 <script>
-import Camera from '../components/DetailsComponents/Camera.vue'
-
+import Camera from "../components/DetailsComponents/Camera.vue";
+import eventBusService from '../service/eventBus.js';
 
 export default {
-data(){
-    return{
-        isPhotoTaken:false,
-        
-    }
-},
-components:{
-            Camera,
-        }
-}
+  data() {
+    return {
+      isPhotoTaken: false
+    };
+  },
+  components: {
+    Camera,
+    eventBusService
+  },
+  created(){
+      eventBusService.eventBus.$on(eventBusService.PHOTO_TAKEN, this.toggleScreen)
+  },
+  methods:{
+      toggleScreen(){
+          this.isPhotoTaken = true;
+      }
+  }
+};
+
+
+
 </script>
 
 <style>
-
 </style>

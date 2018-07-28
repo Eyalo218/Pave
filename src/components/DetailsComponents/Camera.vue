@@ -6,7 +6,8 @@
         </div>
         <div class="flex center">
           <button id="takePhoto" v-on:click="capturePhoto()">Take Photo</button>
-          <button id="next" v-on:click="nextToDesc">Next</button>
+          <button id="next" v-on:click="nextToDesc()">Next</button>
+          <button id="next" v-on:click="deleteLastPhoto()">deleteLastPhoto</button>
         </div>
         <router-link :to="'/'">  
           <button>
@@ -17,7 +18,7 @@
 
         <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
         <ul>
-            <li v-for="photo in photos">
+            <li v-for="(photo, index) in photos" :key="index">
                 <img v-bind:src="photo" height="100" />
             </li>
         </ul>
@@ -25,6 +26,8 @@
 </template>
 
 <script>
+import cloudinary from '../service/cloudinaryService.js';
+
 export default {
   name: "Camera",
   data() {
@@ -50,11 +53,20 @@ export default {
         this.photos.push(canvas.toDataURL("image/png"));
     },
     nextToDesc(){ //need to change that name badly
-      // to put the photos into the store
+      // to put the photos into the cloudinary
       // to change the IsPhotoTaken inside the createMark to true
+      this.photos.forEach(photo => {
+        uploadPhoto(photo)
+      });
+      console.log('lalala');
     },
     deleteLastPhoto(){
-      
+      this.photos = this.photos.splice(0,this.photos.length-1)
+    },
+    uploadPhoto(img){
+       cloudinary.uploader.upload(img, function(result) { 
+      console.log(result) 
+    });
     }
   }
 };
