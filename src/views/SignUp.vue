@@ -35,8 +35,8 @@ export default {
         login() {
             userService.signup(this.signupDetails)
                 .then(user => {
+                    console.log('User is in "then"',user)
                     eventBus.$emit(LOGGED_IN, user);
-                    console.log(user)
                     this.$router.push('/explore')
                 })
         },
