@@ -1,35 +1,36 @@
-const USERS_URL = 'http://localhost:3000/trips'
+const TRIPS_URL = 'http://localhost:3000/trips'
 import axios from 'axios'
 
 
 function query() {
 
-    return axios.get(`${USERS_URL}`)
-            .then(res => {
-                return res.data
-            })
+    return axios.get(`${TRIPS_URL}`)
+        .then(res => {
+            return res.data
+        })
 }
 
 function getById(tripId) {
-    return axios.get(`${USERS_URL}/${tripId}`)
-            .then(resolveData)
-
+    return axios.get(`${TRIPS_URL}/${tripId}`)
+        .then(res => {
+            return res.data;
+        })
 }
 
 function deleteTrip(tripId) {
-    return axios.delete(`${USERS_URL}/${tripId}`)
+    return axios.delete(`${TRIPS_URL}/${tripId}`)
 }
 
 function addTrip(trip) {
-    if (trip._id){
-        return axios.put(`${USERS_URL}/${trip._id}`,trip)
+    if (trip._id) {
+        return axios.put(`${TRIPS_URL}/${trip._id}`, trip)
     } else {
-        return axios.post(USERS_URL,trip)
+        return axios.post(TRIPS_URL, trip)
     }
 }
 
 function editTrip(tripId) {
-  return axios.put(`${USERS_URL}/${tripId}`,trip)
+    return axios.put(`${TRIPS_URL}/${tripId}`, trip)
 }
 
 export default {

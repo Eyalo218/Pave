@@ -1,19 +1,24 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import stripModule from './tripStore'
+import tripModule from './tripStore'
+import markerModule from './markerStore'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
-        stripModule,
+        tripModule,
+        markerModule
     },
     state: {
+        currFilter: '',
         users: [],
         reviews: []
     },
     mutations: {
-
+        setFilter(state, { searchedText }) {
+            state.currFilter = searchedText;
+        }
     },
     actions: {}
 })

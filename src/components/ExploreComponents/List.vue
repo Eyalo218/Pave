@@ -59,31 +59,6 @@ export default {
             padding: 0;
         }
 
-        .h-list-item {
-
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 1.5em;
-
-            .item-img {
-                width: 14.5rem;
-                height: 17.5rem;
-                border-top-left-radius: 0.6rem;
-                border-top-right-radius: 0.6rem;
-            }
-            .location {
-                font-size: 1.2rem;
-            }
-            .reviews {
-                font-family: 'roboto-regular';
-            }
-            .country {
-                font-size: 0.8rem;
-                font-family: 'roboto-regular';
-            }
-            .review-dot {
-                width: 12px;
-            }
-        }
     }
+
 </style>

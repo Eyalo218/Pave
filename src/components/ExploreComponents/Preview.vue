@@ -3,7 +3,6 @@
             <div class="h-list-item" @click="toDetails(`${trip._id}`)">
                 <div><img class="item-img" src="../../../public/img/home/home-list-demo.jpeg"></div>
                 <div class="location">{{trip.title}}</div>
-                <div>{{trip.views}}</div>
                 <div class="reviews">Reviews<img class="review-dot" src="../../../public/img/home/dot-and-circle.svg"/></div>
                 <div class="country">Canada</div>
             </div>
@@ -14,7 +13,7 @@
 
 
 export default {
-    name: 'TripExplore',
+    name: 'PreviewExplore',
     components:{},
     props: ['trip'],
     data(){
@@ -48,7 +47,7 @@ export default {
 
             display: flex;
             flex-direction: column;
-            margin-bottom: 1.5em;
+            margin-bottom: 1rem;
 
             .item-img {
                 width: 14.5rem;
@@ -57,7 +56,7 @@ export default {
                 border-top-right-radius: 0.6rem;
             }
             .location {
-                font-size: 1.2rem;
+                font-size: 1rem;
             }
             .reviews {
                 font-family: 'roboto-regular';
@@ -69,5 +68,9 @@ export default {
             .review-dot {
                 width: 12px;
             }
+
+        }
+        .card {
+            display: inline-block;
         }
 </style>

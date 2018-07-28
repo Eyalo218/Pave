@@ -1,129 +1,132 @@
 <template>
   <div>
     <div>
-      <h2>Search and add a pin</h2>
+      <h2>map component</h2>
       <br/>
     </div>
     <br>
     <gmap-map
       :center="center"
-      :zoom="16"
       style="width:100%;  height: 400px;"
       ref="map"
     >
-      <!-- <gmap-marker
+      <gmap-marker
         :key="index"
-        v-for="(m, index) in markers"
-        :position="m.cords"
-        @click="center=m.cords"
-      ></gmap-marker> -->
+        v-for="(marker, index) in markersForDisplay"
+        :position="marker.cords"
+        @click="setCurrMarker(marker,index)"
+        :icon="{url:displayIconUrl(marker.category)}"
+        :ref="'marker'+index"
+      ></gmap-marker>
     </gmap-map>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import { gmapApi } from "vue2-google-maps";
-const TRIPS_LINK = "http://localhost:3000/trips/";
+import googleService from "@/service/googleService.js";
+import tripService from "@/service/tripService.js";
 
 export default {
   name: "GoogleMap",
   data() {
     return {
-      // default to Montreal to keep it simple
-      // change this to whatever makes sense
-      center: { lat: 45.508, lng: -73.587 },
-      markers: [],
-      places: [],
-      waypoints: [],
-      currentPlace: null,
+      trip: null,
       origin: null,
       dest: null,
-      mid: null
+      center: { lat: 0, lng: 0 }
     };
   },
   created() {
-    this.setPave();
+    this.setCurrTrip();
   },
   computed: {
-    googleMapsObj() {
+    google() {
       return gmapApi();
     },
+    markersForDisplay() {
+      return this.$store.getters.markersForDisplay;
+    },
     setWayPts() {
-      this.markers.forEach((marker, idx) => {
-        // console.log(marker);
-        if (idx === 0 || idx === this.markers.length - 1) return;
-        this.waypoints.push({
-          location: new this.googleMapsObj.maps.LatLng(
-            marker.cords.lat,
-            marker.cords.lng
-          ),
-          stopover: true
-        });
-      });
-      return this.waypoints;
+      return googleService.getWayPts(this.markersForDisplay, this.google);
     }
   },
-  mounted() {
-    this.geolocate();
-  },
   methods: {
+    setPave() {
+      this.setMarkers();
+      this.setRoutes();
+    },
     setPlace(place) {
       this.currentPlace = place;
     },
-    setMarkers(markers) {
+    displayIconUrl(category) {
+      return googleService.getIconUrl(category);
+    },
+    setCurrTrip() {
+      let currTripId = this.$route.params.tripId;
+      this.$store.dispatch({ type: "setCurrTrip", currTripId }).then(() => {
+        this.trip = this.$store.state.tripModule.currTrip;
+        this.setPave();
+      });
+    },
+    setCurrMarker(currMarker, index) {
+      this.$store.commit({ type: "setCurrMarker", currMarker });
+      console.log(this.$refs.map);
+      //   this.$refs.marker.$markerObject.setAnimation(google.maps.Animation.BOUNCE)
+      this.$refs[`marker${index}`][0].$markerObject.setAnimation(
+        this.google.maps.Animation.BOUNCE
+      );
+      setTimeout(() => {
+        this.$refs[`marker${index}`][0].$markerObject.setAnimation(null);
+      }, 2100);
+      //   this.$refs.map.$mapObject.panTo()
+      //   this.$refs.map.$mapObject.panTo(
+      //     googleService.setLatLng(
+      //       currMarker.cords.lat,
+      //       currMarker.cords.lat,
+      //       this.google
+      //     )
+      //   );
+      //   this.$refs.map.$mapObject.getCenter().lat();
+      //   this.$refs.map.$mapObject.getCenter().lng();
+
+      this.$refs.map.$mapObject.panBy(
+        (this.$refs.map.$mapObject.getCenter().lat() - currMarker.cords.lat) *
+          428,
+        this.$refs.map.$mapObject.getCenter().lng() - currMarker.cords.lng
+      );
+
+      //   this.center = currMarker.cords;
+      console.log(this.$refs.map);
+    },
+    setMarkers() {
+      let markers = this.trip.markers;
+      this.$store.commit({ type: "setMarkers", markers });
       this.origin = markers[0];
       this.dest = markers[markers.length - 1];
-      this.markers = markers;
+    },
+    setBounds() {
+      return googleService.getBounds(this.markersForDisplay, this.google);
     },
     setRoutes() {
-      var directionsService = new this.googleMapsObj.maps.DirectionsService();
-      var directionsDisplay = new this.googleMapsObj.maps.DirectionsRenderer();
+      var directionsService = googleService.getDirecService(this.google);
+      var directionsDisplay = googleService.getDirecRender(this.google);
       directionsDisplay.setMap(this.$refs.map.$mapObject);
-      //   console.log("directions service", this.googleMapsObj.maps);
-
-      console.log("origin", this.googleMapsObj.maps);
-      console.log("dest", this.dest.cords);
-
-      var request = {
-        origin: new this.googleMapsObj.maps.LatLng(
-          this.origin.cords.lat,
-          this.origin.cords.lng
-        ),
-        destination: new this.googleMapsObj.maps.LatLng(
-          this.dest.cords.lat,
-          this.dest.cords.lng
-        ),
-        waypoints: this.setWayPts,
-        optimizeWaypoints: true,
-        travelMode: this.googleMapsObj.maps.TravelMode.WALKING
-      };
-      directionsService.route(request, function(response, status) {
+      let request = googleService.getRequest(
+        this.origin,
+        this.dest,
+        this.setWayPts,
+        this.google
+      );
+      directionsService.route(request, (response, status) => {
         if (status == "OK") {
-          //   console.log(response);
           directionsDisplay.setDirections(response);
+          this.$refs.map.fitBounds(this.setBounds());
+          this.$refs.map.panToBounds(this.setBounds());
         }
       });
     },
-    setPave() {
-      axios.get(`${TRIPS_LINK}${this.$route.params.tripId}`).then(res => {
-        this.setMarkers(res.data.markers);
-        this.setRoutes();
-      });
-    },
-    addMarker() {
-      if (this.currentPlace) {
-        const marker = {
-          lat: this.currentPlace.geometry.location.lat(),
-          lng: this.currentPlace.geometry.location.lng()
-        };
-        this.markers.push({ position: marker });
-        this.places.push(this.currentPlace);
-        this.center = marker;
-        this.currentPlace = null;
-      }
-    },
-    geolocate: function() {
+    geolocate() {
       navigator.geolocation.getCurrentPosition(position => {
         this.center = {
           lat: position.coords.latitude,
