@@ -7,109 +7,131 @@
     <br>
     <gmap-map
       :center="center"
-      :zoom="16"
       style="width:100%;  height: 400px;"
       ref="map"
     >
       <gmap-marker
         :key="index"
-        v-for="(marker, index) in markers"
+        v-for="(marker, index) in markersForDisplay"
         :position="marker.cords"
-        @click="center=marker.cords"
+        @click="setCurrMarker(marker,index)"
         :icon="{url:displayIconUrl(marker.category)}"
+        :ref="'marker'+index"
       ></gmap-marker>
     </gmap-map>
   </div>
 </template>
 
 <script>
-import axios from "axios";
 import { gmapApi } from "vue2-google-maps";
 import googleService from "@/service/googleService.js";
-const TRIPS_LINK = "http://localhost:3000/trips/";
+import tripService from "@/service/tripService.js";
 
 export default {
   name: "GoogleMap",
   data() {
     return {
-      center: { lat: 0, lng: 0 },
-      markers: [],
+      trip: null,
       origin: null,
       dest: null,
-      waypoints: []
+      center: { lat: 0, lng: 0 }
     };
   },
   created() {
-    this.setPave();
+    this.setCurrTrip();
   },
   computed: {
-    googleMapsObj() {
+    google() {
       return gmapApi();
     },
+    markersForDisplay() {
+      return this.$store.getters.markersForDisplay;
+    },
     setWayPts() {
-      this.markers.forEach((marker, idx) => {
-        if (idx === 0 || idx === this.markers.length - 1) return;
-        this.waypoints.push(
-          googleService.setWayPoint(
-            marker.cords.lat,
-            marker.cords.lng,
-            this.googleMapsObj
-          )
-        );
-      });
-      return this.waypoints;
+      return googleService.getWayPts(this.markersForDisplay, this.google);
     }
   },
   methods: {
+    setPave() {
+      this.setMarkers();
+      this.setRoutes();
+    },
     setPlace(place) {
       this.currentPlace = place;
     },
     displayIconUrl(category) {
       return googleService.getIconUrl(category);
     },
-    setMarkers(markers) {
+    setCurrTrip() {
+      let currTripId = this.$route.params.tripId;
+      this.$store.dispatch({ type: "setCurrTrip", currTripId }).then(() => {
+        this.trip = this.$store.state.tripModule.currTrip;
+        this.setPave();
+      });
+    },
+    setCurrMarker(currMarker, index) {
+      this.$store.commit({ type: "setCurrMarker", currMarker });
+      console.log(this.$refs.map);
+      //   this.$refs.marker.$markerObject.setAnimation(google.maps.Animation.BOUNCE)
+      this.$refs[`marker${index}`][0].$markerObject.setAnimation(
+        this.google.maps.Animation.BOUNCE
+      );
+      setTimeout(() => {
+        this.$refs[`marker${index}`][0].$markerObject.setAnimation(null);
+      }, 2100);
+      //   this.$refs.map.$mapObject.panTo()
+      //   this.$refs.map.$mapObject.panTo(
+      //     googleService.setLatLng(
+      //       currMarker.cords.lat,
+      //       currMarker.cords.lat,
+      //       this.google
+      //     )
+      //   );
+      //   this.$refs.map.$mapObject.getCenter().lat();
+      //   this.$refs.map.$mapObject.getCenter().lng();
+
+      this.$refs.map.$mapObject.panBy(
+        (this.$refs.map.$mapObject.getCenter().lat() - currMarker.cords.lat) *
+          428,
+        this.$refs.map.$mapObject.getCenter().lng() - currMarker.cords.lng
+      );
+
+      //   this.center = currMarker.cords;
+      console.log(this.$refs.map);
+    },
+    setMarkers() {
+      let markers = this.trip.markers;
+      this.$store.commit({ type: "setMarkers", markers });
       this.origin = markers[0];
       this.dest = markers[markers.length - 1];
-      this.markers = markers;
+    },
+    setBounds() {
+      return googleService.getBounds(this.markersForDisplay, this.google);
     },
     setRoutes() {
-      var directionsService = googleService.getDirecService(this.googleMapsObj);
-      var directionsDisplay = googleService.getDirecRender(this.googleMapsObj);
+      var directionsService = googleService.getDirecService(this.google);
+      var directionsDisplay = googleService.getDirecRender(this.google);
       directionsDisplay.setMap(this.$refs.map.$mapObject);
-
-      var pave = {
-        origin: googleService.setLatLng(
-          this.origin.cords.lat,
-          this.origin.cords.lng,
-          this.googleMapsObj
-        ),
-        destination: googleService.setLatLng(
-          this.dest.cords.lat,
-          this.dest.cords.lng,
-          this.googleMapsObj
-        ),
-        waypoints: this.setWayPts,
-        optimizeWaypoints: true,
-        travelMode: this.googleMapsObj.maps.TravelMode.WALKING
-      };
-      directionsService.route(pave, function(response, status) {
+      let request = googleService.getRequest(
+        this.origin,
+        this.dest,
+        this.setWayPts,
+        this.google
+      );
+      directionsService.route(request, (response, status) => {
         if (status == "OK") {
           directionsDisplay.setDirections(response);
+          this.$refs.map.fitBounds(this.setBounds());
+          this.$refs.map.panToBounds(this.setBounds());
         }
       });
     },
-    geolocate: () => {
+    geolocate() {
       navigator.geolocation.getCurrentPosition(position => {
         this.center = {
           lat: position.coords.latitude,
           lng: position.coords.longitude
         };
-      });
-    },
-    setPave() {
-      axios.get(`${TRIPS_LINK}${this.$route.params.tripId}`).then(res => {
-        this.setMarkers(res.data.markers);
-        this.setRoutes();
       });
     }
   }

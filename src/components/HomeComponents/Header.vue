@@ -3,14 +3,14 @@
       <div class="home-nav-bar flex space-between">
         <div class="logo">Pave</div>
         <div class="links-container flex space-between">
-          <router-link :to="'/how'">How it works</router-link>
-          <router-link :to="'/signup'">Sign up</router-link>
-          <router-link :to="'/login'">Log in</router-link>
+          <router-link  :to="'/how'">How it works</router-link>
+          <router-link  :to="'/signup'">Sign up</router-link>
+          <router-link  :to="'/login'">Log in</router-link>
         </div>
       </div>
       <div class="title-input-container">
         <h1>Explore and share walks <br/> around the world</h1>
-        <input placeholder="Take yourself to..." />
+        <input v-model="searchedText" @keyup.enter="setFilter" placeholder="Take yourself to..." />
       </div>
       <div class="app-data">
         <p>6500+ <span>walks</span> 130 <span>countries</span> 80k+ <span>users</span></p>
@@ -21,6 +21,18 @@
 <script>
 export default {
   name: "HomeHeader",
+  data() {
+    return {
+      searchedText:''
+    }
+  },
+  methods: {
+    setFilter() {
+      let searchedText = this.searchedText;
+      this.$store.commit({type:'setFilter',searchedText})
+      console.log(this.$store);
+    }
+  },
   components: {}
 };
 </script>
@@ -28,7 +40,6 @@ export default {
 <style scoped lang="scss">
 @import "../../../public/css/helpers.css";
 $main-black: #383633;
-
   .header{
     margin: 0;
     background-image: url("../../../public/img/home/homeImg.jpeg");
@@ -40,22 +51,26 @@ $main-black: #383633;
   }
  
 .home-nav-bar{
-  padding: 2rem;
+  padding: 1.5rem;
   .logo{
-    font-family: 'chalk-duster';
+    font-family: 'Chalkduster';
     font-size: 2.5rem;
   }
   .links-container{
   font-size: 1.2rem;
   width: 300px;
-    font-family: 'roboto-medium';
+    // font-family: 'roboto-medium';
     color: white;
   a {
     color: white;
+    &:hover{
+      color:$main-black;
+      transform: scale(1.1);
+      transition: .3s
+    }
   }
 }
 }
-
 
  .title-input-container{
     position: absolute;
