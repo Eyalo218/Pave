@@ -1,6 +1,5 @@
 <template>
     <section>
-        lalala
         <div class="flex">
             <div class="map">
                 <trip-map></trip-map>
@@ -8,6 +7,13 @@
             <div class="photos">
                 <photo-display></photo-display>
             </div>
+        </div>
+        <div>
+            <router-link :to="'/createMark'">  
+                <button>
+                    <img src="../../public/img/details/camera.png" alt="">
+                </button>
+            </router-link>
         </div>
     </section>
 </template>
@@ -31,6 +37,12 @@ components:{
 <style lang="scss" scoped>
 .map, .photos{
     width:50%
+}
+button{
+    width:5%;
+    img{
+        width:80%;
+    }
 }
 
 </style>
