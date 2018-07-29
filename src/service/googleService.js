@@ -8,19 +8,19 @@ const ANIMAL_ICON = 'https://mt.google.com/vt/icon/name=icons/onion/SHARED-mymap
 
 function getIconUrl(category) {
     switch (category) {
-        case 'landscape':
+        case 'Landscape':
             return LANDSCAPE_ICON;
-        case 'urban':
+        case 'Urban':
             return URBAN_ICON;
-        case 'food':
+        case 'Food':
             return FOOD_ICON;
-        case 'historical':
+        case 'Historical':
             return HISTORICAL_ICON;
-        case 'shopping':
+        case 'Shopping':
             return SHOPPING_ICON;
-        case 'party':
+        case 'Party':
             return PARTY_ICON;
-        case 'animals':
+        case 'Animals':
             return ANIMAL_ICON;
     }
 }
