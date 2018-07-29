@@ -6,7 +6,7 @@
         </div>
         <div class="flex center">
           <button id="takePhoto" v-on:click="capturePhoto()">Take Photo</button>
-          <button id="next" v-on:click="nextToDesc()">Next</button>
+          <button id="next" v-on:click="continueToMarkDesc()">Next</button>
           <button id="next" v-on:click="deleteLastPhoto()">deleteLastPhoto</button>
         </div>
         <router-link :to="'/'">  
@@ -57,10 +57,8 @@ export default {
         .drawImage(this.video, 0, 0, 640, 480);
       this.photos.push(canvas.toDataURL("image/png"));
     },
-    nextToDesc() {
+    continueToMarkDesc() {
       //need to change that name badly
-      // to put the photos into the cloudinary
-      // to change the IsPhotoTaken inside the createMark to true
       Promise.all(
         this.photos.map(photo => {
           return this.uploadPhoto(photo);
@@ -70,6 +68,10 @@ export default {
           this.urls.push(result.url);
         })
         console.log(this.urls)
+        var marker = {
+          photos:this.urls
+        }
+        eventBus.$emit(PHOTO_TAKEN, marker)
       });
     },
     deleteLastPhoto() {
@@ -87,7 +89,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 body {
   background-color: #f0f0f0;
 }
