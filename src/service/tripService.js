@@ -34,7 +34,7 @@ function addTrip(trip) {
     }
 }
 
-function editTrip(tripId) {
+function editTrip(tripId, trip) {
     return axios.put(`${TRIPS_URL}/${tripId}`, trip)
 }
 

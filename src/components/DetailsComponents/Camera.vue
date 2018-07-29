@@ -6,7 +6,8 @@
         </div>
         <div class="flex center">
           <button id="takePhoto" v-on:click="capturePhoto()">Take Photo</button>
-          <button id="next" v-on:click="nextToDesc">Next</button>
+          <button id="next" v-on:click="continueToMarkDesc()">Next</button>
+          <button id="next" v-on:click="deleteLastPhoto()">deleteLastPhoto</button>
         </div>
         <router-link :to="'/'">  
           <button>
@@ -17,7 +18,7 @@
 
         <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
         <ul>
-            <li v-for="photo in photos">
+            <li v-for="(photo, index) in photos" :key="index">
                 <img v-bind:src="photo" height="100" />
             </li>
         </ul>
@@ -25,13 +26,18 @@
 </template>
 
 <script>
+import cloudinary from "../../service/cloudinaryService.js";
+import {eventBus, PHOTO_TAKEN} from "../../service/eventBus.js";
+
 export default {
   name: "Camera",
   data() {
     return {
       video: {},
       canvas: {},
-      photos: []
+      photos: [],
+      counter: 0,
+      urls:[]
     };
   },
   mounted() {
@@ -45,22 +51,45 @@ export default {
   },
   methods: {
     capturePhoto() {
-        this.canvas = this.$refs.canvas;
-        var context = this.canvas.getContext("2d").drawImage(this.video, 0, 0, 640, 480);
-        this.photos.push(canvas.toDataURL("image/png"));
+      this.canvas = this.$refs.canvas;
+      var context = this.canvas
+        .getContext("2d")
+        .drawImage(this.video, 0, 0, 640, 480);
+      this.photos.push(canvas.toDataURL("image/png"));
     },
-    nextToDesc(){ //need to change that name badly
-      // to put the photos into the store
-      // to change the IsPhotoTaken inside the createMark to true
+    continueToMarkDesc() {
+      //need to change that name badly
+      Promise.all(
+        this.photos.map(photo => {
+          return this.uploadPhoto(photo);
+        })
+      ).then((result)=>{
+        result.forEach((result)=>{
+          this.urls.push(result.url);
+        })
+        console.log(this.urls)
+        var marker = {
+          photos:this.urls
+        }
+        eventBus.$emit(PHOTO_TAKEN, marker)
+      });
     },
-    deleteLastPhoto(){
-      
+    deleteLastPhoto() {
+      this.photos = this.photos.splice(0, this.photos.length - 1);
+    },
+    uploadPhoto(img) {
+      return new Promise((resolve, reject) => {
+        cloudinary.cloudinary.uploader.upload(img, function(result) {
+          console.log(result);
+          resolve(result);
+        });
+      });
     }
   }
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 body {
   background-color: #f0f0f0;
 }
