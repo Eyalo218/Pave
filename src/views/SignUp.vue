@@ -3,7 +3,7 @@
         <div class="container flex column">
             <div class="logo">Pave</div>
             <div><h3>Explore and share <span class="walks">walks</span></h3><h3>around the world</h3></div>
-            <form @submit.prevent="login" class="form flex column">
+            <form @submit.prevent="signup" class="form flex column">
                 <input type="text" v-model="signupDetails.email" placeholder="Email">
                 <input type="text" v-model="signupDetails.name" placeholder="Name">
                 <input type="text" v-model="signupDetails.password" placeholder="Password">
@@ -29,14 +29,13 @@ export default {
             }
         }
     },
-    created(){},
-    computed: {},
+    created(){
+    },
     methods: {
-        login() {
+        signup() {
             userService.signup(this.signupDetails)
                 .then(user => {
                     console.log('User is in "then"',user)
-                    eventBus.$emit(LOGGED_IN, user);
                     this.$router.push('/explore')
                 })
         },

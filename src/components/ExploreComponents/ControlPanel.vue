@@ -11,9 +11,9 @@
                 <router-link :to="'/'">
                     <button>Home</button>
                 </router-link>
-                <router-link :to="'/profile'">
-                    <button>Profile</button>
-               </router-link>
+                <router-link :to="`/profile/${user._id}`">
+                    <button>{{user.name}}</button>
+                </router-link>
             </div>
         </div>
     </section>
@@ -21,6 +21,8 @@
 
 <script>
 
+import {eventBus, LOGGED_IN} from '../../service/eventBus.js'
+import userService from '../../service/userService.js'
 
 export default {
     name: 'CtrPanel',
@@ -28,9 +30,11 @@ export default {
     data(){
         return {
             search: '',
+            user: userService.getLoggedinUser(),
         }
     },
     created() {
+         eventBus.$on(LOGGED_IN, user => this.user = user)
     },
     computed:{
     },

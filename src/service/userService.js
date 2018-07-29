@@ -1,16 +1,41 @@
-const USERS_URL = 'http://localhost:3000/users'
 import axios from 'axios'
+import storageService from './storageService.js'
+import {eventBus, LOGGED_IN} from './eventBus'
+
+
+const USERS_URL = 'http://localhost:3000/users'
+const STORAGE_KEY = 'loggedinUser';
+
+var loggedinUser = storageService.loadFromStorage(STORAGE_KEY) || null;
+console.log('LOgged:', loggedinUser);
+if (loggedinUser) {
+    eventBus.$emit(LOGGED_IN, loggedinUser)
+}
 
 function signup(userDetails) {
     console.log('front-end service got user signup ', userDetails)
     return axios.post(`${USERS_URL}/signup`, userDetails)
-        .then(res => res.data)
+        .then(res => {
+            _setLoggedinUser(res.data)
+            return res.data
+        })
         .catch(err => console.log('Problem talking to server', err))
-
 }
 
+function login(userCreds) {
+    return axios.post(`${USERS_URL}/checkLogin`, userCreds)
+        .then(res => {
+            const user = res.data;
+            console.log('i got the user::: ', user)
+            _setLoggedinUser(user);
+            return user;
+        })
+        .catch(err => console.log('Problem talking to server', err))
+}
 
-
+function getLoggedinUser() {
+    return loggedinUser
+}
 
 function query() {
 
@@ -25,7 +50,6 @@ function query() {
 function getById(userId) {
     return axios.get(`${USERS_URL}/${userId}`)
             .then(resolveData)
-
 }
 
 function deleteUser(userId) {
@@ -42,5 +66,12 @@ function editUser(userId) {
 
 export default {
     signup,
+    getLoggedinUser,
+    login
 }
 
+function _setLoggedinUser(user) {
+    loggedinUser = user;
+    storageService.saveToStorage(STORAGE_KEY, loggedinUser)
+    eventBus.$emit(LOGGED_IN, user);
+}
