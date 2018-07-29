@@ -48,7 +48,7 @@ export default {
       setFilter() {
         let searchedText = this.searchedText;
         this.$store.commit({type:'setFilter',searchedText})
-        this.$router.push({path:'/explore'});
+        this.$router.push('/explore');
       }
   },
 };

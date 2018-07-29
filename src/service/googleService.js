@@ -48,7 +48,6 @@ function getWayPts(markers, google) {
             )
         );
     });
-    console.log(wayPts);
     return wayPts;
 }
 
