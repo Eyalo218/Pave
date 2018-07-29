@@ -51,7 +51,7 @@ export default new Router({
       component: tripDetails
     },
     {
-      path: 'profile/:userId?',
+      path: '/profile/:userId',
       name: 'Profile',
       component: Profile
     },

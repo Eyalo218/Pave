@@ -10,6 +10,7 @@ export default {
     },
     mutations: {
         loadTrips(state, { trips }) {
+            // console.log(trips);
             state.trips = trips
         },
         setCurrTrip(state, { trip }) {
@@ -18,13 +19,15 @@ export default {
     },
     getters: {
         tripsForDisplay(state) {
-            return state.trips
+            return state.trips;
         },
     },
     actions: {
-        loadTrips(context) {
-            tripService.query()
-                .then(trips => context.commit({ type: 'loadTrips', trips }))
+        loadTrips(context, { searchedText }) {
+            tripService.query(searchedText)
+                .then(trips => {
+                    context.commit({ type: 'loadTrips', trips })
+                })
         },
         setCurrTrip(context, { currTripId }) {
             return tripService.getById(currTripId)

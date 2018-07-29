@@ -1,39 +1,56 @@
 <template>
     <section class="header">
-      <div class="home-nav-bar flex space-between">
-        <div class="logo">Pave</div>
-        <div class="links-container flex space-between">
-          <router-link  :to="'/how'">How it works</router-link>
-          <router-link  :to="'/signup'">Sign up</router-link>
-          <router-link  :to="'/login'">Log in</router-link>
+        <div class="home-nav-bar flex space-between">
+            <div class="logo">Pave</div>
+            <div v-if="!user" class="links-container flex space-between">
+                <router-link  :to="'/how'">How it works</router-link>
+                <router-link  :to="'/signup'">Sign up</router-link>
+                <router-link  :to="'/login'">Log in</router-link>
+            </div>
+            <div v-else class="links-container flex space-between">
+                <router-link  :to="'/how'">How it works</router-link>
+                <button @click="logOut" >Log Out</button>
+                <router-link :to="`/profile/${user._id}`">{{user.name}}</router-link>
+            </div>
         </div>
-      </div>
-      <div class="title-input-container">
-        <h1>Explore and share walks <br/> around the world</h1>
-        <input v-model="searchedText" @keyup.enter="setFilter" placeholder="Take yourself to..." />
-      </div>
-      <div class="app-data">
-        <p>6500+ <span>walks</span> 130 <span>countries</span> 80k+ <span>users</span></p>
+        <div class="title-input-container">
+            <h1>Explore and share walks <br/> around the world</h1>
+            <input v-model="searchedText" @keyup.enter="setFilter" placeholder="Take yourself to..." />
+        </div>
+        <div class="app-data">
+            <p>6500+ <span>walks</span> 130 <span>countries</span> 80k+ <span>users</span></p>
         </div>
     </section>
 </template>
 
 <script>
+
+import userService from '../../service/userService.js'
+import storageService from './../../service/storageService.js'
+import {eventBus, LOGGED_IN} from '../../service/eventBus.js'
+
 export default {
   name: "HomeHeader",
   data() {
-    return {
-      searchedText:''
-    }
+      return {
+          searchedText:'',
+          user: userService.getLoggedinUser()
+      }
+  },
+  created(){
+      eventBus.$on(LOGGED_IN, user => this.user = user)
   },
   methods: {
-    setFilter() {
-      let searchedText = this.searchedText;
-      this.$store.commit({type:'setFilter',searchedText})
-      console.log(this.$store);
-    }
+      logOut() {
+        storageService.removeUser('loggedinUser');
+        this.user = null;
+      },
+      setFilter() {
+        let searchedText = this.searchedText;
+        this.$store.commit({type:'setFilter',searchedText})
+        this.$router.push({path:'/explore'});
+      }
   },
-  components: {}
 };
 </script>
 

@@ -3,9 +3,9 @@
         <div class="container flex column">
             <div class="logo">Pave</div>
             <div><h3>Explore and share <span class="walks">walks</span></h3><h3>around the world</h3></div>
-            <form class="form flex column">
-                <input type="text" placeholder="Email">
-                <input type="text" placeholder="Password">
+            <form @submit.prevent="login" class="form flex column">
+                <input type="text" v-model="loginDetails.name" placeholder="Name">
+                <input type="text" v-model="loginDetails.password" placeholder="Password">
                 <button class="submit-btn">Continue</button>
                 <p class="terms">By continuing, you agree to Pave's <span class="bold">Terms of Service, Privacy Policy</span></p>
             </form>
@@ -16,17 +16,29 @@
 
 <script>
 
-import {eventBus, LOGGED_IN} from '../service/eventBus.js'
+import {eventBus} from '../service/eventBus.js'
+import userService from '../service/userService.js'
 
 
 export default {
-    created(){
-        eventBus.$on(LOGGED_IN, (user) => {
-            console.log('LoggeD' ,user);
-        })
+    data(){
+        return {
+            loginDetails: {
+                name: '',
+                password: ''
+            }
+        }
     },
-    methods: {},
-    mounted(){}
+    created(){},
+    methods: {
+        login(){
+            userService.login(this.loginDetails)
+                .then(user => {
+                    console.log('User is in "then"',user)
+                    this.$router.push('/explore')
+                })
+    }
+    }
 }
 </script>
 
