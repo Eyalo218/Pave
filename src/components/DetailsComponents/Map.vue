@@ -13,7 +13,7 @@
       <gmap-marker
         :key="index"
         v-for="(marker, index) in markersForDisplay"
-        :position="marker.cords"
+        :position="marker.coords"
         @click="setCurrMarker(marker,index)"
         :icon="{url:displayIconUrl(marker.category)}"
         :ref="'marker'+index"
@@ -38,11 +38,8 @@ export default {
     };
   },
   created() {
-    // this.geolocate();
-    console.log("created");
-  },
-  mounted() {
     this.setCurrTrip();
+    console.log("created");
   },
   computed: {
     google() {
@@ -75,33 +72,20 @@ export default {
     },
     setCurrMarker(currMarker, index) {
       this.$store.commit({ type: "setCurrMarker", currMarker });
-      console.log(this.$refs.map);
-      //   this.$refs.marker.$markerObject.setAnimation(google.maps.Animation.BOUNCE)
       this.$refs[`marker${index}`][0].$markerObject.setAnimation(
         this.google.maps.Animation.BOUNCE
       );
       setTimeout(() => {
         this.$refs[`marker${index}`][0].$markerObject.setAnimation(null);
       }, 2100);
-      //   this.$refs.map.$mapObject.panTo()
-      //   this.$refs.map.$mapObject.panTo(
-      //     googleService.setLatLng(
-      //       currMarker.cords.lat,
-      //       currMarker.cords.lat,
-      //       this.google
-      //     )
-      //   );
-      //   this.$refs.map.$mapObject.getCenter().lat();
-      //   this.$refs.map.$mapObject.getCenter().lng();
 
-      this.$refs.map.$mapObject.panBy(
-        (this.$refs.map.$mapObject.getCenter().lat() - currMarker.cords.lat) *
-          428,
-        this.$refs.map.$mapObject.getCenter().lng() - currMarker.cords.lng
+      this.$refs.map.$mapObject.panTo(
+        googleService.setLatLng(
+          currMarker.coords.lat,
+          currMarker.coords.lng,
+          this.google
+        )
       );
-
-      //   this.center = currMarker.cords;
-      console.log(this.$refs.map);
     },
     setMarkers() {
       let markers = this.trip.markers;
@@ -113,6 +97,10 @@ export default {
       return googleService.getBounds(this.markersForDisplay, this.google);
     },
     setRoutes() {
+      if (!this.google) {
+        this.setCurrTrip();
+        return;
+      }
       var directionsService = googleService.getDirecService(this.google);
       var directionsDisplay = googleService.getDirecRender(this.google);
       directionsDisplay.setMap(this.$refs.map.$mapObject);
@@ -122,6 +110,7 @@ export default {
         this.setWayPts,
         this.google
       );
+      
       directionsService.route(request, (response, status) => {
         if (status == "OK") {
           directionsDisplay.setDirections(response);

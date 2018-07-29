@@ -42,26 +42,25 @@ function getWayPts(markers, google) {
         if (idx === 0 || idx === markers.length - 1) return;
         wayPts.push(
             setWayPoint(
-                marker.cords.lat,
-                marker.cords.lng,
+                marker.coords.lat,
+                marker.coords.lng,
                 google
             )
         );
     });
-    console.log(wayPts);
     return wayPts;
 }
 
 function getRequest(origin, dest, wayPoints, google) {
     return {
         origin: setLatLng(
-            origin.cords.lat,
-            origin.cords.lng,
+            origin.coords.lat,
+            origin.coords.lng,
             google
         ),
         destination: setLatLng(
-            dest.cords.lat,
-            dest.cords.lng,
+            dest.coords.lat,
+            dest.coords.lng,
             google
         ),
         waypoints: wayPoints,
@@ -93,7 +92,7 @@ function getBounds(markers, google) {
     let bounds = new google.maps.LatLngBounds();
 
     markers.forEach(marker => {
-        bounds.extend(setLatLng(marker.cords.lat, marker.cords.lng, google))
+        bounds.extend(setLatLng(marker.coords.lat, marker.coords.lng, google))
     });
     return bounds;
 }
