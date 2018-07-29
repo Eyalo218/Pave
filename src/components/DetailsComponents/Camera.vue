@@ -26,7 +26,8 @@
 </template>
 
 <script>
-import cloudinary from '../service/cloudinaryService.js';
+import cloudinary from "../../service/cloudinaryService.js";
+import {eventBus, PHOTO_TAKEN} from "../../service/eventBus.js";
 
 export default {
   name: "Camera",
@@ -34,7 +35,9 @@ export default {
     return {
       video: {},
       canvas: {},
-      photos: []
+      photos: [],
+      counter: 0,
+      urls:[]
     };
   },
   mounted() {
@@ -48,25 +51,37 @@ export default {
   },
   methods: {
     capturePhoto() {
-        this.canvas = this.$refs.canvas;
-        var context = this.canvas.getContext("2d").drawImage(this.video, 0, 0, 640, 480);
-        this.photos.push(canvas.toDataURL("image/png"));
+      this.canvas = this.$refs.canvas;
+      var context = this.canvas
+        .getContext("2d")
+        .drawImage(this.video, 0, 0, 640, 480);
+      this.photos.push(canvas.toDataURL("image/png"));
     },
-    nextToDesc(){ //need to change that name badly
+    nextToDesc() {
+      //need to change that name badly
       // to put the photos into the cloudinary
       // to change the IsPhotoTaken inside the createMark to true
-      this.photos.forEach(photo => {
-        uploadPhoto(photo)
+      Promise.all(
+        this.photos.map(photo => {
+          return this.uploadPhoto(photo);
+        })
+      ).then((result)=>{
+        result.forEach((result)=>{
+          this.urls.push(result.url);
+        })
+        console.log(this.urls)
       });
-      console.log('lalala');
     },
-    deleteLastPhoto(){
-      this.photos = this.photos.splice(0,this.photos.length-1)
+    deleteLastPhoto() {
+      this.photos = this.photos.splice(0, this.photos.length - 1);
     },
-    uploadPhoto(img){
-       cloudinary.uploader.upload(img, function(result) { 
-      console.log(result) 
-    });
+    uploadPhoto(img) {
+      return new Promise((resolve, reject) => {
+        cloudinary.cloudinary.uploader.upload(img, function(result) {
+          console.log(result);
+          resolve(result);
+        });
+      });
     }
   }
 };

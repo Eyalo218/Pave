@@ -4,7 +4,16 @@
     <div v-else>
         <div>
             <h1>Category</h1>
-            <!-- listbox -->
+            <input list="categories">
+            <datalist id="categories">
+                <option value="Landscape"></option>
+                <option value="Urban"></option>
+                <option value="Food"></option>
+                <option value="Historical"></option>
+                <option value="Shopping"></option>
+                <option value="Party"></option>
+                <option value="Animals"></option>
+            </datalist>
         </div>
         <div>
             <h1>Description</h1>
@@ -16,7 +25,7 @@
 
 <script>
 import Camera from "../components/DetailsComponents/Camera.vue";
-import eventBusService from '../service/eventBus.js';
+import {eventBus, PHOTO_TAKEN} from '../service/eventBus.js';
 
 export default {
   data() {
@@ -25,11 +34,10 @@ export default {
     };
   },
   components: {
-    Camera,
-    eventBusService
+    Camera
   },
   created(){
-      eventBusService.eventBus.$on(eventBusService.PHOTO_TAKEN, this.toggleScreen)
+      eventBus.$on(PHOTO_TAKEN, this.toggleScreen)
   },
   methods:{
       toggleScreen(){
