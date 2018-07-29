@@ -41,17 +41,16 @@ export default {
       eventBus.$on(LOGGED_IN, user => this.user = user)
   },
   methods: {
-      setFilter() {
-          let searchedText = this.searchedText;
-          this.$store.commit({type:'setFilter',searchedText})
-          console.log(this.$store);
-      },
       logOut() {
         storageService.removeUser('loggedinUser');
         this.user = null;
+      },
+      setFilter() {
+        let searchedText = this.searchedText;
+        this.$store.commit({type:'setFilter',searchedText})
+        this.$router.push({path:'/explore'});
       }
   },
-  components: {}
 };
 </script>
 

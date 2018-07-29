@@ -2,7 +2,7 @@
     <section>
         <div class="list-container">
             <ul>
-                <li v-for="trip in tripsForDisplay">
+                <li :key="index" v-for="(trip,index) in tripsForDisplay">
                     <Preview :trip="trip"></Preview>
                 </li>
             </ul>
@@ -25,7 +25,7 @@ export default {
         }
     },
     created() {
-      this.loadTrips()
+    //   this.loadTrips()
     },
     computed:{
       tripsForDisplay() {
@@ -33,9 +33,6 @@ export default {
       },
     },
     methods:{
-        loadTrips() {
-            this.$store.dispatch({type:'loadTrips'})
-        },
         toDetails(tripId) {
             this.$router.push(`/trip/${tripId}`)
         }

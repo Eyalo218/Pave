@@ -35,7 +35,8 @@ export default {
         var elImg = document.querySelector(".img");
         console.log(elImg);
         // elimg.background.set(this.photoUrls[currPhotoIdl])
-    }
+    },
+    
 
   }
 };
@@ -54,7 +55,6 @@ export default {
   position: absolute;
   z-index: 1;
   top: 50%;
-  /* left:50%; */
   .btn{
     border: none;
     background: none;
