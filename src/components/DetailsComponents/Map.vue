@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h2>map component</h2>
+      <h2>eyal bug</h2>
       <br/>
     </div>
     <br>
@@ -110,7 +110,7 @@ export default {
         this.setWayPts,
         this.google
       );
-      
+
       directionsService.route(request, (response, status) => {
         if (status == "OK") {
           directionsDisplay.setDirections(response);
