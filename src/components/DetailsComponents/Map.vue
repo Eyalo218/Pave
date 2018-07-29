@@ -38,6 +38,10 @@ export default {
     };
   },
   created() {
+    // this.geolocate();
+    console.log("created");
+  },
+  mounted() {
     this.setCurrTrip();
   },
   computed: {

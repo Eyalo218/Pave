@@ -21,6 +21,9 @@ export default {
         tripsForDisplay(state) {
             return state.trips;
         },
+        getCurrTrip(state){
+            return state.currTrip;
+        }
     },
     actions: {
         loadTrips(context, { searchedText }) {
