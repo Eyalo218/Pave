@@ -26,6 +26,7 @@
 import { gmapApi } from "vue2-google-maps";
 import googleService from "@/service/googleService.js";
 import tripService from "@/service/tripService.js";
+import{ eventBus,MARKER_ADDED } from "@/service/eventBus.js";
 
 export default {
   name: "GoogleMap",
@@ -39,7 +40,10 @@ export default {
   },
   created() {
     this.setCurrTrip();
-    console.log("created");
+    console.log("createdddddddddddddddddddddddddd");
+    eventBus.$on(MARKER_ADDED, () => {
+      this.setCurrTrip();
+    });
   },
   computed: {
     google() {
