@@ -12,6 +12,7 @@ if (loggedinUser) {
     eventBus.$emit(LOGGED_IN, loggedinUser)
 }
 
+// User sign up
 function signup(userDetails) {
     console.log('front-end service got user signup ', userDetails)
     return axios.post(`${USERS_URL}/signup`, userDetails)
@@ -22,6 +23,7 @@ function signup(userDetails) {
         .catch(err => console.log('Problem talking to server', err))
 }
 
+// User log-in
 function login(userCreds) {
     return axios.post(`${USERS_URL}/checkLogin`, userCreds)
         .then(res => {
@@ -33,9 +35,17 @@ function login(userCreds) {
         .catch(err => console.log('Problem talking to server', err))
 }
 
+// Get user if logged in
 function getLoggedinUser() {
     return loggedinUser
 }
+
+// Get user by ID
+function getById(userId) {
+    return axios.get(`${USERS_URL}/${userId}`)
+            .then(res => res.data)
+}
+
 
 function query() {
 
@@ -45,11 +55,6 @@ function query() {
                     users: res.data
                 }
             })
-}
-
-function getById(userId) {
-    return axios.get(`${USERS_URL}/${userId}`)
-            .then(resolveData)
 }
 
 function deleteUser(userId) {
@@ -67,7 +72,8 @@ function editUser(userId) {
 export default {
     signup,
     getLoggedinUser,
-    login
+    login,
+    getById
 }
 
 function _setLoggedinUser(user) {

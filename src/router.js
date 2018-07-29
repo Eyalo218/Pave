@@ -9,6 +9,7 @@ import tripDetails from './views/TripDetails.vue'
 import Profile from './views/Profile.vue'
 import Login from './views/Login.vue'
 import CreateMark from './views/CreateMark.vue'
+import EditProfile from './views/EditProfile.vue'
 // import 
 
 Vue.use(Router)
@@ -59,6 +60,11 @@ export default new Router({
       path: '/createMark',
       name: 'CreateMark',
       component: CreateMark
+    },
+    {
+      path: '/editProfile/:userId',
+      name: 'EditProfile',
+      component: EditProfile
     },
   ]
 })
