@@ -6,7 +6,12 @@
                 <button>My pins</button>
             </div>
             <div class="trip-display">
-            <div class="my-trips"></div>
+            <div class="my-trips">
+                <div>
+                    <div><button click="">+</button></div>
+                    <div>Create trip</div>
+                </div>
+            </div>
             <div class="my-pins"></div>
             </div>
         </div>
