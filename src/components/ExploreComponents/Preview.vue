@@ -22,7 +22,6 @@ export default {
         }
     },
     created() {
-      this.loadTrips()
     },
     computed:{
       tripsForDisplay() {
@@ -30,9 +29,6 @@ export default {
       },
     },
     methods:{
-        loadTrips() {
-            this.$store.dispatch({type:'loadTrips'})
-        },
         toDetails(tripId) {
             this.$router.push(`/trips/${tripId}`)
         }

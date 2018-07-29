@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import {eventBus} from '@/service/eventBus.js';
 export default {
   name: "HomeHeader",
   data() {
@@ -30,7 +31,7 @@ export default {
     setFilter() {
       let searchedText = this.searchedText;
       this.$store.commit({type:'setFilter',searchedText})
-      console.log(this.$store);
+      this.$router.push({path:'/explore'});
     }
   },
   components: {}

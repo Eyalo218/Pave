@@ -5,7 +5,6 @@ const HISTORICAL_ICON = 'https://mt.google.com/vt/icon/name=icons/onion/SHARED-m
 const SHOPPING_ICON = 'https://mt.google.com/vt/icon/name=icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1684-shopping-bag_4x.png&highlight=880e4f,ff000000&scale=1.0';
 const PARTY_ICON = 'https://mt.google.com/vt/icon/name=icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1511-balloons_4x.png&highlight=ffea00,ff000000&scale=1.0';
 const ANIMAL_ICON = 'https://mt.google.com/vt/icon/name=icons/onion/SHARED-mymaps-container_4x.png,icons/onion/1759-bear_4x.png&highlight=4e342e,ff000000&scale=1.0';
-import { gmapApi } from "vue2-google-maps";
 
 function getIconUrl(category) {
     switch (category) {
