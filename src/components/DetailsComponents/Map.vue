@@ -13,7 +13,7 @@
       <gmap-marker
         :key="index"
         v-for="(marker, index) in markersForDisplay"
-        :position="marker.cords"
+        :position="marker.coords"
         @click="setCurrMarker(marker,index)"
         :icon="{url:displayIconUrl(marker.category)}"
         :ref="'marker'+index"
@@ -38,11 +38,9 @@ export default {
     };
   },
   created() {
-    // this.geolocate();
-    console.log("created");
-  },
-  mounted() {
     this.setCurrTrip();
+    console.log("created");
+    console.log(navigator);
   },
   computed: {
     google() {
@@ -86,8 +84,8 @@ export default {
       //   this.$refs.map.$mapObject.panTo()
       //   this.$refs.map.$mapObject.panTo(
       //     googleService.setLatLng(
-      //       currMarker.cords.lat,
-      //       currMarker.cords.lat,
+      //       currMarker.coords.lat,
+      //       currMarker.coords.lat,
       //       this.google
       //     )
       //   );
@@ -95,12 +93,12 @@ export default {
       //   this.$refs.map.$mapObject.getCenter().lng();
 
       this.$refs.map.$mapObject.panBy(
-        (this.$refs.map.$mapObject.getCenter().lat() - currMarker.cords.lat) *
+        (this.$refs.map.$mapObject.getCenter().lat() - currMarker.coords.lat) *
           428,
-        this.$refs.map.$mapObject.getCenter().lng() - currMarker.cords.lng
+        this.$refs.map.$mapObject.getCenter().lng() - currMarker.coords.lng
       );
 
-      //   this.center = currMarker.cords;
+      //   this.center = currMarker.coords;
       console.log(this.$refs.map);
     },
     setMarkers() {
@@ -113,6 +111,7 @@ export default {
       return googleService.getBounds(this.markersForDisplay, this.google);
     },
     setRoutes() {
+      if (!this.google) this.setCurrTrip();
       var directionsService = googleService.getDirecService(this.google);
       var directionsDisplay = googleService.getDirecRender(this.google);
       directionsDisplay.setMap(this.$refs.map.$mapObject);
