@@ -6,15 +6,19 @@ import tripService from '../service/tripService.js'
 export default {
     state: {
         trips: [],
-        currTrip: null
+        currTrip: null,
+        currUserTrips: []
     },
     mutations: {
         loadTrips(state, { trips }) {
-            // console.log(trips);
             state.trips = trips
         },
         setCurrTrip(state, { trip }) {
             state.currTrip = trip
+        },
+        userTripsToDisplay(state, {trips}) {
+            console.log('his here, ', trips);
+            state.currUserTrips = trips
         }
     },
     getters: {
@@ -23,6 +27,9 @@ export default {
         },
         getCurrTrip(state){
             return state.currTrip;
+        },
+        userTripsToDisplay(state){
+            return state.currUserTrips;
         }
     },
     actions: {
@@ -34,8 +41,12 @@ export default {
         },
         setCurrTrip(context, { currTripId }) {
             return tripService.getById(currTripId)
-                .then(trip =>
-                    context.commit({ type: 'setCurrTrip', trip }))
+                .then(trip => context.commit({ type: 'setCurrTrip', trip }))
+        },
+        loadTripsByUserId(context, {userId}) {
+            console.log('user id in store', userId)
+            return tripService.query('' ,userId)
+                .then(trips => context.commit({ type: 'userTripsToDisplay', trips }))
         }
     }
 }
