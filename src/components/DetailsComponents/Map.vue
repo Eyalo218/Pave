@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h2>eyal bug</h2>
+      <h2></h2>
       <br/>
     </div>
     <br>
