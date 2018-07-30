@@ -22,6 +22,7 @@ export default {
             return state.trips;
         },
         getCurrTrip(state){
+            console.log('lala',state.currTrip)
             return state.currTrip;
         }
     },
