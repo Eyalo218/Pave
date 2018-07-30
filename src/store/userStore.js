@@ -3,6 +3,7 @@ import userService from '../service/userService.js'
 export default {
     state: {
         currUser: null,
+        currUserTrips: null,
     },
     mutations: {
         setCurrUser(state, {user}) {

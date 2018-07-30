@@ -66,5 +66,6 @@ export default new Router({
       name: 'EditProfile',
       component: EditProfile
     },
+    
   ]
 })

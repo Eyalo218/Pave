@@ -45,7 +45,6 @@ export default {
   created() {
     eventBus.$on(PHOTO_TAKEN, this.toggleScreen);
     console.log(this.$store.state);
-    
   },
   methods: {
     toggleScreen(marker) {
@@ -67,17 +66,16 @@ export default {
           lng: this.position.coords.longitude
         };
         this.marker.createdAt = this.position.timestamp;
-        this.updateTrip()
-        
+        this.updateTrip();
       });
     },
-    updateTrip(){
-        console.log(this.marker)
-        var trip = this.$store.state.tripModule.currTrip;
-        trip.markers.push(this.marker)
-        tripService.editTrip(trip._id, trip)
-        eventBus.$emit(MARKER_ADDED);
-        this.$router.push('/trips/'+trip._id)
+    updateTrip() {
+      console.log(this.marker);
+      var trip = this.$store.state.tripModule.currTrip;
+      trip.markers.push(this.marker);
+      tripService.editTrip(trip._id, trip);
+      eventBus.$emit(MARKER_ADDED, trip._id);
+      this.$router.push("/trips/" + trip._id);
     }
   }
 };

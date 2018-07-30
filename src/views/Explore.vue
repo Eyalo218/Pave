@@ -1,31 +1,30 @@
 <template>
     <section>
-        <controlPanel></controlPanel>
-        <tripList></tripList>
+        <control-panel></control-panel>
+        <related-searches></related-searches>
+        <trip-list></trip-list>
     </section>
 </template>
 
 <script>
-
-import tripList from '../components/ExploreComponents/List.vue'
-import controlPanel from '../components/ExploreComponents/ControlPanel.vue'
+import tripList from "../components/ExploreComponents/List.vue";
+import controlPanel from "../components/ExploreComponents/ControlPanel.vue";
+import relatedSearches from "../components/ExploreComponents/relatedSearches.vue";
 
 export default {
-    components:{
-        tripList,
-        controlPanel
-    },
-    data(){
-        return {
-          
-        }
-    },
-    created() {},
-    computed:{},
-    methods:{}
-}
+  components: {
+    tripList,
+    controlPanel,
+    relatedSearches
+  },
+  data() {
+    return {};
+  },
+  created() {},
+  computed: {},
+  methods: {}
+};
 </script>
 
 <style>
-
 </style>

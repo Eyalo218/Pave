@@ -2,11 +2,12 @@ const TRIPS_URL = 'http://localhost:3000/trips'
 import axios from 'axios'
 
 
-function query(searchedText = '') {
+function query(searchedText = '', userId = null) {
     return axios.get(`${TRIPS_URL}`,
         {
             params: {
-                searchedText
+                searchedText,
+                userId
             }
         }
     )
@@ -31,6 +32,7 @@ function addTrip(trip) {
         return axios.put(`${TRIPS_URL}/${trip._id}`, trip)
     } else {
         return axios.post(TRIPS_URL, trip)
+            .then(trip => trip.data)
     }
 }
 
@@ -38,11 +40,16 @@ function editTrip(tripId, trip) {
     return axios.put(`${TRIPS_URL}/${tripId}`, trip)
 }
 
+function getTripsByUserId(userId) {
+    return axios.get(`${TRIPS_URL}/${userId}`, trip)
+}
+
 export default {
     query,
     getById,
     deleteTrip,
     addTrip,
-    editTrip
+    editTrip,
+    getTripsByUserId
 }
 

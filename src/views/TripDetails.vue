@@ -13,7 +13,7 @@
                 </div>
         </div>
         <div>
-            <router-link :to="'/createMark'">  
+            <router-link :to="'/createMark'" style="position:absolute;right:1%;top:50%;">  
                 <button>
                     <img src="../../public/img/details/camera.png" alt="">
                 </button>
