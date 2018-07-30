@@ -45,13 +45,13 @@ export default {
     .list-container {
         font-family: 'roboto-medium';
         color: #383633;
-        width: 90%;
+        width: 70%;
         margin: 0 auto;
         margin-bottom: 4rem;
         ul {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: space-around;
             margin: 0;
             padding: 0;
         }

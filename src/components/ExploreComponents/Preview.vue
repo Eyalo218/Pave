@@ -10,63 +10,57 @@
 </template>
 
 <script>
-
-
 export default {
-    name: 'PreviewExplore',
-    components:{},
-    props: ['trip'],
-    data(){
-        return {
-          trips: null,
-        }
-    },
-    created() {
-    },
-    computed:{
-      tripsForDisplay() {
-          return this.$store.getters.tripsForDisplay
-      },
-    },
-    methods:{
-        toDetails(tripId) {
-            this.$router.push(`/trips/${tripId}`)
-        }
+  name: "PreviewExplore",
+  components: {},
+  props: ["trip"],
+  data() {
+    return {
+      trips: null
+    };
+  },
+  created() {},
+  computed: {
+    tripsForDisplay() {
+      return this.$store.getters.tripsForDisplay;
     }
-}
+  },
+  methods: {
+    toDetails(tripId) {
+      this.$router.push(`/trips/${tripId}`);
+    }
+  }
+};
 </script>
 
 
 <style lang="scss" scoped>
+.h-list-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
 
-        .h-list-item {
-
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 1rem;
-
-            .item-img {
-                width: 14.5rem;
-                height: 17.5rem;
-                border-top-left-radius: 0.6rem;
-                border-top-right-radius: 0.6rem;
-            }
-            .location {
-                font-size: 1rem;
-            }
-            .reviews {
-                font-family: 'roboto-regular';
-            }
-            .country {
-                font-size: 0.8rem;
-                font-family: 'roboto-regular';
-            }
-            .review-dot {
-                width: 12px;
-            }
-
-        }
-        .card {
-            display: inline-block;
-        }
+  .item-img {
+    width: 14.5rem;
+    height: 17.5rem;
+    border-top-left-radius: 0.6rem;
+    border-top-right-radius: 0.6rem;
+  }
+  .location {
+    font-size: 1rem;
+  }
+  .reviews {
+    font-family: "roboto-regular";
+  }
+  .country {
+    font-size: 0.8rem;
+    font-family: "roboto-regular";
+  }
+  .review-dot {
+    width: 12px;
+  }
+}
+.card {
+  display: inline-block;
+}
 </style>

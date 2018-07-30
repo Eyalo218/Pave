@@ -1,15 +1,6 @@
 <template>
-  <div>
-    <div>
-      <h2></h2>
-      <br/>
-    </div>
-    <br>
-    <gmap-map
-      :center="center"
-      style="width:100%;  height: 400px;"
-      ref="map"
-    >
+  <section class="map-cmp">
+    <gmap-map :center="center" style="width:100%; height:95vh" ref="map">
       <gmap-marker
         :key="index"
         v-for="(marker, index) in markersForDisplay"
@@ -18,8 +9,9 @@
         :icon="{url:displayIconUrl(marker.category)}"
         :ref="'marker'+index"
       ></gmap-marker>
+      
     </gmap-map>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -139,4 +131,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.map-cmp{
+  // padding: 0.5rem;
+  padding: 1rem ;
+}
 </style>
