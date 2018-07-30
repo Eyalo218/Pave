@@ -6,8 +6,7 @@ function query(searchedText = '') {
     return axios.get(`${TRIPS_URL}`,
         {
             params: {
-                searchedText,
-                userId
+                searchedText
             }
         }
     )
