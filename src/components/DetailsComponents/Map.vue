@@ -26,7 +26,7 @@
 import { gmapApi } from "vue2-google-maps";
 import googleService from "@/service/googleService.js";
 import tripService from "@/service/tripService.js";
-import{ eventBus,MARKER_ADDED } from "@/service/eventBus.js";
+import { eventBus, MARKER_ADDED } from "@/service/eventBus.js";
 
 export default {
   name: "GoogleMap",
@@ -35,18 +35,25 @@ export default {
       trip: null,
       origin: null,
       dest: null,
-      center: { lat: 0, lng: 0 }
+      center: { lat: 0, lng: 0 },
+      currTripId: null
     };
   },
   created() {
-    this.setCurrTrip();
-    console.log("createdddddddddddddddddddddddddd");
-    eventBus.$on(MARKER_ADDED, () => {
-      this.setCurrTrip();
+    console.log("outside the event");
+    eventBus.$on(MARKER_ADDED, currTripId => {
+      console.log("inside the event");
+      this.currTripId = currTripId; // 1
     });
+    this.setCurrTrip(this.currTripId); // 2
   },
+  mounted() {},
   computed: {
     google() {
+      if (!gmapApi()) {
+        this.google;
+        return;
+      }
       return gmapApi();
     },
     markersForDisplay() {
@@ -67,8 +74,8 @@ export default {
     displayIconUrl(category) {
       return googleService.getIconUrl(category);
     },
-    setCurrTrip() {
-      let currTripId = this.$route.params.tripId;
+    setCurrTrip(currTripId) {
+      if (!currTripId) currTripId = this.$route.params.tripId;
       this.$store.dispatch({ type: "setCurrTrip", currTripId }).then(() => {
         this.trip = this.$store.state.tripModule.currTrip;
         this.setPave();
@@ -101,12 +108,9 @@ export default {
       return googleService.getBounds(this.markersForDisplay, this.google);
     },
     setRoutes() {
-      if (!this.google) {
-        this.setCurrTrip();
-        return;
-      }
       var directionsService = googleService.getDirecService(this.google);
       var directionsDisplay = googleService.getDirecRender(this.google);
+      console.log("in set routes:", this.$refs);
       directionsDisplay.setMap(this.$refs.map.$mapObject);
       let request = googleService.getRequest(
         this.origin,
@@ -114,7 +118,6 @@ export default {
         this.setWayPts,
         this.google
       );
-
       directionsService.route(request, (response, status) => {
         if (status == "OK") {
           directionsDisplay.setDirections(response);
