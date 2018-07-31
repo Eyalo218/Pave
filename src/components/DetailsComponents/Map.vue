@@ -32,20 +32,25 @@ export default {
     };
   },
   created() {
-    console.log("outside the event");
     eventBus.$on(MARKER_ADDED, currTripId => {
-      console.log("inside the event");
-      this.currTripId = currTripId; // 1
+      location.reload();
+      this.currTripId = currTripId;
     });
-    this.setCurrTrip(this.currTripId); // 2
+    eventBus.$on("changeMarker", currMarker => {
+      this.$refs.map.$mapObject.panTo(
+        googleService.setLatLng(
+          currMarker.marker.coords.lat,
+          currMarker.marker.coords.lng,
+          this.google
+        )
+      );
+    });
+    this.setCurrTrip(this.currTripId);
   },
   mounted() {},
   computed: {
     google() {
-      if (!gmapApi()) {
-        this.google;
-        return;
-      }
+      if (!gmapApi()) location.reload();
       return gmapApi();
     },
     markersForDisplay() {
@@ -70,7 +75,14 @@ export default {
       if (!currTripId) currTripId = this.$route.params.tripId;
       this.$store.dispatch({ type: "setCurrTrip", currTripId }).then(() => {
         this.trip = this.$store.state.tripModule.currTrip;
-        this.setPave();
+        console.log("trip", this.trip);
+        //TODO:change to !hasMarkers later
+        if (this.trip.markers.length === 0) {
+          this.geolocate();
+        } else {
+          eventBus.$emit("setTripPhotos", this.trip);
+          this.setPave();
+        }
       });
     },
     setCurrMarker(currMarker, index) {
@@ -81,7 +93,6 @@ export default {
       setTimeout(() => {
         this.$refs[`marker${index}`][0].$markerObject.setAnimation(null);
       }, 2100);
-
       this.$refs.map.$mapObject.panTo(
         googleService.setLatLng(
           currMarker.coords.lat,
@@ -89,6 +100,7 @@ export default {
           this.google
         )
       );
+      eventBus.$emit("markerClicked", index);
     },
     setMarkers() {
       let markers = this.trip.markers;
@@ -131,8 +143,8 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.map-cmp{
+.map-cmp {
   // padding: 0.5rem;
-  padding: 1rem ;
+  padding: 1rem;
 }
 </style>
