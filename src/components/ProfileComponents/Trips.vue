@@ -40,7 +40,7 @@
 import tripService from '../../service/tripService.js'
 
 export default {
-    name: 'Trips',
+    name: 'Tripss',
     data(){
         return {
             newTrip: {
@@ -173,7 +173,7 @@ export default {
     .modal-container{
         padding: 50px;
         background-color: blue;
-        
+
         .create-board-modal {
             width: 40rem;
             position: absolute;

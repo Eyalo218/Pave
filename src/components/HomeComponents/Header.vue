@@ -2,7 +2,7 @@
     <section class="header">
         <div class="mobile-home-nav-bar flex space-between align-center">
             <div class="mobile-logo">Pave</div>
-            <div>
+            <div v-if="toggle">
                 <div v-if="user" class="mobile-links-container flex space-between">
                     <router-link  :to="'/how'">How it works</router-link>
                     <button @click="logOut" >Log Out</button>
@@ -49,6 +49,7 @@ export default {
   data() {
       return {
           searchedText:'',
+          toggle: false,
           // user: userService.getLoggedinUser() ? userService.getLoggedinUser() : null
       }
   },
@@ -199,7 +200,13 @@ $main-black: #383633;
     @media(max-width: 960px) {
         display: block;
         background-color: #fff;
+        padding: 0.3rem 0;
+        .mobile-logo {
+          font-family: 'Chalkduster';
+          font-size: 1.6rem;
+        }
   }
+  
 }
 
 </style>
