@@ -1,6 +1,6 @@
 <template>
     <section>
-        {{setReviews._id}}
+    <button @click="setReviews">ima shel udad</button>
         <ul>
             <li v-for="(review,idx) in reviews" :key="idx">
                 {{review.review}}

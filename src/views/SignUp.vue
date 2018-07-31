@@ -1,8 +1,10 @@
 <template>
     <section>
+    <div class="background">
+        <div class="home"><router-link :to="'/'"><span class="link-home">Home</span></router-link></div>
         <div class="container flex column">
             <div class="logo">Pave</div>
-            <div><h3>Explore and share <span class="walks">walks</span></h3><h3>around the world</h3></div>
+            <div class="call-out"><h3>Explore and share <span class="walks">walks</span></h3><h3>around the world</h3></div>
             <form @submit.prevent="signup" class="form flex column">
                 <input type="text" v-model="signupDetails.email" placeholder="Email">
                 <input type="text" v-model="signupDetails.name" placeholder="Name">
@@ -12,6 +14,7 @@
             </form>
             <div class="redirect"><p>Already have an account? <router-link :to="'/login'"><span class="hover">Log-in</span></router-link></p></div>
         </div>
+    </div>
     </section>
 </template>
 
@@ -46,50 +49,107 @@ export default {
 
 <style lang="scss" scoped>
 
+  .background{
+        width: 100vw;
+        height: 100vh;
+        background-image: url("../../public/img/signup.jpeg");
+        background-repeat: no-repeat;
+        background-position: center; 
+        background-size: auto;
+
+        .home{
+            padding: 0.7rem 0 0 0.7rem;
+            
+            .link-home{
+                color: #fff;
+            }
+        }
+    }
     .container {
-      position: absolute;
+        background-color: #fff;
+        position: absolute;
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
         width: 25%;
         border-radius: 5px;
-      
+
+        @media (max-width: 1200px){
+            width: 30%;
+        }
+        @media (max-width: 1200px){
+            width: 35%;
+        }
+        @media (max-width: 820px){
+            width: 40%;
+        }
+        @media (max-width: 680px){
+            width: 60%;
+        }
+        @media (max-width: 490px){
+            width: 75%;
+        }
       .logo {
           text-align: center;
-          font-size: 2rem;
+          font-size: 3rem;
+          margin: 1rem 0;
       }
       h3 {
         font-size: 1.5rem;
+        font-family: 'roboto-bold';
         text-align: center;
         margin: 0;
         padding: 0;
+      }
+      .call-out{
+          margin-bottom: 1.5rem;
       }
       .walks{
         color: #44809e;
       }
       .form {
         margin: 0 auto;
-        width: 50%;
+        width: 55%;
         input {
           border: 1px solid #EDEDED;
           margin-bottom: 10px;
+          border-radius: 5px;
+        }
+        input{
+            padding: 0.5rem 1rem
         }
         .submit-btn {
+          border: none;
           color: #44809e;
-          border-raius: 5px;
+          font-family: 'roboto-bold';
+          font-size: 0.9rem;
+          padding: 0.5rem 1rem;
           background-color: #383633;
+          border-radius: 5px;
+          margin-bottom: 0.5rem;
+          cursor: pointer;
         }
         .terms {
-          font-size: 7px;
+          font-size: 0.4rem;
+          margin-bottom: 5rem;
           .bold{
-            font-family: 'roboto-bold'
+            font-family: 'roboto-bold';
+            cursor: pointer;
           }
         }
     }
       .redirect {
+        font-family: 'roboto-medium';
+        font-size: 0.9rem;
+        color: #383633;
+        background-color: #44809e;
+        padding: 1rem 0;
         text-align: center;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        
         .hover:hover{
-          color: #44809e;
+          color: #fff;
         }
       }
   }
