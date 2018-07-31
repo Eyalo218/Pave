@@ -4,13 +4,17 @@
             <div class="map">
                 <trip-map></trip-map>
             </div>
+            <div class="details">
                 <div class="photos">
                     <photo-display></photo-display>
                 </div>
             
+                <!-- gal's code enter here -->
+
                 <div class="reviews">
                     <Reviews></Reviews>
                 </div>
+            </div>
         </div>
         <div>
             <router-link :to="'/createMark'" style="position:absolute;right:1%;top:50%;">  
@@ -41,7 +45,7 @@ components:{
 </script>
 
 <style lang="scss" scoped>
-.map, .photos{
+.map, .details{
     width:50%
 }
 button{
