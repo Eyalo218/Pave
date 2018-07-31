@@ -1,6 +1,21 @@
 <template>
     <section class="header">
-        <div class="home-nav-bar flex space-between">
+        <div class="mobile-home-nav-bar flex space-between align-center">
+            <div class="mobile-logo">Pave</div>
+            <div>
+                <div v-if="user" class="mobile-links-container flex space-between">
+                    <router-link  :to="'/how'">How it works</router-link>
+                    <button @click="logOut" >Log Out</button>
+                    <router-link :to="`/profile/${user._id}`">{{user.name}}</router-link>
+                </div>
+                <div v-else class="mobile-links-container flex space-between">
+                    <router-link  :to="'/how'">How it works</router-link>
+                    <router-link  :to="'/signup'">Sign up</router-link>
+                    <router-link  :to="'/login'">Log in</router-link>
+                </div>
+            </div>
+        </div>
+        <div class="home-nav-bar flex space-between align-center">
             <div class="logo">Pave</div>
             <div v-if="user" class="links-container flex space-between">
                 <router-link  :to="'/how'">How it works</router-link>
@@ -39,6 +54,7 @@ export default {
   },
   created(){
       // eventBus.$on(LOGGED_IN, user => this.user = user)
+      this.checkIfUserInStorage()
   },
   computed: {
       user() {
@@ -54,6 +70,12 @@ export default {
         let searchedText = this.searchedText;
         this.$store.commit({type:'setFilter',searchedText})
         this.$router.push('/explore');
+      },
+      checkIfUserInStorage() {
+          let user = storageService.loadFromStorage('loggedInUser')
+          if (user){
+              this.$store.dispatch({type: 'loggedIn', user})
+          }
       }
   },
 };
@@ -67,13 +89,16 @@ $main-black: #383633;
     background-image: url("../../../public/img/home/homeImg.jpeg");
     background-size: cover;
     background-position: center;
-    height: 90vh;
+    height: 100vh;
     margin-bottom: 4rem;
     position: relative;
   }
- 
+
 .home-nav-bar{
-  padding: 1.5rem;
+  padding: 0.5rem 1.5rem 1.5rem 1.5rem;
+    @media(max-width: 960px) {
+      display: none;
+    }
   .logo{
     font-family: 'Chalkduster';
     font-size: 2.5rem;
@@ -100,11 +125,27 @@ $main-black: #383633;
     left: 50%;
     transform: translate(-50%,-50%);
     width: 65%;
-    // padding-top: 4rem;
+    @media(max-width: 520px) {
+      width: 82%;
+    }
     h1{
       color: white;
       font-size: 3rem;
-      // text-align: center;
+      @media(max-width: 920px) {
+        font-size: 2.5rem;
+      }
+        @media(max-width: 860px) {
+          font-size: 2.4rem;
+        }
+            @media(max-width: 660px) {
+              font-size: 2.1rem;
+            }
+              @media(max-width: 580px) {
+               font-size: 1.9rem;
+              }
+                @media(max-width: 430px) {
+                  font-size: 1.7rem;
+                }
     }
     input{
       border: none;
@@ -133,10 +174,31 @@ $main-black: #383633;
     color: white;
     font-family: 'roboto-medium';
     font-size: 2.5rem;
+    padding-bottom: 1rem;
     span{
       font-size: 1rem;
       opacity: 0.8;
     }
+    @media(max-width: 960px) {
+      font-size: 2rem;
+    }
+    @media(max-width: 840px) {
+      font-size: 1.7rem;
+    }
+    @media(max-width: 840px) {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      font-size: 1.7rem;
+    }
+  }
+}
+
+.mobile-home-nav-bar{
+  display: none;
+    @media(max-width: 960px) {
+        display: block;
+        background-color: #fff;
   }
 }
 

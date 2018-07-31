@@ -21,14 +21,16 @@
             <div class="my-pins"></div>
             </div>
         </div>
-        <div class="create-board-modal" v-if="createTrip">
-            <button @click="createTrip = false">X</button>
-            <form @submit.prev="submitTrip" class="flex column">
-                <input v-model="newTrip.title" type="text" placeholder="Title">
-                <textarea v-model="newTrip.desc" maxlength="300" placeholder="Description">
-                </textarea>
-                <button @click.prev="">Create</button>
-            </form>
+        <div class="modal-container">
+            <div class="create-board-modal" v-if="createTrip">
+                <button @click="createTrip = false">X</button>
+                <form @submit.prev="submitTrip" class="flex column">
+                    <input v-model="newTrip.title" type="text" placeholder="Title">
+                    <textarea v-model="newTrip.desc" maxlength="300" placeholder="Description">
+                    </textarea>
+                    <button @click.prev="">Create</button>
+                </form>
+            </div>
         </div>
     </section>
 </template>
@@ -165,11 +167,16 @@ export default {
             }
         }
     }
-    .create-board-modal {
-        width: 40rem;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+    .modal-container{
+        padding: 50px;
+        background-color: blue;
+        
+        .create-board-modal {
+            width: 40rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+    }
     }
 </style>
