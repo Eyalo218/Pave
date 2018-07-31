@@ -1,4 +1,5 @@
 import userService from '../service/userService.js'
+import storageService from '../service/storageService.js'
 
 export default {
     state: {
@@ -12,10 +13,11 @@ export default {
         },
         setLoggedIn(state, {user}) {
             state.currUserLogged = user;
+            storageService.saveToStorage('loggedInUser', user)
         },
         setLoggedOut(state, payload) {
             state.currUserLogged = null;
-            console.log('mut', state.currUserLogged)
+            localStorage.removeItem('loggedInUser')
         }
     },
     getters: {
@@ -23,7 +25,6 @@ export default {
           return state.currUser
         },
         loggedIn(state) {
-            console.log('get', state.currUserLogged)
             return state.currUserLogged 
         }
     },
