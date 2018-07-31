@@ -11,10 +11,10 @@
                     <li class="create-trip flex center align-center">
                         <div class="create-btn flex center align-center"@click="createTrip = true" >+</div>
                     </li>
-                    <li class="trip flex column" v-for="trip in userTripsToDisplay">
+                    <li v-for="trip in userTripsToDisplay" class="trip flex column">
                         <div class="active" v-if="trip.isActive = true"> Active</div>
                         <div class="complete" v-else>Complete</div>
-                        <div class="trip-title">{{trip.title}}</div>
+                        <div @click="directToTrip(trip._id)" class="trip-title">{{trip.title}}</div>
                     </li>
                 </ul>
             </div>
@@ -75,6 +75,9 @@ export default {
         },
         loadUserTrips() {
             this.$store.dispatch({type: 'loadTripsByUserId', userId: this.$route.params.userId})
+        },
+        directToTrip(tripId) {
+            this.$router.push(`/trips/${tripId}`)
         }
     }
 }

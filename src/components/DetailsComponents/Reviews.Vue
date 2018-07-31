@@ -1,5 +1,5 @@
 <template>
-    <section>
+<section>
         <ul>
             <li v-for="(review,idx) in reviews" :key="idx">
                 {{review.review}}
@@ -13,9 +13,9 @@
 <script>
 import axios from "axios";
 import reviewService from "@/service/reviewService.js";
-export default {
 
-    data(){
+export default {
+ data(){
         return {
             reviews:null
         }
@@ -34,10 +34,10 @@ export default {
     },
     created(){
         this.setReviews();
-    }
+    }   
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>
