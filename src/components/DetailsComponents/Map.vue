@@ -1,6 +1,6 @@
 <template>
   <section class="map-cmp">
-    <gmap-map :center="center" style="width:100%; height:95vh" ref="map">
+    <gmap-map zoom="12" :center="center" style="width:100%; height:95vh" ref="map">
       <gmap-marker
         :key="index"
         v-for="(marker, index) in markersForDisplay"
@@ -9,7 +9,6 @@
         :icon="{url:displayIconUrl(marker.category)}"
         :ref="'marker'+index"
       ></gmap-marker>
-      
     </gmap-map>
   </section>
 </template>
