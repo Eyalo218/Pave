@@ -4,13 +4,17 @@
             <div class="map">
                 <trip-map></trip-map>
             </div>
+            <div class="details">
                 <div class="photos">
                     <photo-display></photo-display>
                 </div>
             
+                <!-- gal's code enter here -->
+
                 <div class="reviews">
-                    <reviews></reviews>
+                    <Reviews></Reviews>
                 </div>
+            </div>
         </div>
         <div>
             <router-link :to="'/createMark'" style="position:absolute;right:1%;top:50%;">  
@@ -25,7 +29,8 @@
 <script>
 import tripMap from '@/components/DetailsComponents/Map.vue'
 import photoDisplay from '@/components/DetailsComponents/PhotoDisplay.vue'
-import reviews from '@/components/DetailsComponents/Reviews.vue'
+import Reviews from '@/components/DetailsComponents/Reviews.vue'
+
 export default {
 
 created(){
@@ -34,13 +39,13 @@ created(){
 components:{
    tripMap,
    photoDisplay,
-   reviews,
+   Reviews
 }
 }
 </script>
 
 <style lang="scss" scoped>
-.map, .photos{
+.map, .details{
     width:50%
 }
 button{

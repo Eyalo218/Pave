@@ -33,11 +33,12 @@ function getByTripId(tripId) {
 }
 
 
-// function addReview(trip) {
-//     return axios.put(`${REVIEW_URL}, trip)
-// }
+function addReview(review) {
+    return axios.put(`${REVIEW_URL}`, review)
+}
 
 export default {
-    getByTripId
+    getByTripId,
+    addReview
 }
 
