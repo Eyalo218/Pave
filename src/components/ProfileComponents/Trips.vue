@@ -3,7 +3,7 @@
         <div class="trips-container">
             <div class="trips-display-ctr">
                 <button>My trips</button>
-                <button>My pins</button>
+                <button>Pins</button>
             </div>
             <div class="trip-display">
             <div class="my-trips">
@@ -83,7 +83,7 @@ export default {
 <style lang="scss" scoped>
     .trips-display-ctr {
         margin: 0 auto;
-        width: 70%;
+        width: 65%;
         margin-bottom: 1.2rem;
 
         button {

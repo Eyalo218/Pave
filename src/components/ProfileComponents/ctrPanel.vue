@@ -10,25 +10,24 @@
                 <input @keyup.enter="setFilter" class="search" type="text" v-model="searchedText" placeholder="Seach"/>
                 </div>
             </div>
-            <div class="container-right flex flex-end">
-                <!-- <router-link class="flex" :to="'/'">
+            <div class="container-right">
+               <!--  <router-link :to="'/'">Home</router-link>
+                <router-link class="flex" :to="'/'">
                 <div class="user-img"></div>
                 <span>username</span>
                 </router-link>
                  <font-awesome-icon class="search-icon" icon="comments" size="lg" />
-                 <font-awesome-icon class="search-icon" icon="bell" size="lg" /> -->
+                 <font-awesome-icon class="search-icon" icon="bell" size="lg" />-->
                 <div v-if="user">
-                    <router-link :to="'/'"><button>Home</button></router-link>
-                    <button @click="logOut" >Log out</button>
-                    <router-link :to="`/profile/${user._id}`">
-                        <button>{{user.name}}</button>
+                    <router-link :to="`/`">
+                        <button>Home</button>
                     </router-link>
+                    <button @click="logOut">Log out</button>
                 </div>
                 <div v-else>
-                    <router-link :to="'/'"><button>Home</button></router-link>
                     <router-link :to="`/login`">
-                    <button>Login</button>
-                </router-link>
+                        <p>Log in</p>
+                    </router-link>
                 </div>
             </div>
         </div>
@@ -36,23 +35,23 @@
 </template>
 
 <script>
-import { eventBus, LOGGED_IN, EMIT_SEARCH} from "../../service/eventBus.js";
+import { eventBus, EMIT_SEARCH } from "../../service/eventBus.js";
 import userService from "../../service/userService.js";
-import storageService from '../../service/storageService.js'
 
 export default {
-  name: "CtrPanel",
+  name: "CtrPanelProfile",
   components: {},
   data() {
     return {
-      searchedText: "",
+        searchedText: "",
+        // user: userService.getLoggedinUser() ? userService.getLoggedinUser() : null
     };
   },
   created() {
-      this.searchedText = this.$store.state.currFilter;
-      this.displayTripsByText();
-      eventBus.$on(LOGGED_IN, user => (this.user = user));
-      eventBus.$on(EMIT_SEARCH, searchedText => this.displayTripsByText(searchedText))
+    this.validate()
+    // this.searchedText = this.$store.state.currFilter;
+    // this.displayTripsByText();
+    // eventBus.$on(LOGGED_IN, user => (this.user = user));
   },
   computed: {
       user() {
@@ -63,16 +62,23 @@ export default {
       setFilter() {
           let searchedText = this.searchedText;
           this.$store.commit({ type: "setFilter", searchedText });
-          this.displayTripsByText();
-      },
-      displayTripsByText() {
-          let searchedText = this.$store.state.currFilter;
-          this.$store.dispatch({ type: "loadTrips", searchedText }).then(() => {});
+          eventBus.$emit(EMIT_SEARCH, this.searchedText);
+          this.$router.push('/explore')
       },
       logOut() {
-          storageService.removeUser('loggedinUser');
+          // storageService.removeUser('loggedinUser');
           this.$store.dispatch({type: 'loggedOut'})
+          this.$router.push('/')
+      },
+      validate() {
+        if(!this.user) this.$router.push('/')
       }
+      // displayTripsByText() {
+      //   let searchedText = this.$store.state.currFilter;
+      //   this.$store.dispatch({ type: "loadTrips", searchedText }).then(() => {
+          
+      //   });
+      // }
   }
 };
 </script>

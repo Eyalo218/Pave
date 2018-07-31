@@ -2,15 +2,15 @@
     <section class="header">
         <div class="home-nav-bar flex space-between">
             <div class="logo">Pave</div>
-            <div v-if="!user" class="links-container flex space-between">
-                <router-link  :to="'/how'">How it works</router-link>
-                <router-link  :to="'/signup'">Sign up</router-link>
-                <router-link  :to="'/login'">Log in</router-link>
-            </div>
-            <div v-else class="links-container flex space-between">
+            <div v-if="user" class="links-container flex space-between">
                 <router-link  :to="'/how'">How it works</router-link>
                 <button @click="logOut" >Log Out</button>
                 <router-link :to="`/profile/${user._id}`">{{user.name}}</router-link>
+            </div>
+            <div v-else class="links-container flex space-between">
+                <router-link  :to="'/how'">How it works</router-link>
+                <router-link  :to="'/signup'">Sign up</router-link>
+                <router-link  :to="'/login'">Log in</router-link>
             </div>
         </div>
         <div class="title-input-container">
@@ -34,16 +34,21 @@ export default {
   data() {
       return {
           searchedText:'',
-          user: userService.getLoggedinUser()
+          // user: userService.getLoggedinUser() ? userService.getLoggedinUser() : null
       }
   },
   created(){
-      eventBus.$on(LOGGED_IN, user => this.user = user)
+      // eventBus.$on(LOGGED_IN, user => this.user = user)
+  },
+  computed: {
+      user() {
+          return this.$store.getters.loggedIn
+      }
   },
   methods: {
       logOut() {
         storageService.removeUser('loggedinUser');
-        this.user = null;
+        this.$store.dispatch({type: 'loggedOut'})
       },
       setFilter() {
         let searchedText = this.searchedText;
