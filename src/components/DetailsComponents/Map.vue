@@ -1,6 +1,6 @@
 <template>
   <section class="map-cmp">
-    <gmap-map zoom="12" :center="center" style="width:100%; height:95vh" ref="map">
+    <gmap-map :center="center" style="width:100%; height:95vh" ref="map">
       <gmap-marker
         :key="index"
         v-for="(marker, index) in markersForDisplay"
@@ -76,12 +76,9 @@ export default {
         this.trip = this.$store.state.tripModule.currTrip;
         console.log("trip", this.trip);
         //TODO:change to !hasMarkers later
-        if (this.trip.markers.length === 0) {
-          this.geolocate();
-        } else {
-          eventBus.$emit("setTripPhotos", this.trip);
-          this.setPave();
-        }
+        if (this.checkMarkersCount()) return;
+        eventBus.$emit("setTripPhotos", this.trip);
+        this.setPave();
       });
     },
     setCurrMarker(currMarker, index) {
@@ -111,6 +108,7 @@ export default {
       return googleService.getBounds(this.markersForDisplay, this.google);
     },
     setRoutes() {
+      this.checkMarkersCount();
       var directionsService = googleService.getDirecService(this.google);
       var directionsDisplay = googleService.getDirecRender(this.google);
       console.log("in set routes:", this.$refs);
@@ -136,6 +134,19 @@ export default {
           lng: position.coords.longitude
         };
       });
+    },
+    checkMarkersCount() {
+      if (!this.markersForDisplay.length) {
+        console.log(this.markersForDisplay);
+        console.log(this.$refs);
+        console.log();
+        
+        return true;
+      }
+      if (this.markersForDisplay.length === 1) {
+        return true;
+        console.log(this.$refs);
+      }
     }
   }
 };

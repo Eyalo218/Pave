@@ -20,12 +20,13 @@ export default {
         markersForDisplay(state) {
             return state.markers;
         },
-        
     },
     actions: {
-        loadMarkers(context) {
-            tripService.query()
-                .then(trips => context.commit({ type: 'loadTrips', trips }))
+        loadMarkers(context, { currTrip }) {
+            return tripService.getById(tripId)
+                .then(trip => {
+                    context.commit({ type: 'loadTrips', trips })
+                })
         }
     }
 }
