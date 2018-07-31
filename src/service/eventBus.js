@@ -4,5 +4,6 @@ export const PHOTO_TAKEN = 'photo-taken';
 export const MARKER_ADDED = 'marker-added';
 
 
+
 import Vue from 'vue';
 export const eventBus = new Vue();

@@ -17,7 +17,6 @@ export default {
             state.currTrip = trip
         },
         userTripsToDisplay(state, {trips}) {
-            console.log('his here, ', trips);
             state.currUserTrips = trips
         }
     },
@@ -35,7 +34,7 @@ export default {
     },
     actions: {
         loadTrips(context, { searchedText }) {
-            tripService.query(searchedText)
+            return tripService.query(searchedText)
                 .then(trips => {
                     context.commit({ type: 'loadTrips', trips })
                 })
