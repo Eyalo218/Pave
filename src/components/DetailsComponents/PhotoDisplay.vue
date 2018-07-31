@@ -10,7 +10,13 @@
 </template>
 
 <script>
-import { eventBus, MARKER_ADDED } from "@/service/eventBus.js";
+import {
+  eventBus,
+  MARKER_ADDED,
+  CHANGE_MARKER,
+  SET_TRIP_PHOTOS,
+  MARKER_CLICKED
+} from "@/service/eventBus.js";
 export default {
   name: "photoDisplay",
 
@@ -22,14 +28,13 @@ export default {
     };
   },
   created() {
-    eventBus.$on("setTripPhotos", trip => {
+    eventBus.$on(SET_TRIP_PHOTOS, trip => {
       this.currTrip = trip;
-        console.log('event');
-      
+
       this.insertPhotosUrls(this.currTrip.markers);
       this.setFirstPhoto();
     });
-    eventBus.$on("markerClicked", this.setPhotosByClickedMarker);
+    eventBus.$on(MARKER_CLICKED, this.setPhotosByClickedMarker);
   },
   computed: {
     getCurrPhotoUrl() {}
@@ -44,7 +49,7 @@ export default {
               let newUrls = ("" + urls).split(",");
               this.currPhoto = newUrls[newUrls.length - 1];
               let currMarkerIdx = urls.length - 1;
-              eventBus.$emit("changeMarker", {
+              eventBus.$emit(CHANGE_MARKER, {
                 currMarkerIdx,
                 marker: this.currTrip.markers[currMarkerIdx]
               });
@@ -55,7 +60,7 @@ export default {
               : urls[i - 1][urls[i - 1].length - 1];
             if (!urls[i][j - 1]) {
               let currMarkerIdx = i - 1;
-              eventBus.$emit("changeMarker", {
+              eventBus.$emit(CHANGE_MARKER, {
                 currMarkerIdx,
                 marker: this.currTrip.markers[currMarkerIdx]
               });
@@ -74,7 +79,7 @@ export default {
             if (i === urls.length - 1 && j === urls[i].length - 1) {
               let currMarkerIdx = 0;
               this.currPhoto = urls[0][0];
-              eventBus.$emit("changeMarker", {
+              eventBus.$emit(CHANGE_MARKER, {
                 currMarkerIdx,
                 marker: this.currTrip.markers[currMarkerIdx]
               });
@@ -83,7 +88,7 @@ export default {
             this.currPhoto = urls[i][j + 1] ? urls[i][j + 1] : urls[i + 1][0];
             if (!urls[i][j + 1]) {
               let currMarkerIdx = i + 1;
-              eventBus.$emit("changeMarker", {
+              eventBus.$emit(CHANGE_MARKER, {
                 currMarkerIdx,
                 marker: this.currTrip.markers[currMarkerIdx]
               });
@@ -97,14 +102,12 @@ export default {
       this.photosUrls = markers.map(marker => {
         return marker.photos.map(photo => photo);
       });
-      console.log(this.photosUrls);
     },
     setFirstPhoto() {
       this.currPhoto = this.photosUrls[0][0];
     },
     setPhotosByClickedMarker(markerIdx) {
       this.currPhoto = this.photosUrls[markerIdx][0];
-      
     }
   }
 };
