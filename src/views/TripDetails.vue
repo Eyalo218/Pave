@@ -9,7 +9,7 @@
                 </div>
             
                 <div class="reviews">
-                    <Reviews></Reviews>
+                    <reviews></reviews>
                 </div>
         </div>
         <div>
@@ -25,8 +25,7 @@
 <script>
 import tripMap from '@/components/DetailsComponents/Map.vue'
 import photoDisplay from '@/components/DetailsComponents/PhotoDisplay.vue'
-import Reviews from '@/components/DetailsComponents/Reviews.vue'
-
+import reviews from '@/components/DetailsComponents/Reviews.vue'
 export default {
 
 created(){
@@ -35,7 +34,7 @@ created(){
 components:{
    tripMap,
    photoDisplay,
-   Reviews
+   reviews,
 }
 }
 </script>
