@@ -1,6 +1,5 @@
 <template>
     <section>
-    <button @click="setReviews">ima shel udad</button>
         <ul>
             <li v-for="(review,idx) in reviews" :key="idx">
                 {{review.review}}
@@ -18,7 +17,7 @@ export default {
 
 data(){
     return {
-        reviews:[]
+        reviews:null
     }
 },
 computed:{
@@ -28,9 +27,14 @@ computed:{
 },
 methods:{
     setReviews(){
-        this.reviews = reviewService.getByTripId(this.$route.params.tripId);
+        reviewService.getByTripId(this.$route.params.tripId).then(res=>{
+            this.reviews = res;
+        })
     }
 },
+created(){
+    this.setReviews();
+}
 }
 </script>
 

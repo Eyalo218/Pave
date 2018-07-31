@@ -5,5 +5,6 @@ export const MARKER_ADDED = 'marker-added';
 export const EMIT_SEARCH = 'emit-search'
 
 
+
 import Vue from 'vue';
 export const eventBus = new Vue();
