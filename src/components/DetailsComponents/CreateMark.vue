@@ -3,6 +3,10 @@
     <Camera v-if="!isPhotoTaken"></Camera>
     <div v-else class="input-container flex column center align-center">
         <div>
+          <h1>Marker Title</h1>
+          <input v-model="title" type="text">
+        </div>
+        <div>
             <h1>Marker Category</h1>
             <input v-model="category" list="categories">
             <datalist id="categories">
@@ -14,10 +18,6 @@
                 <option value="Party"></option>
                 <option value="Animals"></option>
             </datalist>
-        </div>
-        <div>
-          <h1>Marker Title</h1>
-          <input type="text">
         </div>
         <div>
             <h1>Description</h1>
@@ -40,7 +40,8 @@ export default {
       marker: null,
       category: null,
       desc: null,
-      position: null
+      position: null,
+      title:null
     };
   },
   components: {
@@ -57,6 +58,7 @@ export default {
     },
     createMark() {
       console.log(this.category, this.desc);
+      this.marker.title = this.title;
       this.marker.desc = this.desc;
       this.marker.category = this.category;
       return new Promise((resolve, reject) => {
@@ -90,6 +92,9 @@ export default {
   height: 100vh;
   input, textarea{
     width:300px;
+  }
+  h1{
+    margin:1.1rem 0;
   }
 }
 
