@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { Carousel, Slide } from "vue-carousel";
 import {
   eventBus,
   MARKER_ADDED,
@@ -19,7 +20,10 @@ import {
 } from "@/service/eventBus.js";
 export default {
   name: "photoDisplay",
-
+  components: {
+    Carousel,
+    Slide
+  },
   data: () => {
     return {
       photosUrls: [],
@@ -37,7 +41,12 @@ export default {
     eventBus.$on(MARKER_CLICKED, this.setPhotosByClickedMarker);
   },
   computed: {
-    getCurrPhotoUrl() {}
+    getUrls() {
+      if (this.photosUrls.length !== 0) {
+        return ("" + this.photosUrls).split(",");
+      }
+      return this.photosUrls;
+    }
   },
   methods: {
     lastPhoto() {
@@ -113,6 +122,7 @@ export default {
     },
     setFirstPhoto() {
       this.currPhoto = this.photosUrls[0][0];
+      console.log(this.currTrip.markers[0]);
     },
     setPhotosByClickedMarker(markerIdx) {
       this.currPhoto = this.photosUrls[markerIdx][0];
@@ -122,11 +132,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$main-black: #383633;
 section {
   // padding: 1rem;
   width:100%;
   max-width: 450px;
   min-width: 200px;
+}
+.images-container {
+  overflow-x: hidden;
 }
 .img {
   height: 353px;
@@ -134,8 +148,8 @@ section {
   position: relative;
   background-repeat: no-repeat;
   background-size: contain;
-  border: 1.5px solid #47809d;
-  box-shadow: 1px 1px 10px 1px black;
+  border: 2px solid #47809d;
+  background-color: $main-black;
   &:hover > .arrows {
     transition: all 0.2s;
     opacity: 0.4;
@@ -150,7 +164,7 @@ section {
   opacity: 0;
   top: 40%;
   left: 5%;
-  color: black;
+  color: white;
   .arrow:hover {
     cursor: pointer;
     opacity: 1;

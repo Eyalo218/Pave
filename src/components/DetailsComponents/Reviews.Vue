@@ -1,7 +1,9 @@
 <template>
 <section>
+    <h1>Reviews</h1>
         <ul>
             <li v-for="(review,idx) in reviews" :key="idx">
+                <!-- {{review.title}} -->
                 {{review.review}}
                 {{review.rank}}
                 <!--review.userId  -->
@@ -41,11 +43,15 @@ export default {
 <style lang="scss" scoped>;
 ul{
     height: 100px;
-    overflow: scroll;
+    overflow-y: scroll;
     li{
         margin-bottom:1rem;
         border: solid 1px #44809e;
     }
+}
+h1{
+    padding:0 40px;
+    margin-bottom: 1.1rem;
 }
 
 </style>

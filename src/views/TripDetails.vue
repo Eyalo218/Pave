@@ -7,6 +7,7 @@
             <div class="flex space-between">
                 <div class="map">
                     <trip-map></trip-map>
+                    <button @click="togglePhotoMode()"><img src="../../public/img/details/camera.png" alt=""></button>
                 </div>
                 <div class="components-container">
                     <div v-if="photoMode" class="createMark">
@@ -16,9 +17,9 @@
                         <div class="photos flex center">
                             <photo-display></photo-display>
                         </div>
-                        <div v-if="getCurrMarker" class="category-desc-container">
+                        <div v-if="getMarkers.length!==0" class="category-desc-container">
                             <p><span class="category">Category: &nbsp;</span><span>{{getCurrMarker.category}}</span></p>
-                            <p class="desc">{{getCurrMarker.desc}}</p>
+                            <p  class="desc">{{getCurrMarker.desc}}</p>
                         </div>
                         <div class="reviews">
                             <Reviews></Reviews>
@@ -27,9 +28,7 @@
                 </div>
             </div>
         </div>
-        <div> 
-            <button @click="togglePhotoMode()"><img src="../../public/img/details/camera.png" alt=""></button>
-        </div>
+        
     </section>
 </template>
 
@@ -66,6 +65,9 @@ export default {
       return this.$store.getters.getCurrTrip;
     },
     getCurrMarker() {
+      if (!this.$store.getters.getCurrMarker) {
+        return this.getMarkers[0];
+      }
       return this.$store.getters.getCurrMarker;
     },
     getMarkers() {
@@ -104,7 +106,7 @@ $main-black: #383633;
   }
 }
 button {
-  width: 25%;
+  width: 10%;
   z-index: 2;
   img {
     width: 80%;
@@ -121,5 +123,11 @@ button {
   position: relative;
   width: 50%;
   padding: 1rem 5rem;
+}
+.category-desc-container{
+    p{
+        margin-bottom:1.25rem;
+        padding:0 40px;
+    }
 }
 </style>

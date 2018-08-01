@@ -10,10 +10,11 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(fas);
+import VueCarousel from 'vue-carousel';
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
-// const API_KEY = 'AIzaSyAtV_-P7Dy8mEqJh4X39HrKQheE9gu5Jns';
 
+Vue.use(VueCarousel);
 Vue.use(VueGoogleMaps, {
   load: {
     key: 'AIzaSyBK-PV1V8IShmHQTUAmrsKsNmm-eSk6nIo',

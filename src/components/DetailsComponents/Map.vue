@@ -42,7 +42,7 @@ export default {
       this.currTripId = currTripId;
     });
     eventBus.$on(CHANGE_MARKER, currMarker => {
-      this.$refs.map.$mapObject.panTo(
+     this.$refs.map.$mapObject.panTo(
         googleService.setLatLng(
           currMarker.marker.coords.lat,
           currMarker.marker.coords.lng,
