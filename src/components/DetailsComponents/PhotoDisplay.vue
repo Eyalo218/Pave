@@ -24,7 +24,8 @@ export default {
     return {
       photosUrls: [],
       currPhoto: null,
-      currTrip: null
+      currTrip: null,
+      
     };
   },
   created() {

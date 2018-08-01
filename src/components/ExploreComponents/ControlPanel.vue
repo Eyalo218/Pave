@@ -7,7 +7,7 @@
                 </router-link>
                 <div class="input-container">
                     <font-awesome-icon class="search-icon" icon="search" size="sm" />
-                <input @keyup.enter="setFilter" class="search" type="text" v-model="searchedText" placeholder="Seach"/>
+                <input @input="setFilter" class="search" type="text" v-model="searchedText" placeholder="Seach"/>
                 </div>
             </div>
             <div class="container-right flex flex-end">
