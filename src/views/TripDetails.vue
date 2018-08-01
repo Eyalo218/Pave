@@ -15,8 +15,10 @@
                     <div class="photos">
                         <photo-display></photo-display>
                     </div>
-                
-                    <!-- gal's code enter here -->
+                <div  v-if="getMarkers.length!==0" class="category-desc-container">
+                    <p><span onselectstart="return false;"  unselectable="on" class="category">Category: &nbsp;</span><span>{{getCurrMarker.category}}</span></p>
+                    <p  class="desc">{{getCurrMarker.desc}}</p>
+                </div>
                     <div class="reviews">
                         <Reviews></Reviews>
                     </div>
@@ -30,59 +32,95 @@
 </template>
 
 <script>
-import tripMap from '@/components/DetailsComponents/Map.vue'
-import photoDisplay from '@/components/DetailsComponents/PhotoDisplay.vue'
-import Reviews from '@/components/DetailsComponents/Reviews.vue'
-import createMark from '@/components/DetailsComponents/CreateMark.vue'
-import tripBanner from '@/components/DetailsComponents/TripBanner.vue'
+import tripMap from "@/components/DetailsComponents/Map.vue";
+import photoDisplay from "@/components/DetailsComponents/PhotoDisplay.vue";
+import Reviews from "@/components/DetailsComponents/Reviews.vue";
+import createMark from "@/components/DetailsComponents/CreateMark.vue";
+import tripBanner from "@/components/DetailsComponents/TripBanner.vue";
+import { eventBus, CHANGE_MARKER } from "@/service/eventBus.js";
 
 export default {
-
-created(){
-    console.log('trip details created');
-},
-components:{
-   tripMap,
-   photoDisplay,
-   Reviews,
-   createMark,
-   tripBanner
-},
-data(){
-    return{
-        photoMode:false
+  created() {
+    console.log("trip details created");
+  },
+  components: {
+    tripMap,
+    photoDisplay,
+    Reviews,
+    createMark,
+    tripBanner
+  },
+  data() {
+    return {
+      photoMode: false
+    };
+  },
+  created() {
+    console.log(this.getCurrTrip);
+    // eventBus.$on(CHANGE_MARKER,)
+  },
+  computed: {
+    getCurrTrip() {
+      return this.$store.getters.getCurrTrip;
+    },
+    getCurrMarker() {
+      if (!this.$store.getters.getCurrMarker) {
+        return this.getMarkers[0];
+      }
+      return this.$store.getters.getCurrMarker;
+    },
+    getMarkers() {
+      return this.$store.getters.markersForDisplay;
     }
-},
-methods:{
-    togglePhotoMode(){
-        this.photoMode = !this.photoMode
+  },
+  methods: {
+    togglePhotoMode() {
+      this.photoMode = !this.photoMode;
     }
-}
-}
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-.map{
-    width:50%
+$main-black: #383633;
+.map {
+  width: 50%;
 }
-button{
-    width:25%;
-    z-index: 2;
-    img{
-        width:80%;
-    }
-   
+.category-desc-container {
+  padding: 2rem 0;
+  .category {
+    color: $main-black;
+    font-size: 1.3rem;
+    font-weight: bold;
+  }
+  span {
+    color: #47809d;
+    font-weight: bold;
+  }
+  .desc {
+    font-size: 0.8rem;
+    padding: 0.5rem 0;
+    width: 80%;
+    font-weight: bold;
+  }
 }
-.createMark{
-    position: absolute;
-    width: 100%;
-    z-index: 2;
-    background: white;
-    height:100vh;
+button {
+  width: 25%;
+  z-index: 2;
+  img {
+    width: 80%;
+  }
 }
-.components-container{
-    position: relative;
-    width:50%
+.createMark {
+  position: absolute;
+  width: 100%;
+  z-index: 2;
+  background: white;
+  height: 100vh;
 }
-
+.components-container {
+  position: relative;
+  width: 50%;
+  padding: 1rem 5rem;
+}
 </style>

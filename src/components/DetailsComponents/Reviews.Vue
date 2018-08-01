@@ -42,6 +42,7 @@ export default {
 ul{
     height: 100px;
     overflow: scroll;
+    
     li{
         margin-bottom:1rem;
         border: solid 1px #44809e;

@@ -20,6 +20,9 @@ export default {
         markersForDisplay(state) {
             return state.markers;
         },
+        getCurrMarker(state) {
+            return state.currMarker;
+        }
     },
     actions: {
         loadMarkers(context, { currTrip }) {

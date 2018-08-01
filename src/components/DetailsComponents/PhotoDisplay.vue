@@ -1,5 +1,10 @@
 <template>
 <section>
+  <!-- <div><carousel :navigationEnabled="true">
+    <slide class="label" v-if="getUrls" :key="index" v-for="(url,index) in goodUrls">
+      <img :src="url" style="width: 100%;"/>
+      </slide>
+    </carousel></div> -->
     <div ref="image" class="img" :style="{ 'background-image': `url(${currPhoto})` }">
         <div class="flex space-between arrows">    
               <font-awesome-icon @click="lastPhoto" class="arrow btn btn2" icon="angle-left" size="3x" />  
@@ -10,6 +15,7 @@
 </template>
 
 <script>
+import { Carousel, Slide } from "vue-carousel";
 import {
   eventBus,
   MARKER_ADDED,
@@ -19,13 +25,15 @@ import {
 } from "@/service/eventBus.js";
 export default {
   name: "photoDisplay",
-
+  components: {
+    Carousel,
+    Slide
+  },
   data: () => {
     return {
       photosUrls: [],
       currPhoto: null,
-      currTrip: null,
-      
+      currTrip: null
     };
   },
   created() {
@@ -38,7 +46,28 @@ export default {
     eventBus.$on(MARKER_CLICKED, this.setPhotosByClickedMarker);
   },
   computed: {
-    getCurrPhotoUrl() {}
+    getUrls() {
+      let urls;
+      if (this.photosUrls.length !== 0) {
+        urls = ("" + this.photosUrls).split(",");
+      }
+      let slideMarkup = "";
+      for (var i = 1; i <= this.photosUrls.length; i++) {
+        slideMarkup += `<slide><img src="${
+          urls[i]
+        }" style="width: 300px; max-width: 100%;"></slide>`;
+      }
+      return slideMarkup;
+      // return this.photosUrls;
+    },
+    goodUrls() {
+      let urls;
+      if (this.photosUrls.length !== 0) {
+        urls = ("" + this.photosUrls).split(",");
+        console.log(urls);
+        return urls;
+      }
+    }
   },
   methods: {
     lastPhoto() {
@@ -50,6 +79,8 @@ export default {
               let newUrls = ("" + urls).split(",");
               this.currPhoto = newUrls[newUrls.length - 1];
               let currMarkerIdx = urls.length - 1;
+              let currMarker = this.currTrip.markers[currMarkerIdx];
+              this.$store.commit({ type: "setCurrMarker", currMarker });
               eventBus.$emit(CHANGE_MARKER, {
                 currMarkerIdx,
                 marker: this.currTrip.markers[currMarkerIdx]
@@ -61,6 +92,8 @@ export default {
               : urls[i - 1][urls[i - 1].length - 1];
             if (!urls[i][j - 1]) {
               let currMarkerIdx = i - 1;
+              let currMarker = this.currTrip.markers[currMarkerIdx];
+              this.$store.commit({ type: "setCurrMarker", currMarker });
               eventBus.$emit(CHANGE_MARKER, {
                 currMarkerIdx,
                 marker: this.currTrip.markers[currMarkerIdx]
@@ -84,6 +117,8 @@ export default {
                 currMarkerIdx,
                 marker: this.currTrip.markers[currMarkerIdx]
               });
+              let currMarker = this.currTrip.markers[currMarkerIdx];
+              this.$store.commit({ type: "setCurrMarker", currMarker });
               return;
             }
             this.currPhoto = urls[i][j + 1] ? urls[i][j + 1] : urls[i + 1][0];
@@ -93,6 +128,8 @@ export default {
                 currMarkerIdx,
                 marker: this.currTrip.markers[currMarkerIdx]
               });
+              let currMarker = this.currTrip.markers[currMarkerIdx];
+              this.$store.commit({ type: "setCurrMarker", currMarker });
             }
             return;
           }
@@ -106,6 +143,7 @@ export default {
     },
     setFirstPhoto() {
       this.currPhoto = this.photosUrls[0][0];
+      console.log(this.currTrip.markers[0]);
     },
     setPhotosByClickedMarker(markerIdx) {
       this.currPhoto = this.photosUrls[markerIdx][0];
@@ -115,15 +153,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$main-black: #383633;
 section {
-  padding: 1rem;
+  // padding: 1rem;
+}
+.label {
+  // position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .img {
   height: 350px;
   background-position: center;
   position: relative;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
+  border: 2px solid #47809d;
+  background-color: $main-black;
   &:hover > .arrows {
     transition: all 0.2s;
     opacity: 0.4;
@@ -137,7 +184,7 @@ section {
   opacity: 0;
   top: 40%;
   left: 5%;
-  color: black;
+  color: white;
   .arrow:hover {
     cursor: pointer;
     opacity: 1;
