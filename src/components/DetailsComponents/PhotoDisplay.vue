@@ -1,6 +1,6 @@
 <template>
 <section>
-    <div :key="index" v-for="(photoUrl,index) in getUrls" ref="image" class="img" :style="{ 'background-image': `url(${photoUrl})` }">
+    <div ref="image" class="img" :style="{ 'background-image': `url(${currPhoto})` }">
         <div class="flex space-between arrows">    
               <font-awesome-icon @click="lastPhoto" class="arrow btn btn2" icon="angle-left" size="3x" />  
               <font-awesome-icon @click="nextPhoto" class="arrow btn btn1"  icon="angle-right" size="3x" />
@@ -41,7 +41,7 @@ export default {
       if (this.photosUrls.length !== 0) {
         return ("" + this.photosUrls).split(",");
       }
-      // return this.photosUrls;
+      return this.photosUrls;
     }
   },
   methods: {
@@ -131,6 +131,9 @@ export default {
 $main-black: #383633;
 section {
   // padding: 1rem;
+}
+.images-container{
+  overflow-x: hidden;
 }
 .img {
   height: 350px;
