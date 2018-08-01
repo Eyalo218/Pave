@@ -1,13 +1,13 @@
 <template>
-    <div id="Camera">
+    <div class="Camera">
         <div>
-          <video ref="video" id="video" width="640" height="480" autoplay>
+          <video ref="video" class="video" width="640" height="480" autoplay>
           </video>
         </div>
         <div class="flex center buttons">
           <button id="takePhoto" v-on:click="capturePhoto()">Take Photo</button>
           <button id="next" v-on:click="continueToMarkDesc()">Next</button>
-          <button id="next" v-on:click="deleteLastPhoto()">deleteLastPhoto</button>
+          <button id="delete" v-on:click="deleteLastPhoto()">deleteLastPhoto</button>
         </div>
         <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
         <ul>
@@ -86,11 +86,12 @@ export default {
 body {
   background-color: #f0f0f0;
 }
-#Camera {
+.Camera {
   text-align: center;
   color: #2c3e50;
+  margin-top:16px;
 }
-#video {
+.video {
   background-color: #000000;
 }
 #canvas {
