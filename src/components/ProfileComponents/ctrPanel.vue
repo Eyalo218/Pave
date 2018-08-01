@@ -1,12 +1,11 @@
 <template>
-    <section>
+    <section class="header">
         <div class="container">
             <div class="container-left">
                 <router-link :to="'/'">
-                    <div class="logo" ><span>P</span></div>
+                    <div class="logo">Pave</div>
                 </router-link>
                 <div class="input-container">
-                    <font-awesome-icon class="search-icon" icon="search" size="sm" />
                 <input @keyup.enter="setFilter" class="search" type="text" v-model="searchedText" placeholder="Seach"/>
                 </div>
             </div>
@@ -19,9 +18,7 @@
                  <font-awesome-icon class="search-icon" icon="comments" size="lg" />
                  <font-awesome-icon class="search-icon" icon="bell" size="lg" />-->
                 <div v-if="user">
-                    <router-link :to="`/`">
-                        <button>Home</button>
-                    </router-link>
+                        <button @click="toHome">Home</button>
                     <button @click="logOut">Log out</button>
                 </div>
                 <div v-else>
@@ -35,7 +32,7 @@
 </template>
 
 <script>
-import { eventBus, EMIT_SEARCH } from "../../service/eventBus.js";
+import { eventBus, EMIT_SEARCH, OPEN_EXPLORE } from "../../service/eventBus.js";
 import userService from "../../service/userService.js";
 
 export default {
@@ -49,8 +46,7 @@ export default {
   },
   created() {
     this.validate()
-    // this.searchedText = this.$store.state.currFilter;
-    // this.displayTripsByText();
+    this.searchedText = this.$store.state.currFilter;
     // eventBus.$on(LOGGED_IN, user => (this.user = user));
   },
   computed: {
@@ -63,7 +59,9 @@ export default {
           let searchedText = this.searchedText;
           this.$store.commit({ type: "setFilter", searchedText });
           eventBus.$emit(EMIT_SEARCH, this.searchedText);
-          this.$router.push('/explore')
+          this.$store.dispatch({type: 'updateExplore', currStatus : true})
+        //   eventBus.$emit(OPEN_EXPLORE)
+          this.$router.push('/')
       },
       logOut() {
           // storageService.removeUser('loggedinUser');
@@ -72,6 +70,10 @@ export default {
       },
       validate() {
         if(!this.user) this.$router.push('/')
+      },
+      toHome() {
+          this.$store.dispatch({type: 'updateExplore', currStatus : false})
+          this.$router.push('/')
       }
       // displayTripsByText() {
       //   let searchedText = this.$store.state.currFilter;
@@ -86,7 +88,6 @@ export default {
 
 <style lang="scss" scoped>
 .container {
-  border-bottom: 1px solid #efefef;
   height: 70px;
   display: flex;
   justify-content: space-between;
@@ -97,15 +98,10 @@ export default {
     align-items: center;
     margin-left: 2rem;
     .logo {
-      border-radius: 2px;
-      background-color: #44809e;
-      width: 30px;
-      height: 30px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 1.3rem;
-      margin-right: 2rem;
+        color: #383633;
+        font-family: 'Chalkduster';
+        font-size: 2.5rem;
+        cursor: pointer;
     }
     .input-container {
       position: relative;
@@ -117,12 +113,13 @@ export default {
       }
     }
     .search {
-      width: 40vw;
+      margin-left: 2rem;
+      width: 30vw;
       height: 30px;
       padding: 0.25rem 2.5rem;
       border-radius: 5px;
       font-size: 1rem;
-      background-color: #efefef;
+      background-color: #fff;
       border: none;
       &:focus {
         outline: none !important;
@@ -147,11 +144,11 @@ export default {
       }
     }
     button {
-      background-color: none;
+      background-color: transparent;
+      color: #fff;
       border: none;
-      font-size: 1rem;
-      font-family: "roboto-bold";
-      color: #383633;
+      font-size: 1.2rem;
+      font-family: "roboto-regular";
       cursor: pointer;
       margin-right: 2rem;
       outline: none;
@@ -161,4 +158,14 @@ export default {
     }
   }
 }
+  .header{
+    margin: 0;
+    background-image: url("../../../public/img/home/homeImg.jpeg");
+    background-size: cover;
+    background-position: center;
+    height: 9vh;
+    margin-bottom: 4rem;
+    position: relative;
+    transition: all ease-in 0.3s;
+  }
 </style>

@@ -38,7 +38,8 @@ export default {
             userService.login(this.loginDetails)
                 .then(user => {
                     this.$store.dispatch({type: 'loggedIn', user: user})
-                    this.$router.push('/explore')
+                    this.$store.dispatch({type: 'updateExplore', currStatus : false})
+                    this.$router.push('/')
                 })
     }
     }
