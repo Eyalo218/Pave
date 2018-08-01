@@ -1,6 +1,6 @@
 <template>
 <section>
-    <div ref="image" class="img" :style="{ 'background-image': `url(${currPhoto})` }">
+    <div :key="index" v-for="(photoUrl,index) in getUrls" ref="image" class="img" :style="{ 'background-image': `url(${photoUrl})` }">
         <div class="flex space-between arrows">    
               <font-awesome-icon @click="lastPhoto" class="arrow btn btn2" icon="angle-left" size="3x" />  
               <font-awesome-icon @click="nextPhoto" class="arrow btn btn1"  icon="angle-right" size="3x" />
@@ -37,7 +37,12 @@ export default {
     eventBus.$on(MARKER_CLICKED, this.setPhotosByClickedMarker);
   },
   computed: {
-    getCurrPhotoUrl() {}
+    getUrls() {
+      if (this.photosUrls.length !== 0) {
+        return ("" + this.photosUrls).split(",");
+      }
+      // return this.photosUrls;
+    }
   },
   methods: {
     lastPhoto() {
@@ -113,6 +118,7 @@ export default {
     },
     setFirstPhoto() {
       this.currPhoto = this.photosUrls[0][0];
+      console.log(this.currTrip.markers[0]);
     },
     setPhotosByClickedMarker(markerIdx) {
       this.currPhoto = this.photosUrls[markerIdx][0];
@@ -122,6 +128,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+$main-black: #383633;
 section {
   // padding: 1rem;
 }
@@ -130,9 +137,9 @@ section {
   background-position: center;
   position: relative;
   background-repeat: no-repeat;
-  background-size: cover;
-  border: 1.5px solid #47809d;
-  box-shadow: 1px 1px 10px 1px black;
+  background-size: contain;
+  border: 2px solid #47809d;
+  background-color: $main-black;
   &:hover > .arrows {
     transition: all 0.2s;
     opacity: 0.4;
@@ -146,7 +153,7 @@ section {
   opacity: 0;
   top: 40%;
   left: 5%;
-  color: black;
+  color: white;
   .arrow:hover {
     cursor: pointer;
     opacity: 1;

@@ -15,9 +15,9 @@
                     <div class="photos">
                         <photo-display></photo-display>
                     </div>
-                <div v-if="getCurrMarker" class="category-desc-container">
+                <div v-if="getMarkers.length!==0" class="category-desc-container">
                     <p><span class="category">Category: &nbsp;</span><span>{{getCurrMarker.category}}</span></p>
-                    <p class="desc">{{getCurrMarker.desc}}</p>
+                    <p  class="desc">{{getCurrMarker.desc}}</p>
                 </div>
                     <div class="reviews">
                         <Reviews></Reviews>
@@ -64,6 +64,9 @@ export default {
       return this.$store.getters.getCurrTrip;
     },
     getCurrMarker() {
+      if (!this.$store.getters.getCurrMarker) {
+        return this.getMarkers[0];
+      }
       return this.$store.getters.getCurrMarker;
     },
     getMarkers() {
