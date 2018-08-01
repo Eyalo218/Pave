@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { Carousel, Slide } from "vue-carousel";
 import {
   eventBus,
   MARKER_ADDED,
@@ -19,7 +20,10 @@ import {
 } from "@/service/eventBus.js";
 export default {
   name: "photoDisplay",
-
+  components: {
+    Carousel,
+    Slide
+  },
   data: () => {
     return {
       photosUrls: [],
@@ -132,7 +136,7 @@ $main-black: #383633;
 section {
   // padding: 1rem;
 }
-.images-container{
+.images-container {
   overflow-x: hidden;
 }
 .img {
