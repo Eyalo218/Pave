@@ -1,17 +1,22 @@
 <template>
     <section class="header">
-        <div class="mobile-home-nav-bar flex space-between align-center">
-            <div class="mobile-logo">Pave</div>
-            <div v-if="toggle">
-                <div v-if="user" class="mobile-links-container flex space-between">
-                    <router-link  :to="'/how'">How it works</router-link>
-                    <button @click="logOut" >Log Out</button>
-                    <router-link :to="`/profile/${user._id}`">{{user.name}}</router-link>
+        <div class="mobile-home-nav-bar flex align-center">
+            <div class="flex space-between align-center">
+                <div class="mobile-logo">Pave</div>
+                <div class="hamburger">
+                    <img @click="isOpen=!isOpen" class="hamburger" src="../../../public/img/hamburger.svg">
                 </div>
-                <div v-else class="mobile-links-container flex space-between">
-                    <router-link  :to="'/how'">How it works</router-link>
-                    <router-link  :to="'/signup'">Sign up</router-link>
-                    <router-link  :to="'/login'">Log in</router-link>
+            </div>
+            <div class="drop-down" v-if="isOpen">
+                <div v-if="user" class="mobile-links-container flex column align-center">
+                    <router-link  :to="'/how'"><button>How it works</button></router-link>
+                    <button @click="logOut" >Log Out</button>
+                    <router-link :to="`/profile/${user._id}`"><button>{{user.name}}</button></router-link>
+                </div>
+                <div v-else class="mobile-links-container flex column align-center">
+                    <router-link  :to="'/login'"><button>Log in</button></router-link>
+                    <router-link  :to="'/signup'"><button>Sign up</button></router-link>
+                    <router-link  :to="'/how'"><button>How it works</button></router-link>
                 </div>
             </div>
         </div>
@@ -48,6 +53,7 @@ export default {
   name: "HomeHeader",
   data() {
       return {
+        isOpen: false,
           searchedText:'',
           toggle: false,
           // user: userService.getLoggedinUser() ? userService.getLoggedinUser() : null
@@ -97,7 +103,7 @@ $main-black: #383633;
 
 .home-nav-bar{
   padding: 0.5rem 1.5rem 1.5rem 1.5rem;
-    @media(max-width: 960px) {
+    @media(max-width: 740px) {
       display: none;
     }
   .logo{
@@ -194,18 +200,44 @@ $main-black: #383633;
     }
   }
 }
-
+.drop-down {
+  z-index: 100000;
+}
 .mobile-home-nav-bar{
   display: none;
-    @media(max-width: 960px) {
+
+    
+    @media(max-width: 740px) {
         display: block;
         background-color: #fff;
         padding: 0.3rem 0;
         .mobile-logo {
+          padding-left: 1rem;
           font-family: 'Chalkduster';
           font-size: 1.6rem;
         }
-  }
+        .hamburger{
+          cursor: pointer;
+          padding-right: 1rem;
+          width: 20px;
+        }
+        .mobile-links-container{
+          button {
+            background: none;
+            border: none;
+            font-size: 1.2rem;
+            font-family: 'roboto-medium';
+            cursor: pointer;
+            margin-bottom: 1rem;
+          }
+          button:hover {
+            color: #44809e;
+          }
+          button:first-child{
+            margin-top: 1rem;
+          }
+        }
+    }
   
 }
 

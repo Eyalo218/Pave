@@ -1,6 +1,6 @@
 <template>
     <section class="flex">
-      <ul class="flex space-between">
+      <ul class="flex center">
         <li><a href="#">About</a></li>
         <li><a href="#">Privacy Policy</a></li>
         <li><a href="#">Log In</a></li>
@@ -25,10 +25,13 @@ section{
 }
 
 ul{
-  width: 25%;
-  margin-left:3rem;
+  width: 100%;
+  padding: 0;
   a{
     color:#44809e;
+  }
+  li {
+    margin: 0 1rem;
   }
 }
 </style>
