@@ -1,6 +1,6 @@
 <template>
   <section class="map-cmp">
-    <gmap-map :center="center" style="width:100%; height:95vh" ref="map">
+    <gmap-map :zoom=18 :center="center" style="width:100%; height:70vh" ref="map">
       <gmap-marker
         :key="index"
         v-for="(marker, index) in markersForDisplay"
@@ -9,7 +9,6 @@
         :icon="{url:displayIconUrl(marker.category)}"
         :ref="'marker'+index"
       ></gmap-marker>
-      
     </gmap-map>
   </section>
 </template>
@@ -18,7 +17,13 @@
 import { gmapApi } from "vue2-google-maps";
 import googleService from "@/service/googleService.js";
 import tripService from "@/service/tripService.js";
-import { eventBus, MARKER_ADDED } from "@/service/eventBus.js";
+import {
+  eventBus,
+  MARKER_ADDED,
+  CHANGE_MARKER,
+  SET_TRIP_PHOTOS,
+  MARKER_CLICKED
+} from "@/service/eventBus.js";
 
 export default {
   name: "GoogleMap",
@@ -36,7 +41,7 @@ export default {
       location.reload();
       this.currTripId = currTripId;
     });
-    eventBus.$on("changeMarker", currMarker => {
+    eventBus.$on(CHANGE_MARKER, currMarker => {
       this.$refs.map.$mapObject.panTo(
         googleService.setLatLng(
           currMarker.marker.coords.lat,
@@ -75,14 +80,10 @@ export default {
       if (!currTripId) currTripId = this.$route.params.tripId;
       this.$store.dispatch({ type: "setCurrTrip", currTripId }).then(() => {
         this.trip = this.$store.state.tripModule.currTrip;
-        console.log("trip", this.trip);
         //TODO:change to !hasMarkers later
-        if (this.trip.markers.length === 0) {
-          this.geolocate();
-        } else {
-          eventBus.$emit("setTripPhotos", this.trip);
-          this.setPave();
-        }
+        if (this.checkMarkersCount()) return;
+        eventBus.$emit(SET_TRIP_PHOTOS, this.trip);
+        this.setPave();
       });
     },
     setCurrMarker(currMarker, index) {
@@ -100,7 +101,7 @@ export default {
           this.google
         )
       );
-      eventBus.$emit("markerClicked", index);
+      eventBus.$emit(MARKER_CLICKED, index);
     },
     setMarkers() {
       let markers = this.trip.markers;
@@ -112,9 +113,9 @@ export default {
       return googleService.getBounds(this.markersForDisplay, this.google);
     },
     setRoutes() {
+      if (this.trip.markers.length <= 1) if (!this.checkMarkersCount()) return;
       var directionsService = googleService.getDirecService(this.google);
       var directionsDisplay = googleService.getDirecRender(this.google);
-      console.log("in set routes:", this.$refs);
       directionsDisplay.setMap(this.$refs.map.$mapObject);
       let request = googleService.getRequest(
         this.origin,
@@ -137,6 +138,16 @@ export default {
           lng: position.coords.longitude
         };
       });
+    },
+    checkMarkersCount() {
+      if (!this.trip.markers.length) {
+        this.geolocate();
+        return true;
+      }
+      if (this.trip.markers.length === 1) {
+        this.center = this.trip.markers[0].coords;
+        return false;
+      }
     }
   }
 };
@@ -144,7 +155,6 @@ export default {
 
 <style scoped lang="scss">
 .map-cmp {
-  // padding: 0.5rem;
   padding: 1rem;
 }
 </style>
