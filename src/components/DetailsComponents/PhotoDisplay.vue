@@ -1,16 +1,16 @@
 <template>
 <section>
-  <div><carousel :navigationEnabled="true">
+  <!-- <div><carousel :navigationEnabled="true">
     <slide class="label" v-if="getUrls" :key="index" v-for="(url,index) in goodUrls">
       <img :src="url" style="width: 100%;"/>
       </slide>
-    </carousel></div>
-    <!-- <div ref="image" class="img" :style="{ 'background-image': `url(${currPhoto})` }">
+    </carousel></div> -->
+    <div ref="image" class="img" :style="{ 'background-image': `url(${currPhoto})` }">
         <div class="flex space-between arrows">    
               <font-awesome-icon @click="lastPhoto" class="arrow btn btn2" icon="angle-left" size="3x" />  
               <font-awesome-icon @click="nextPhoto" class="arrow btn btn1"  icon="angle-right" size="3x" />
         </div>
-    </div> -->
+    </div>
 </section>
 </template>
 
