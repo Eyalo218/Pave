@@ -1,6 +1,6 @@
 <template>
   <section class="map-cmp">
-    <gmap-map :zoom=18 :center="center" style="width:100%; height:95vh" ref="map">
+    <gmap-map :zoom=18 :center="center" style="width:100%; height:70vh" ref="map">
       <gmap-marker
         :key="index"
         v-for="(marker, index) in markersForDisplay"

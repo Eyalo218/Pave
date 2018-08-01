@@ -24,8 +24,7 @@ export default {
     return {
       photosUrls: [],
       currPhoto: null,
-      currTrip: null,
-      
+      currTrip: null
     };
   },
   created() {
@@ -50,6 +49,8 @@ export default {
               let newUrls = ("" + urls).split(",");
               this.currPhoto = newUrls[newUrls.length - 1];
               let currMarkerIdx = urls.length - 1;
+              let currMarker = this.currTrip.markers[currMarkerIdx];
+              this.$store.commit({ type: "setCurrMarker", currMarker });
               eventBus.$emit(CHANGE_MARKER, {
                 currMarkerIdx,
                 marker: this.currTrip.markers[currMarkerIdx]
@@ -61,6 +62,8 @@ export default {
               : urls[i - 1][urls[i - 1].length - 1];
             if (!urls[i][j - 1]) {
               let currMarkerIdx = i - 1;
+              let currMarker = this.currTrip.markers[currMarkerIdx];
+              this.$store.commit({ type: "setCurrMarker", currMarker });
               eventBus.$emit(CHANGE_MARKER, {
                 currMarkerIdx,
                 marker: this.currTrip.markers[currMarkerIdx]
@@ -84,6 +87,8 @@ export default {
                 currMarkerIdx,
                 marker: this.currTrip.markers[currMarkerIdx]
               });
+              let currMarker = this.currTrip.markers[currMarkerIdx];
+              this.$store.commit({ type: "setCurrMarker", currMarker });
               return;
             }
             this.currPhoto = urls[i][j + 1] ? urls[i][j + 1] : urls[i + 1][0];
@@ -93,6 +98,8 @@ export default {
                 currMarkerIdx,
                 marker: this.currTrip.markers[currMarkerIdx]
               });
+              let currMarker = this.currTrip.markers[currMarkerIdx];
+              this.$store.commit({ type: "setCurrMarker", currMarker });
             }
             return;
           }
@@ -116,7 +123,7 @@ export default {
 
 <style lang="scss" scoped>
 section {
-  padding: 1rem;
+  // padding: 1rem;
 }
 .img {
   height: 350px;
@@ -124,6 +131,8 @@ section {
   position: relative;
   background-repeat: no-repeat;
   background-size: cover;
+  border: 1.5px solid #47809d;
+  box-shadow: 1px 1px 10px 1px black;
   &:hover > .arrows {
     transition: all 0.2s;
     opacity: 0.4;
