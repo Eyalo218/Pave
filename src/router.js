@@ -8,7 +8,6 @@ import signUp from './views/SignUp.vue'
 import tripDetails from './views/TripDetails.vue'
 import Profile from './views/Profile.vue'
 import Login from './views/Login.vue'
-import CreateMark from './views/CreateMark.vue'
 import EditProfile from './views/EditProfile.vue'
 // import 
 
@@ -55,11 +54,6 @@ export default new Router({
       path: '/profile/:userId',
       name: 'Profile',
       component: Profile
-    },
-    {
-      path: '/createMark',
-      name: 'CreateMark',
-      component: CreateMark
     },
     {
       path: '/editProfile/:userId',

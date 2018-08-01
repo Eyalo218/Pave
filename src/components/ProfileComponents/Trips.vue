@@ -21,14 +21,15 @@
             <div class="my-pins"></div>
             </div>
         </div>
-        <div class="create-board-modal" v-if="createTrip">
-            <button @click="createTrip = false">X</button>
-            <form @submit.prev="submitTrip" class="flex column">
-                <input v-model="newTrip.title" type="text" placeholder="Title">
-                <textarea v-model="newTrip.desc" maxlength="300" placeholder="Description">
-                </textarea>
-                <button @click.prev="">Create</button>
-            </form>
+            <div class="create-board-modal" v-if="createTrip">
+                <button class="close-btn" @click="closeModal">X</button>
+                <div class="new-title">New trip</div>
+                <form @submit.prev="submitTrip" class="flex column">
+                    <input class="title" v-model="newTrip.title" type="text" placeholder="Title">
+                    <textarea class="description" v-model="newTrip.desc" maxlength="300" placeholder="Description">
+                    </textarea>
+                    <button class="submit-btn" @click.prev="">Create</button>
+                </form>
         </div>
     </section>
 </template>
@@ -38,7 +39,7 @@
 import tripService from '../../service/tripService.js'
 
 export default {
-    name: 'Trips',
+    name: 'Tripss',
     data(){
         return {
             newTrip: {
@@ -71,6 +72,8 @@ export default {
                 .then(trip => {
                     this.loadUserTrips()
                     this.createTrip = false;
+                    this.newTrip.title = '';
+                    this.newTrip.desc = '';
                 })
         },
         loadUserTrips() {
@@ -78,6 +81,11 @@ export default {
         },
         directToTrip(tripId) {
             this.$router.push(`/trips/${tripId}`)
+        },
+        closeModal() {
+            this.createTrip = false;
+            this.newTrip.title = '';
+            this.newTrip.desc = '';
         }
     }
 }
@@ -161,18 +169,112 @@ export default {
                 transform:translate(-50%, -50%);
                 cursor: pointer;
                 transition: all 0.2s;
+                    @media(max-width: 760px) {
+                            font-size: 2.3rem;
+                    }
+                        @media(max-width: 550px) {
+                            font-size: 2rem;
+                        }
+                            @media(max-width: 490px) {
+                                font-size: 1.5rem;
+                            }
             }
 
             .trip-title:hover {
                 color: #DEDEDE;
             }
         }
+        @media(max-width: 1230px) {
+            .create-trip, .trip {
+                width: 280px;
+                height: 180px;
+            }
+        }
+            @media(max-width: 1150px) {
+                .create-trip, .trip {
+                    width: 260px;
+                    height: 160px;
+            }
+            }
+                @media(max-width: 1080px) {
+                    .create-trip, .trip {
+                        width: 100%;
+                        height: 150px;
+                    }
+                }
+                    @media(max-width: 1080px) {
+                        .create-trip, .trip {
+                            width: 100%;
+                            height: 100px;
+                            margin: 0.3rem;
+                        }
+                    }
     }
-    .create-board-modal {
-        width: 40rem;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        .create-board-modal {
+            box-shadow: 1px 10px 55px 2px rgba(77,73,77,1);
+            background-color: #fff;
+            width: 50%;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            .close-btn {
+                border: none;
+                cursor: pointer;
+                font-size: 1.25rem;
+                fomt-family: 'roboto-bold';
+                padding: 0.5rem;
+            }
+            .close-btn:hover {
+                color: #44809e;
+            }
+            .new-title {
+                padding-top: 2.5rem;
+                text-align: center;
+                font-family: 'roboto-bold';
+                font-size: 2.5rem;
+            }
+            form {
+                padding: 3rem 5rem 5rem 5rem;
+                .title {
+                    padding: 0.8rem;
+                    margin-bottom: 1.2rem;
+                    border-radius: 5px;
+                    border: 1px solid #EDEDED;
+                }
+                .description  {
+                    margin-bottom: 1.2rem;
+                    padding: 0.8rem;
+                    height: 4rem;
+                    border-radius: 5px;
+                    border: 1px solid #EDEDED;
+                }
+                .submit-btn {
+                    background-color: #383633;
+                    color: #44809e;
+                    font-family: 'roboto-bold';
+                    font-size: 1.2rem;
+                    padding: 0.7rem;
+                    border-radius: 5px;
+                    cursor: pointer;
+                }
+            }
+        @media(max-width: 880px){
+            width: 60%;
+        }
+            @media(max-width: 720px){
+                width: 70%;
+            }
+                @media(max-width: 600px){
+                    width: 80%;
+                }
+                    @media(max-width: 500px){
+                        width: 90%;
+                    }
+                        @media(max-width: 460px){
+                            form {
+                                padding: 3rem 3rem 5rem 3rem;
+                            }
+                        }
     }
 </style>

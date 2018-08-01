@@ -1,9 +1,9 @@
 <template>
 <section>
     <Camera v-if="!isPhotoTaken"></Camera>
-    <div v-else>
+    <div v-else class="input-container flex column center align-center">
         <div>
-            <h1>Category</h1>
+            <h1>Marker Category</h1>
             <input v-model="category" list="categories">
             <datalist id="categories">
                 <option value="Landscape"></option>
@@ -16,6 +16,10 @@
             </datalist>
         </div>
         <div>
+          <h1>Marker Title</h1>
+          <input type="text">
+        </div>
+        <div>
             <h1>Description</h1>
             <textarea v-model="desc" name="" id="" cols="40" rows="5" maxlength="200"></textarea>
         </div>
@@ -25,9 +29,9 @@
 </template>
 
 <script>
-import Camera from "../components/DetailsComponents/Camera.vue";
-import { eventBus, PHOTO_TAKEN, MARKER_ADDED } from "../service/eventBus.js";
-import tripService from "../service/tripService.js";
+import Camera from "./Camera.vue";
+import { eventBus, PHOTO_TAKEN, MARKER_ADDED } from "@/service/eventBus.js";
+import tripService from "@/service/tripService.js";
 
 export default {
   data() {
@@ -81,5 +85,12 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.input-container{
+  height: 100vh;
+  input, textarea{
+    width:300px;
+  }
+}
+
 </style>

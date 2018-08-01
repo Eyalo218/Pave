@@ -12,10 +12,12 @@
                     <div class="country">Canada</div>
                 </li>
                 <li li class="h-list-item">
-                    <router-link :to="'/explore'">  
-                            <img class="item-img" src="../../../public/img/home/home-list-demo.jpeg">
-                    </router-link>
+                    <router-link :to="'/explore'">
                     <div class="cover">Check all the other trips from Canada ></div>
+                    </router-link>
+                            <img class="item-img" src="../../../public/img/home/home-list-demo.jpeg">
+                    
+                    
                 </li>
             </ul>
         </div>
@@ -71,6 +73,7 @@ export default {
     text-align: center;
     display: flex;
     align-items: center;
+    z-index: 1;
   }
   .h-list-item {
     display: flex;
