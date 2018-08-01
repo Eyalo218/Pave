@@ -1,27 +1,30 @@
 <template>
     <section>
+        <div>
+            <trip-banner></trip-banner>
+        </div>
         <div class="flex">
             <div class="map">
                 <trip-map></trip-map>
             </div>
-            <div class="details">
-                <div class="photos">
-                    <photo-display></photo-display>
+            <div class="components-container">
+                <div v-if="photoMode" class="createMark">
+                <create-mark></create-mark>
                 </div>
-            
-                <!-- gal's code enter here -->
-
-                <div class="reviews">
-                    <Reviews></Reviews>
+                <div class="details">
+                    <div class="photos">
+                        <photo-display></photo-display>
+                    </div>
+                
+                    <!-- gal's code enter here -->
+                    <div class="reviews">
+                        <Reviews></Reviews>
+                    </div>
                 </div>
             </div>
         </div>
-        <div>
-            <router-link :to="'/createMark'" style="position:absolute;right:1%;top:50%;">  
-                <button>
-                    <img src="../../public/img/details/camera.png" alt="">
-                </button>
-            </router-link>
+        <div> 
+            <button @click="togglePhotoMode()"><img src="../../public/img/details/camera.png" alt=""></button>
         </div>
     </section>
 </template>
@@ -30,6 +33,8 @@
 import tripMap from '@/components/DetailsComponents/Map.vue'
 import photoDisplay from '@/components/DetailsComponents/PhotoDisplay.vue'
 import Reviews from '@/components/DetailsComponents/Reviews.vue'
+import createMark from '@/components/DetailsComponents/CreateMark.vue'
+import tripBanner from '@/components/DetailsComponents/TripBanner.vue'
 
 export default {
 
@@ -39,20 +44,45 @@ created(){
 components:{
    tripMap,
    photoDisplay,
-   Reviews
+   Reviews,
+   createMark,
+   tripBanner
+},
+data(){
+    return{
+        photoMode:false
+    }
+},
+methods:{
+    togglePhotoMode(){
+        this.photoMode = !this.photoMode
+    }
 }
 }
 </script>
 
 <style lang="scss" scoped>
-.map, .details{
+.map{
     width:50%
 }
 button{
-    width:5%;
+    width:25%;
+    z-index: 2;
     img{
         width:80%;
     }
+   
+}
+.createMark{
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    background: white;
+    height:100vh;
+}
+.components-container{
+    position: relative;
+    width:50%
 }
 
 </style>
