@@ -4,18 +4,11 @@
           <video ref="video" id="video" width="640" height="480" autoplay>
           </video>
         </div>
-        <div class="flex center">
+        <div class="flex center buttons">
           <button id="takePhoto" v-on:click="capturePhoto()">Take Photo</button>
           <button id="next" v-on:click="continueToMarkDesc()">Next</button>
           <button id="next" v-on:click="deleteLastPhoto()">deleteLastPhoto</button>
         </div>
-        <router-link :to="'/'">  
-          <button>
-            <!-- need to return to trips/currentTripId -->
-            X
-          </button>
-        </router-link>
-
         <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
         <ul>
             <li v-for="(photo, index) in photos" :key="index">
@@ -96,7 +89,6 @@ body {
 #Camera {
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 #video {
   background-color: #000000;
@@ -107,5 +99,8 @@ body {
 li {
   display: inline;
   padding: 5px;
+}
+.buttons{
+  margin-bottom:2rem;
 }
 </style>
