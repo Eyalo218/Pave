@@ -124,19 +124,23 @@ export default {
 <style lang="scss" scoped>
 section {
   // padding: 1rem;
+  width:100%;
+  max-width: 450px;
+  min-width: 200px;
 }
 .img {
-  height: 350px;
+  height: 353px;
   background-position: center;
   position: relative;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   border: 1.5px solid #47809d;
   box-shadow: 1px 1px 10px 1px black;
   &:hover > .arrows {
     transition: all 0.2s;
     opacity: 0.4;
   }
+  align-self:center;
 }
 .arrows {
   transition: all 0.2s;

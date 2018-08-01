@@ -3,24 +3,26 @@
         <div>
             <trip-banner></trip-banner>
         </div>
-        <div class="flex">
-            <div class="map">
-                <trip-map></trip-map>
-            </div>
-            <div class="components-container">
-                <div v-if="photoMode" class="createMark">
-                <create-mark></create-mark>
+        <div>
+            <div class="flex space-between">
+                <div class="map">
+                    <trip-map></trip-map>
                 </div>
-                <div class="details">
-                    <div class="photos">
-                        <photo-display></photo-display>
+                <div class="components-container">
+                    <div v-if="photoMode" class="createMark">
+                        <create-mark></create-mark>
                     </div>
-                <div v-if="getCurrMarker" class="category-desc-container">
-                    <p><span class="category">Category: &nbsp;</span><span>{{getCurrMarker.category}}</span></p>
-                    <p class="desc">{{getCurrMarker.desc}}</p>
-                </div>
-                    <div class="reviews">
-                        <Reviews></Reviews>
+                    <div v-else class="details">
+                        <div class="photos flex center">
+                            <photo-display></photo-display>
+                        </div>
+                        <div v-if="getCurrMarker" class="category-desc-container">
+                            <p><span class="category">Category: &nbsp;</span><span>{{getCurrMarker.category}}</span></p>
+                            <p class="desc">{{getCurrMarker.desc}}</p>
+                        </div>
+                        <div class="reviews">
+                            <Reviews></Reviews>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -84,7 +86,7 @@ $main-black: #383633;
   width: 50%;
 }
 .category-desc-container {
-  padding: 2rem 0;
+//   padding: 2rem 0;
   .category {
     color: $main-black;
     font-size: 1.3rem;
@@ -96,7 +98,7 @@ $main-black: #383633;
   }
   .desc {
     font-size: 0.8rem;
-    padding: 0.5rem 0;
+    // padding: 0.5rem 0;
     width: 80%;
     font-weight: bold;
   }
