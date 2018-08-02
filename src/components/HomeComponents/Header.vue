@@ -1,8 +1,9 @@
 <template>
-    <section class="header">
+    <section class="header" :class="{ 'explore-open': isExploreOpen, 'explore-open-flex': isExploreOpen,  }">
         <div class="mobile-home-nav-bar flex align-center">
             <div class="flex space-between align-center">
-                <div class="mobile-logo">Pave</div>
+                <div @click="updateExplore(false)" class="mobile-logo">Pave</div>
+                <input v-if="isExploreOpen" class="search" type="text" placeholder="Seach"/>
                 <div class="hamburger">
                     <img @click="isOpen=!isOpen" class="hamburger" src="../../../public/img/hamburger.svg">
                 </div>
@@ -21,7 +22,10 @@
             </div>
         </div>
         <div class="home-nav-bar flex space-between align-center">
-            <div class="logo">Pave</div>
+            <div class="logo-search-container flex space-between align-center">
+                <div @click="updateExplore(false)" class="logo">Pave</div>
+                <input v-if="isExploreOpen" class="search-desc" type="text" placeholder="Seach"/>
+            </div>
             <div v-if="user" class="links-container flex space-between">
                 <router-link  :to="'/how'">How it works</router-link>
                 <button @click="logOut" >Log Out</button>
@@ -33,11 +37,11 @@
                 <router-link  :to="'/login'">Log in</router-link>
             </div>
         </div>
-        <div class="title-input-container">
+        <div v-if="!isExploreOpen" class="title-input-container">
             <h1>Explore and share walks <br/> around the world</h1>
             <input v-model="searchedText" @keyup.enter="setFilter" placeholder="Take yourself to..." />
         </div>
-        <div class="app-data">
+        <div class="app-data" v-if="!isExploreOpen">
             <p>6500+ <span>walks</span> 130 <span>countries</span> 80k+ <span>users</span></p>
         </div>
     </section>
@@ -47,25 +51,30 @@
 
 import userService from '../../service/userService.js'
 import storageService from './../../service/storageService.js'
-import {eventBus, LOGGED_IN} from '../../service/eventBus.js'
+import {eventBus, LOGGED_IN, OPEN_EXPLORE, CLOSE_EXPLORE} from '../../service/eventBus.js'
 
 export default {
   name: "HomeHeader",
   data() {
       return {
-        isOpen: false,
+          isOpen: false,
           searchedText:'',
           toggle: false,
+          // isExploreOpen: false
           // user: userService.getLoggedinUser() ? userService.getLoggedinUser() : null
       }
   },
   created(){
-      // eventBus.$on(LOGGED_IN, user => this.user = user)
+      eventBus.$on(OPEN_EXPLORE, () => this.isExploreOpen = true)
+      eventBus.$on(CLOSE_EXPLORE, () => this.isExploreOpen = false)
       this.checkIfUserInStorage()
   },
   computed: {
       user() {
           return this.$store.getters.loggedIn
+      },
+      isExploreOpen() {
+          return this.$store.getters.isExploreOpen
       }
   },
   methods: {
@@ -76,13 +85,21 @@ export default {
       setFilter() {
         let searchedText = this.searchedText;
         this.$store.commit({type:'setFilter',searchedText})
-        this.$router.push('/explore');
+        this.updateExplore(true)
+        // this.$router.push('/explore');
       },
       checkIfUserInStorage() {
           let user = storageService.loadFromStorage('loggedInUser')
           if (user){
               this.$store.dispatch({type: 'loggedIn', user})
           }
+      },
+      closeExplore() {
+        eventBus.$emit(CLOSE_EXPLORE)
+      },
+      updateExplore(currStatus) {
+        console.log('BYEBYEBYE')
+            this.$store.dispatch({type: 'updateExplore', currStatus: currStatus})
       }
   },
 };
@@ -91,6 +108,10 @@ export default {
 <style scoped lang="scss">
 @import "../../../public/css/helpers.css";
 $main-black: #383633;
+  section .explore-open{
+    height: 9vh;
+      margin: 0;
+  }
   .header{
     margin: 0;
     background-image: url("../../../public/img/home/homeImg.jpeg");
@@ -99,6 +120,7 @@ $main-black: #383633;
     height: 100vh;
     margin-bottom: 4rem;
     position: relative;
+    transition: all ease-in 0.3s;
   }
 
 .home-nav-bar{
@@ -109,6 +131,7 @@ $main-black: #383633;
   .logo{
     font-family: 'Chalkduster';
     font-size: 2.5rem;
+    cursor: pointer;
   }
   .links-container{
   font-size: 1.2rem;
@@ -209,17 +232,19 @@ $main-black: #383633;
     
     @media(max-width: 740px) {
         display: block;
-        background-color: #fff;
+        background-color: transparent;
         padding: 0.3rem 0;
         .mobile-logo {
           padding-left: 1rem;
           font-family: 'Chalkduster';
           font-size: 1.6rem;
+          cursor: pointer;
         }
         .hamburger{
           cursor: pointer;
           padding-right: 1rem;
           width: 20px;
+          padding-top: 2px;
         }
         .mobile-links-container{
           button {
@@ -238,7 +263,40 @@ $main-black: #383633;
           }
         }
     }
-  
+    .search {
+        width: 30vw;
+        height: 30px;
+        padding: 0.25rem 2.5rem;
+        border-radius: 5px;
+        font-size: 1rem;
+        // background-color: #efefef;
+        border: none;
+        &:focus {
+          outline: none !important;
+          box-shadow: 1px 1px 2px 3px #85bef3;
+        }
+    }
+    section .explore-open-flex {
+      display: flex;
+      align-items: center;
+    }
 }
+  .search-desc{
+      margin-left: 2rem;
+      width: 30vw;
+      height: 30px;
+      padding: 0.25rem 2.5rem;
+      border-radius: 5px;
+      font-size: 1rem;
+      // background-color: #efefef;
+      border: none;
+      &:focus {
+          outline: none !important;
+          box-shadow: 1px 1px 2px 3px #85bef3;
+      }
+  }
+  .logo-search-container{
+
+  }
 
 </style>

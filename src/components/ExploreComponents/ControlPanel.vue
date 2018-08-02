@@ -154,5 +154,18 @@ export default {
         color: #44809e;
     }
   }
+  .search {
+      width: 40vw;
+      height: 30px;
+      padding: 0.25rem 2.5rem;
+      border-radius: 5px;
+      font-size: 1rem;
+      background-color: #efefef;
+      border: none;
+      &:focus {
+        outline: none !important;
+        box-shadow: 1px 1px 2px 3px #85bef3;
+      }
+    }
 }
 </style>

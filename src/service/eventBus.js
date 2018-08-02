@@ -6,6 +6,8 @@ export const EMIT_SEARCH = 'emit-search';
 export const CHANGE_MARKER = 'change-marker';
 export const SET_TRIP_PHOTOS = 'set-trip-photos';
 export const MARKER_CLICKED = 'marker-clicked';
+export const OPEN_EXPLORE = 'open-explore';
+export const CLOSE_EXPLORE = 'close-explore';
 
 import Vue from 'vue';
 export const eventBus = new Vue();

@@ -38,8 +38,13 @@ export default {
         signup() {
             userService.signup(this.signupDetails)
                 .then(user => {
-                    console.log('User is in "then"',user)
-                    this.$router.push('/explore')
+                    userService.login(user)
+                        .then(() => {
+                            console.log('User is in "then"',user)
+                            this.$store.dispatch({type: 'loggedIn', user: user})
+                            this.$store.dispatch({type: 'updateExplore', currStatus : false})
+                            this.$router.push('/')
+                        })
                 })
         },
     },

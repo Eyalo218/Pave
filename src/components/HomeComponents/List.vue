@@ -2,22 +2,22 @@
     <section>
         <div class="list-container">
             <h1>Trips in Canada</h1>
-            <ul v-if="trips">
+            <ul v-if="trips" class="trips">
                 <li class="h-list-item" v-for="(trip,idx) in trips" :key="idx" >
                     <router-link :to="`trips/${trip._id}`">  
                             <img class="item-img" :src="`${trip.image}`">
                     </router-link>
-                    <div class=title></div>
-                    <div class="rank">Reviews<img class="review-dot" src="../../../public/img/home/dot-and-circle.svg"/></div>
-                    <div class="country">Canada</div>
+                    <div class="trip-info">
+                      <div class=title>{{trip.title}}</div>
+                      <div class="rank">Reviews<img class="review-dot" src="../../../public/img/home/dot-and-circle.svg"/></div>
+                      <div class="country">Canada</div>
+                    </div>
                 </li>
                 <li li class="h-list-item">
                     <router-link :to="'/explore'">
-                    <div class="cover">Check all the other trips from Canada ></div>
+                     <div class="cover">Check all the other trips from Canada ></div>
                     </router-link>
-                            <img class="item-img" src="../../../public/img/home/home-list-demo.jpeg">
-                    
-                    
+                      <img class="item-img" src="../../../public/img/home/home-list-demo.jpeg">
                 </li>
             </ul>
         </div>
@@ -34,7 +34,7 @@ export default {
   },
   components: {},
   created() {
-      this.displayTripsByText();
+    this.displayTripsByText();
   },
   methods: {
     displayTripsByText() {
@@ -52,12 +52,51 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.list-container {
-  font-family: "roboto-medium";
-  color: #383633;
-  width: 85%;
-  margin: 0 auto;
-  margin-bottom: 4rem;
+
+  .trips {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        width:100%;
+        padding:0;
+      }
+  h1 {
+    text-align: center;
+  }
+  .h-list-item,  {
+    width: 45%;
+    margin:5px 5px 3rem 5px;
+  }
+  section .list-container{
+    margin:0 0;
+  }
+  .item-img{
+
+      width:100%;
+      box-shadow: #888888 2px 2px;
+  }
+    .cover {
+    width: 45%;
+    height: 7rem;
+    background: #0e95f094;
+    position: absolute;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    z-index: 1;
+  }
+  .review-dot {
+    width: 12px;
+  }
+  
+
+@media screen and (min-width: 415px) {
+  .list-container {
+    font-family: "roboto-medium";
+    color: #383633;
+    width: 85%;
+    margin: 0 auto;
+    margin-bottom: 4rem;
   ul {
     display: flex;
     flex-wrap: wrap;
@@ -68,18 +107,13 @@ export default {
   .cover {
     width: 14.5rem;
     height: 10rem;
-    background:#0e95f094;
-    position:absolute;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    z-index: 1;
   }
   .h-list-item {
     display: flex;
     flex-direction: column;
-    margin-bottom: 1.5em;
-
+    margin-bottom: 4rem;
+    width:14.5rem;
+  }
     .item-img {
       position: relative;
       width: 14.5rem;
@@ -95,12 +129,64 @@ export default {
       font-size: 0.8rem;
       font-family: "roboto-regular";
     }
-    .review-dot {
-      width: 12px;
-    }
   }
   h1 {
     margin-bottom: 2rem;
   }
+  .list-container {
+    width:100%;
+  }
 }
+
+@media screen and (min-width: 550px) {
+  .trips{
+    display: flex;
+    justify-content: space-around;
+  }
+
+}
+@media screen and (min-width: 600px) {
+  .trips{
+    display: flex;
+    justify-content: space-around;
+     .h-list-item, .cover{
+      width:45%;
+      height: 10rem;
+      min-height: 10rem;
+    }
+     .item-img{
+      width:100%
+    }
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .trips{ .item-img{
+      width:100%;
+      height: 12rem;
+    }
+    .h-list-item, .cover{
+      height: 12rem;
+    }
+  }
+}
+
+
+@media screen and (min-width: 1024px) {
+  .trips{
+    .item-img{
+      width:100%;
+      height: 12rem;
+    }
+    .h-list-item, .cover{
+      width: 20%;
+      height: 12rem;
+    }
+  }
+}
+
+
 </style>
+
+
+ 

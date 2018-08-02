@@ -1,5 +1,10 @@
 <template>
 <section>
+  <!-- <div><carousel :navigationEnabled="true">
+    <slide class="label" v-if="getUrls" :key="index" v-for="(url,index) in goodUrls">
+      <img :src="url" style="width: 100%;"/>
+      </slide>
+    </carousel></div> -->
     <div ref="image" class="img" :style="{ 'background-image': `url(${currPhoto})` }">
         <div class="flex space-between arrows">    
               <font-awesome-icon @click="lastPhoto" class="arrow btn btn2" icon="angle-left" size="3x" />  
@@ -42,10 +47,26 @@ export default {
   },
   computed: {
     getUrls() {
+      let urls;
       if (this.photosUrls.length !== 0) {
-        return ("" + this.photosUrls).split(",");
+        urls = ("" + this.photosUrls).split(",");
       }
-      return this.photosUrls;
+      let slideMarkup = "";
+      for (var i = 1; i <= this.photosUrls.length; i++) {
+        slideMarkup += `<slide><img src="${
+          urls[i]
+        }" style="width: 300px; max-width: 100%;"></slide>`;
+      }
+      return slideMarkup;
+      // return this.photosUrls;
+    },
+    goodUrls() {
+      let urls;
+      if (this.photosUrls.length !== 0) {
+        urls = ("" + this.photosUrls).split(",");
+        console.log(urls);
+        return urls;
+      }
     }
   },
   methods: {
@@ -139,8 +160,11 @@ section {
   max-width: 450px;
   min-width: 200px;
 }
-.images-container {
-  overflow-x: hidden;
+.label {
+  // position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 .img {
   height: 353px;

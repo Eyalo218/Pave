@@ -44,6 +44,7 @@ export default {
 ul{
     height: 100px;
     overflow-y: scroll;
+    
     li{
         margin-bottom:1rem;
         border: solid 1px #44809e;
@@ -54,4 +55,25 @@ h1{
     margin-bottom: 1.1rem;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 5px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #44809e; 
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #1c3b4b; 
+}
 </style>

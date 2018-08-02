@@ -17,8 +17,8 @@
                         <div class="photos flex center">
                             <photo-display></photo-display>
                         </div>
-                        <div v-if="getMarkers.length!==0" class="category-desc-container">
-                            <p><span class="category">Category: &nbsp;</span><span>{{getCurrMarker.category}}</span></p>
+                        <div  v-if="getMarkers.length!==0" class="category-desc-container">
+                            <p><span onselectstart="return false;"  unselectable="on" class="category">Category: &nbsp;</span><span>{{getCurrMarker.category}}</span></p>
                             <p  class="desc">{{getCurrMarker.desc}}</p>
                         </div>
                         <div class="reviews">

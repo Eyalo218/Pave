@@ -7,7 +7,8 @@ export default {
     state: {
         trips: [],
         currTrip: null,
-        currUserTrips: []
+        currUserTrips: [],
+        explore: false,
     },
     mutations: {
         loadTrips(state, { trips }) {
@@ -18,6 +19,10 @@ export default {
         },
         userTripsToDisplay(state, {trips}) {
             state.currUserTrips = trips
+        },
+        updateExplore(state, {currStatus}){
+            console.log('bol',currStatus.currStatus)
+            state.explore = currStatus
         }
     },
     getters: {
@@ -29,6 +34,9 @@ export default {
         },
         userTripsToDisplay(state){
             return state.currUserTrips;
+        },
+        isExploreOpen(state) {
+            return state.explore
         }
     },
     actions: {
@@ -46,6 +54,9 @@ export default {
             console.log('user id in store', userId)
             return tripService.query('' ,userId)
                 .then(trips => context.commit({ type: 'userTripsToDisplay', trips }))
+        },
+        updateExplore(context, {currStatus}){
+            context.commit({type: 'updateExplore', currStatus})
         }
     }
 }

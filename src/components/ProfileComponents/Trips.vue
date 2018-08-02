@@ -25,6 +25,7 @@
                 <button class="close-btn" @click="closeModal">X</button>
                 <div class="new-title">New trip</div>
                 <form @submit.prev="submitTrip" class="flex column">
+                    <input class="title" v-model="newTrip.country" type="text" placeholder="Country">
                     <input class="title" v-model="newTrip.title" type="text" placeholder="Title">
                     <textarea class="description" v-model="newTrip.desc" maxlength="300" placeholder="Description">
                     </textarea>
@@ -43,6 +44,7 @@ export default {
     data(){
         return {
             newTrip: {
+                country: '',
                 title: '',
                 desc: '',
                 markers: [],
