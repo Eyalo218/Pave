@@ -1,5 +1,5 @@
 <template>
-<section>
+<section class="photos">
   <!-- <div><carousel :navigationEnabled="true">
     <slide class="label" v-if="getUrls" :key="index" v-for="(url,index) in goodUrls">
       <img :src="url" style="width: 100%;"/>
@@ -39,7 +39,6 @@ export default {
   created() {
     eventBus.$on(SET_TRIP_PHOTOS, trip => {
       this.currTrip = trip;
-
       this.insertPhotosUrls(this.currTrip.markers);
       this.setFirstPhoto();
     });
@@ -156,6 +155,9 @@ export default {
 $main-black: #383633;
 section {
   // padding: 1rem;
+  width:100%;
+  max-width: 450px;
+  min-width: 200px;
 }
 .label {
   // position: absolute;
@@ -164,7 +166,8 @@ section {
   transform: translate(-50%, -50%);
 }
 .img {
-  height: 350px;
+  height: 100%;
+  border-radius: 5px;
   background-position: center;
   position: relative;
   background-repeat: no-repeat;
@@ -175,6 +178,10 @@ section {
     transition: all 0.2s;
     opacity: 0.4;
   }
+  align-self:center;
+}
+.photos{
+  height: auto;
 }
 .arrows {
   transition: all 0.2s;

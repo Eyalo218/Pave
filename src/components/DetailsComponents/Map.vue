@@ -1,6 +1,6 @@
 <template>
   <section class="map-cmp">
-    <gmap-map :zoom=18 :center="center" style="width:100%; height:70vh" ref="map">
+    <gmap-map :zoom=18 :center="center" :style="`width:100%; height:${mapHeight}`" ref="map">
       <gmap-marker
         :key="index"
         v-for="(marker, index) in markersForDisplay"
@@ -27,6 +27,7 @@ import {
 
 export default {
   name: "GoogleMap",
+  props: ["mapHeight"],
   data() {
     return {
       trip: null,
@@ -42,7 +43,7 @@ export default {
       this.currTripId = currTripId;
     });
     eventBus.$on(CHANGE_MARKER, currMarker => {
-     this.$refs.map.$mapObject.panTo(
+      this.$refs.map.$mapObject.panTo(
         googleService.setLatLng(
           currMarker.marker.coords.lat,
           currMarker.marker.coords.lng,

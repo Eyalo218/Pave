@@ -1,7 +1,7 @@
 <template>
     <div class="Camera">
         <div>
-          <video ref="video" class="video" width="640" height="480" autoplay>
+          <video ref="video" class="video" width="500" height="375" autoplay>
           </video>
         </div>
         <div class="flex center buttons">

@@ -1,10 +1,13 @@
 <template>
 <section>
+    <h1>Reviews</h1>
         <ul>
             <li v-for="(review,idx) in reviews" :key="idx">
-                {{review.review}}
-                {{review.rank}}
+                <div class="flex column">
+                <h1>user</h1>
+                <span>{{review.title}}</span> {{review.review}}<!-- {{review.title}} -->
                 <!--review.userId  -->
+                </div>
             </li>
         </ul>
     </section>
@@ -41,12 +44,51 @@ export default {
 <style lang="scss" scoped>;
 ul{
     height: 100px;
-    overflow: scroll;
+    overflow-y: scroll;
+    padding:0;
+    
     
     li{
         margin-bottom:1rem;
-        border: solid 1px #44809e;
+        color: #363833;
+        background-color:#EDEDED;
+        border-radius: 5px;
+        span{
+            font-weight:bold;  
+        }
+        h1{
+            color: #44809e;
+            margin-bottom:0.5rem;
+        }
     }
 }
+h1{
+    padding:0;
+    margin-bottom: 1.1rem;
+}
+p{
+    padding:0;
+}
 
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 5px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #44809e; 
+    border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #1c3b4b; 
+}
 </style>
