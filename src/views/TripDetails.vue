@@ -59,6 +59,9 @@
             <photo-display></photo-display>
         <font-awesome-icon @click="showMarkerDesc" class="info" icon="info"  />
           </div>
+          <router-link :to="'/'" >
+         <font-awesome-icon class="home-link" icon="arrow-circle-left" size="3x" />
+         </router-link>
            <div  :class="{'category-desc-container-shown':isDescShown}" 
            v-if="getMarkers.length!==0" class="category-desc-container">
             <p>
@@ -71,6 +74,7 @@
             <Reviews></Reviews>
           </div>
         </div>
+               
   </div>
   <div>
   </div>
@@ -177,7 +181,6 @@ $mobile-width: 80vw;
   margin-top: 0.5rem;
   padding: 0rem 1rem;
   color: $main-black;
-  opacity: 0.5;
   font-size: 1.5em;
   &:hover {
     transform: scale(1.15);
@@ -192,15 +195,14 @@ hr {
 }
 .camera {
   cursor: pointer;
-  color: white;
+  color: $main-black;
   &:hover {
     transform: scale(1.15);
   }
 }
 .category-desc-container {
-  // padding: 2rem 0;
+  padding: 2rem 0;
   padding-left: 0.5rem;
-  // padding-top: 2rem;
   .category {
     color: $main-black;
     font-size: 1.3rem;
@@ -266,9 +268,13 @@ button {
 }
 @media (max-width: 800px) {
   .home-link {
-    display: none;
+    // display: none;
+    position: absolute;
+    bottom: 5%;
+    left: 7%;
+    cursor: pointer;
   }
-  .icon:hover{
+  .icon:hover {
     cursor: pointer;
     transform: scale(1.1);
   }
@@ -281,12 +287,14 @@ button {
   .map {
     width: $mobile-width;
     height: $mobile-height;
+    position: relative;
   }
   .category-desc-container {
     position: absolute;
     bottom: 2%;
     transition: all 0.5s;
     // padding: 0 2rem;
+    z-index: -1;
     opacity: 0;
     color: white;
     .category {
@@ -303,27 +311,34 @@ button {
     z-index: 1;
     opacity: 0;
     background-color: black;
-    transition: all .5s;
+    transition: all 0.5s;
   }
   .desc-modal-shown {
     // z-index: 1;
     opacity: 0.5;
-    transition: all .5s;
+    transition: all 0.5s;
   }
   .category-desc-container-shown {
     z-index: 3;
     bottom: 75%;
-    transition: all 0.5s;
+    transition: all 1s;
     opacity: 1;
+    // z-index: 1;
   }
-  .camera-container{
-    background-color: #47809d;
+  .camera-container {
+    background-color: white;
     border-radius: 50%;
     width: 20px;
-    // color: white;
-    padding: 0.5rem;
+    position: absolute;
+    /* left: 0%; */
+    bottom: 8%;
+    padding: 1rem;
     display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
     justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
     align-items: center;
   }
   .reviews {
