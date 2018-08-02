@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="personal-info-container">
         <div v-if="userToDisplay" class="personalInfo">
             <div class="column">
                 <div class="user-name">{{userToDisplay.name}}</div>
@@ -32,7 +32,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+    .personal-info-container {
+        margin-top: 3rem;
+    }
     .personalInfo {
         width: 65%;
         margin: 0 auto;

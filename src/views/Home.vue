@@ -25,6 +25,7 @@ import Header from '../components/HomeComponents/Header.vue'
 import List from '../components/HomeComponents/List.vue'
 import AboutSection from '../components/HomeComponents/AboutSection.vue'
 import Footer from '../components/HomeComponents/Footer.vue'
+import NavBar from '../components/HomeComponents/NavBar'
 
 // Explore imports
 
@@ -41,6 +42,7 @@ export default {
         List,
         AboutSection,
         Footer,
+        NavBar,
         // Explore import 
         tripList,
         relatedSearches

@@ -43,6 +43,9 @@ export default {
     computed: {
         userToDisplay() {
             return this.$store.getters.userToDisplay
+        },
+        isExploreOpen() {
+            return this.$store.getters.isExploreOpen
         }
     }
 }

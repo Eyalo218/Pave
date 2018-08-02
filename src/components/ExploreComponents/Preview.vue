@@ -1,11 +1,12 @@
 <template>
     <section>
-            <div class="h-list-item" @click="toDetails(`${trip._id}`)">
-                <div><img class="item-img" src="../../../public/img/home/home-list-demo.jpeg"></div>
-                <div class="location">{{trip.title}}</div>
-                <div class="reviews">Reviews<img class="review-dot" src="../../../public/img/home/dot-and-circle.svg"/></div>
-                <div class="country">Canada</div>
-            </div>
+        <div class="hover-opacity"></div>
+        <div class="h-list-item" @click="toDetails(`${trip._id}`)">
+            <div><img class="item-img" src="../../../public/img/home/home-list-demo.jpeg"></div>
+            <div class="location">{{trip.title}}</div>
+            <div class="reviews">Reviews<img class="review-dot" src="../../../public/img/home/dot-and-circle.svg"/></div>
+            <div class="country">Canada</div>
+        </div>
     </section>
 </template>
 
@@ -43,8 +44,7 @@ export default {
   .item-img {
     width: 14.5rem;
     height: 17.5rem;
-    border-top-left-radius: 0.6rem;
-    border-top-right-radius: 0.6rem;
+    border-radius: 0.3rem;
   }
   .location {
     font-size: 1rem;
@@ -60,7 +60,19 @@ export default {
     width: 12px;
   }
 }
-.card {
-  display: inline-block;
-}
+  .card {
+    display: inline-block;
+  }
+  .hover-opacity {
+      background-color: transparent;
+      position: absolut;
+      width:100%;
+      height: 100%;
+  }
+  .hover-opacity:hover{
+      cursor: pointer;
+      z-index: 1000;
+      border-radius: 5px;
+      background-color: rgba( 100, 100, 100, 0.5);
+  }
 </style>

@@ -1,10 +1,9 @@
 <template>
-
-    <section class="header">
-    <nav class="nav-container flex space-between align-center">
+    <section>
+        <nav class="nav-container flex space-between align-center">
             <div class="left-nav flex align-center">
-                <div @click="updateExplore(false)"><router-link :to="'/'"><button class="logo">Pave</button></router-link></div>
-                <input class="search" type="text" placeholder="Seach"/>
+                <div @click="updateExplore(false)" class="logo">Pave</div>
+                <input v-if="isExploreOpen" class="search" type="text" placeholder="Seach"/>
             </div>
             <div class="right-nav-mobile">
                 <div class="hamburger">
@@ -12,87 +11,63 @@
                 </div>
                 <div>
                     <div v-if="user" class="links-container flex space-between">
-                        <button @click="toHome">Home</button>
-                        <button class="user-link" @click="logOut">Log out</button>
+                        <router-link  :to="'/how'"><button>Explore</button></router-link>
+                        <button @click="logOut" >Log out</button>
+                        <router-link :to="`/profile/${user._id}`"><button class="user-link" >{{user.name}}</button></router-link>
                     </div>
                     <div v-else class="links-container flex space-between">
-                        <router-link :to="`/login`">
-                            <button>Log in</button>
-                        </router-link>
+                    <!-- <router-link  :to="'/how'"><bottun>How it works</bottun></router-link> -->
+                        <router-link  :to="'/signup'"><button>Sign up</button></router-link>
+                        <router-link  :to="'/login'"><button>Log in</button></router-link>
                     </div>
                 </div>
             </div>
         </nav>
         <div v-if="dropDownOpen" class="drop-down">
             <div v-if="user" class="mobile-links-container flex column align-center">
-                <button @click="toHome">Home</button>
-                <button @click="logOut">Log out</button>
+                <router-link :to="`/profile/${user._id}`"><button>{{user.name}}</button></router-link>
+                <router-link  :to="'/how'"><button>Explore</button></router-link>
+                <button @click="logOut" >Log out</button>
             </div>
             <div v-else class="mobile-links-container flex column align-center">
-                <button>Log in</button>
+                <router-link  :to="'/login'"><button>Log in</button></router-link>
+                <router-link  :to="'/signup'"><button>Sign up</button></router-link>
+                <router-link  :to="'/how'"><button>How it works</button></router-link>
             </div>
         </div>
     </section>
 </template>
 
 <script>
-import { eventBus, EMIT_SEARCH, OPEN_EXPLORE } from "../../service/eventBus.js";
-import userService from "../../service/userService.js";
-
 export default {
-  name: "CtrPanelProfile",
-  components: {},
-  data() {
-    return {
-        searchedText: "",
-        dropDownOpen: false,
-        toggleHam: false
-    };
-  },
-  created() {
-    this.validate()
-    this.searchedText = this.$store.state.currFilter;
-    // eventBus.$on(LOGGED_IN, user => (this.user = user));
-  },
-  computed: {
-      user() {
-          return this.$store.getters.loggedIn
-      }
-  },
-  methods: {
-      setFilter() {
-          let searchedText = this.searchedText;
-          this.$store.commit({ type: "setFilter", searchedText });
-          eventBus.$emit(EMIT_SEARCH, this.searchedText);
-          this.$store.dispatch({type: 'updateExplore', currStatus : true})
-        //   eventBus.$emit(OPEN_EXPLORE)
-          this.$router.push('/')
-      },
-      logOut() {
-          // storageService.removeUser('loggedinUser');
-          this.$store.dispatch({type: 'loggedOut'})
-          this.$router.push('/')
-      },
-      validate() {
-        if(!this.user) this.$router.push('/')
-      },
-      toHome() {
-          this.$store.dispatch({type: 'updateExplore', currStatus : false})
-          this.$router.push('/')
-      },
-      // displayTripsByText() {
-      //   let searchedText = this.$store.state.currFilter;
-      //   this.$store.dispatch({ type: "loadTrips", searchedText }).then(() => {
-          
-      //   });
-      // }
-  }
-};
+    name: "navBar",
+    data() {
+        return {
+            dropDownOpen: false,
+        };
+    },
+    components: {},
+    created() {},
+    computed: {
+        user() {
+            return this.$store.getters.loggedIn
+        },
+        isExploreOpen() {
+            return this.$store.getters.isExploreOpen
+        }
+    },
+    methods: {
+        updateExplore(currStatus) {
+            this.$store.dispatch({type: 'updateExplore', currStatus: currStatus})
+        },
+        logOut() {
+        storageService.removeUser('loggedinUser');
+        this.$store.dispatch({type: 'loggedOut'})
+        },
+    }
+}
 </script>
-
-
 <style lang="scss" scoped>
-
 .nav-container {
     background-color: #383633;
     padding: 0.6rem 0;
@@ -104,8 +79,6 @@ export default {
         cursor: pointer;
         color: #44809e;
         margin-right: 5rem;
-        background: transparent;
-        border: none;
         @media(max-width: 740px) {
             margin-right: 3rem;
         }
@@ -139,7 +112,7 @@ export default {
                     }
                         @media(max-width: 740px){
                             width: 15rem;
-                            height: 1.5rem;
+                            height: 1.6rem;
                         }
                             @media(max-width: 650px){
                                 width: 10rem;

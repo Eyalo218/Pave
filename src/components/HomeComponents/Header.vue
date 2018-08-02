@@ -1,42 +1,6 @@
 <template>
     <section class="header" :class="{ 'explore-open': isExploreOpen, 'explore-open-flex': isExploreOpen,  }">
-        <div class="mobile-home-nav-bar flex align-center">
-            <div class="flex space-between align-center">
-                <div @click="updateExplore(false)" class="mobile-logo">Pave</div>
-                <input v-if="isExploreOpen" class="search" type="text" placeholder="Seach"/>
-                <div class="hamburger">
-                    <img @click="isOpen=!isOpen" class="hamburger" src="../../../public/img/hamburger.svg">
-                </div>
-            </div>
-            <div class="drop-down" v-if="isOpen">
-                <div v-if="user" class="mobile-links-container flex column align-center">
-                    <router-link  :to="'/how'"><button>How it works</button></router-link>
-                    <button @click="logOut" >Log Out</button>
-                    <router-link :to="`/profile/${user._id}`"><button>{{user.name}}</button></router-link>
-                </div>
-                <div v-else class="mobile-links-container flex column align-center">
-                    <router-link  :to="'/login'"><button>Log in</button></router-link>
-                    <router-link  :to="'/signup'"><button>Sign up</button></router-link>
-                    <router-link  :to="'/how'"><button>How it works</button></router-link>
-                </div>
-            </div>
-        </div>
-        <div class="home-nav-bar flex space-between align-center">
-            <div class="logo-search-container flex space-between align-center">
-                <div @click="updateExplore(false)" class="logo">Pave</div>
-                <input v-if="isExploreOpen" class="search-desc" type="text" placeholder="Seach"/>
-            </div>
-            <div v-if="user" class="links-container flex space-between">
-                <router-link  :to="'/how'">How it works</router-link>
-                <button @click="logOut" >Log Out</button>
-                <router-link :to="`/profile/${user._id}`">{{user.name}}</router-link>
-            </div>
-            <div v-else class="links-container flex space-between">
-                <router-link  :to="'/how'">How it works</router-link>
-                <router-link  :to="'/signup'">Sign up</router-link>
-                <router-link  :to="'/login'">Log in</router-link>
-            </div>
-        </div>
+        <navBar></navBar>
         <div v-if="!isExploreOpen" class="title-input-container">
             <h1>Explore and share walks <br/> around the world</h1>
             <input v-model="searchedText" @keyup.enter="setFilter" placeholder="Take yourself to..." />
@@ -52,15 +16,18 @@
 import userService from '../../service/userService.js'
 import storageService from './../../service/storageService.js'
 import {eventBus, LOGGED_IN, OPEN_EXPLORE, CLOSE_EXPLORE} from '../../service/eventBus.js'
+import NavBar from './NavBar'
 
 export default {
   name: "HomeHeader",
+  components: {
+      NavBar,
+  },
   data() {
       return {
           isOpen: false,
           searchedText:'',
           toggle: false,
-          // isExploreOpen: false
           // user: userService.getLoggedinUser() ? userService.getLoggedinUser() : null
       }
   },
@@ -78,10 +45,6 @@ export default {
       }
   },
   methods: {
-      logOut() {
-        storageService.removeUser('loggedinUser');
-        this.$store.dispatch({type: 'loggedOut'})
-      },
       setFilter() {
         let searchedText = this.searchedText;
         this.$store.commit({type:'setFilter',searchedText})
@@ -109,7 +72,7 @@ export default {
 @import "../../../public/css/helpers.css";
 $main-black: #383633;
   section .explore-open{
-    height: 9vh;
+    height: 0px;
       margin: 0;
   }
   .header{
@@ -253,13 +216,10 @@ $main-black: #383633;
             font-size: 1.2rem;
             font-family: 'roboto-medium';
             cursor: pointer;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
           }
           button:hover {
             color: #44809e;
-          }
-          button:first-child{
-            margin-top: 1rem;
           }
         }
     }
