@@ -118,6 +118,6 @@ background-color:#44809e
 
 }
 .delete{
-  background-color:red(64, 250, 64)
+  background-color:red;
 }
 </style>
