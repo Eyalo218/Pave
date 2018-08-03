@@ -9,6 +9,7 @@ export default {
         currTrip: null,
         currUserTrips: [],
         explore: false,
+        currFilter: '',
     },
     mutations: {
         loadTrips(state, { trips }) {
@@ -21,8 +22,10 @@ export default {
             state.currUserTrips = trips
         },
         updateExplore(state, {currStatus}){
-            console.log('bol',currStatus.currStatus)
             state.explore = currStatus
+        },
+        updateFilter(state, {trips}) {
+            state.trips = trips
         }
     },
     getters: {
@@ -51,12 +54,19 @@ export default {
                 .then(trip => context.commit({ type: 'setCurrTrip', trip }))
         },
         loadTripsByUserId(context, {userId}) {
-            console.log('user id in store', userId)
             return tripService.query('' ,userId)
                 .then(trips => context.commit({ type: 'userTripsToDisplay', trips }))
         },
         updateExplore(context, {currStatus}){
             context.commit({type: 'updateExplore', currStatus})
+        },
+        setFilter(context, { searchedText }) {
+            return tripService.query(searchedText, null)
+                .then(trips => {
+                    context.commit({type: 'updateFilter', trips})
+                })
+            // context.commit({type: 'updateFilter', searchedText})
+            // state.currFilter = searchedText;
         }
     }
 }

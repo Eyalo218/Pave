@@ -4,7 +4,7 @@
     <nav class="nav-container flex space-between align-center">
             <div class="left-nav flex align-center">
                 <div @click="updateExplore(false)"><router-link :to="'/'"><button class="logo">Pave</button></router-link></div>
-                <input class="search" type="text" placeholder="Seach"/>
+                <input v-model="searchedText" @keyup.enter="setFilter" class="search" type="text" placeholder="Seach"/>
             </div>
             <div class="right-nav-mobile">
                 <div class="hamburger">
@@ -62,8 +62,7 @@ export default {
   methods: {
       setFilter() {
           let searchedText = this.searchedText;
-          this.$store.commit({ type: "setFilter", searchedText });
-          eventBus.$emit(EMIT_SEARCH, this.searchedText);
+          this.$store.dispatch({ type: "setFilter", searchedText });
           this.$store.dispatch({type: 'updateExplore', currStatus : true})
         //   eventBus.$emit(OPEN_EXPLORE)
           this.$router.push('/')

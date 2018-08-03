@@ -1,7 +1,7 @@
 <template>
     <section>
         <div class="list-container">
-            <h1>Trips in Canada</h1>
+            <h1 class="headline">Trips around the world</h1>
             <ul v-if="trips" class="trips">
                 <li class="h-list-item" v-for="(trip,idx) in trips" :key="idx" >
                     <router-link :to="`trips/${trip._id}`">  
@@ -52,7 +52,9 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-
+  .headline{
+    font-size: 1.5rem;
+  }
   .trips {
         display: flex;
         justify-content: center;
@@ -71,9 +73,8 @@ export default {
     margin:0 0;
   }
   .item-img{
-
       width:100%;
-      box-shadow: #888888 2px 2px;
+      box-shadow: 1px 2px 5px #262626;
   }
     .cover {
     width: 45%;

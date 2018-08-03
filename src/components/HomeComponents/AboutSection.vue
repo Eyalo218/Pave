@@ -1,20 +1,20 @@
 <template>
     <section>
-        <div class="flex row-reverse space-between about">
+        <div class="about-section flex row-reverse space-between about">
             <div class="info">
                 <h1>Plan faster, easily</h1>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas doloremque pariatur et aliquam</p>
             </div>
             <div class="img img1"></div>
         </div>
-        <div class="flex space-between about about1">
+        <div class="about-section flex space-between about about1">
             <div class="info">
                 <h1>Travel Orginaized</h1>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas doloremque pariatur et aliquam</p>
             </div>
             <div class="img img2"></div>
         </div>
-        <div class="flex row-reverse space-between about">
+        <div class="about-section flex row-reverse space-between about">
             <div class="info">
                 <h1>Follow and Lead</h1>
                 <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas doloremque pariatur et aliquam</p>
@@ -38,7 +38,11 @@ export default {
 
 section{
     width:95%;
-    margin: 1.5rem auto;
+    margin: 2rem auto;
+}
+
+.about-section {
+    margin-bottom: 1.5rem;
 }
 
 .img{

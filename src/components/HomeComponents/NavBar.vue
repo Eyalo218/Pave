@@ -3,7 +3,7 @@
         <nav class="nav-container flex space-between align-center">
             <div class="left-nav flex align-center">
                 <div @click="updateExplore(false)" class="logo">Pave</div>
-                <input v-if="isExploreOpen" class="search" type="text" placeholder="Seach"/>
+                <input v-model="searchedText" @keyup.enter="setFilter" v-if="isExploreOpen" class="search" type="text" placeholder="Seach"/>
             </div>
             <div class="right-nav-mobile">
                 <div class="hamburger">
@@ -44,6 +44,7 @@ export default {
     data() {
         return {
             dropDownOpen: false,
+            searchedText:'',
         };
     },
     components: {},
@@ -64,6 +65,10 @@ export default {
         storageService.removeUser('loggedinUser');
         this.$store.dispatch({type: 'loggedOut'})
         },
+        setFilter() {
+        let searchedText = this.searchedText;
+        this.$store.dispatch({type:'setFilter',searchedText})
+        }
     }
 }
 </script>

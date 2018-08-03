@@ -2,7 +2,7 @@
     <section>
         <div class="list-container">
             <ul>
-                <li :key="index" v-for="(trip,index) in tripsForDisplay">
+                <li class="prev" :key="index" v-for="(trip,index) in tripsForDisplay">
                     <Preview :trip="trip"></Preview>
                 </li>
             </ul>
@@ -46,8 +46,7 @@ export default {
         font-family: 'roboto-medium';
         color: #383633;
         width: 70%;
-        margin: 0 auto;
-        margin-bottom: 4rem;
+        margin: 4rem auto;
         ul {
             display: flex;
             flex-wrap: wrap;
@@ -56,5 +55,8 @@ export default {
             padding: 0;
         }
     }
+    .prev{
+        cursor: pointer;
+    } 
 
 </style>

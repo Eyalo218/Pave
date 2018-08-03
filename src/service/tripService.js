@@ -12,7 +12,6 @@ function query(searchedText = '', userId = null) {
         }
     )
         .then(res => {
-            console.log(res.data);
             return res.data
         })
 }

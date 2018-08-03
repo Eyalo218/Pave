@@ -13,14 +13,10 @@ export default new Vuex.Store({
         userModule
     },
     state: {
-        currFilter: '',
         users: [],
         reviews: []
     },
     mutations: {
-        setFilter(state, { searchedText }) {
-            state.currFilter = searchedText;
-        }
     },
     actions: {}
 })

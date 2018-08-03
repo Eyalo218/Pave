@@ -2,18 +2,22 @@
     <section>
         <div class="hover-opacity"></div>
         <div class="h-list-item" @click="toDetails(`${trip._id}`)">
-            <div><img class="item-img" src="../../../public/img/home/home-list-demo.jpeg"></div>
-            <div class="location">{{trip.title}}</div>
-            <div class="reviews">Reviews<img class="review-dot" src="../../../public/img/home/dot-and-circle.svg"/></div>
-            <div class="country">Canada</div>
+            <div ><img class="item-img" :src="trip.image"></div>
+            <div class="flex column txt-container">
+                <div class="location">{{trip.title}}</div>
+                <div class="country">Canada</div>
+                <star-rating v-bind:star-size="15"></star-rating>
+            </div>
         </div>
     </section>
 </template>
 
 <script>
+
 export default {
   name: "PreviewExplore",
-  components: {},
+  components: {
+  },
   props: ["trip"],
   data() {
     return {
@@ -40,24 +44,34 @@ export default {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
+  box-shadow: 0px 3px 10px 1px rgba(84,81,84,0.78);
+  height: 18rem;
+  width: 15rem;
+
+  .txt-container{
+    padding: 0.5rem;
+  }
 
   .item-img {
-    width: 14.5rem;
-    height: 17.5rem;
-    border-radius: 0.3rem;
+    width: 100%;
+    height: 12rem;
   }
   .location {
+    font-family: "roboto-medium";
     font-size: 1rem;
   }
   .reviews {
-    font-family: "roboto-regular";
+    font-family: "roboto-medium";
   }
   .country {
     font-size: 0.8rem;
-    font-family: "roboto-regular";
+    font-family: "roboto-medium";
   }
   .review-dot {
     width: 12px;
+  }
+  .stars{
+    width: 50px;
   }
 }
   .card {

@@ -33,6 +33,7 @@ import tripList from "../components/ExploreComponents/List.vue";
 // import controlPanel from "../components/ExploreComponents/ControlPanel.vue";
 import relatedSearches from "../components/ExploreComponents/relatedSearches.vue";
 
+
 export default {
     name: 'Home',
     created(){},

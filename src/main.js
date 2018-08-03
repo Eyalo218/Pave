@@ -9,10 +9,12 @@ import * as VueGoogleMaps from 'vue2-google-maps'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { fas } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import StarRating from 'vue-star-rating'
 library.add(fas);
 import VueCarousel from 'vue-carousel';
 
-Vue.component('font-awesome-icon', FontAwesomeIcon)
+Vue.component('font-awesome-icon', FontAwesomeIcon);
+Vue.component('star-rating', StarRating);
 
 Vue.use(VueCarousel);
 Vue.use(VueGoogleMaps, {

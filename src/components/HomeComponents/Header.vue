@@ -47,7 +47,7 @@ export default {
   methods: {
       setFilter() {
         let searchedText = this.searchedText;
-        this.$store.commit({type:'setFilter',searchedText})
+        this.$store.dispatch({type:'setFilter',searchedText})
         this.updateExplore(true)
         // this.$router.push('/explore');
       },
@@ -61,7 +61,6 @@ export default {
         eventBus.$emit(CLOSE_EXPLORE)
       },
       updateExplore(currStatus) {
-        console.log('BYEBYEBYE')
             this.$store.dispatch({type: 'updateExplore', currStatus: currStatus})
       }
   },
