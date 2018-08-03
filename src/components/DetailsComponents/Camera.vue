@@ -5,9 +5,9 @@
           </video>
         </div>
         <div class="flex center buttons">
-          <button id="takePhoto" v-on:click="capturePhoto()">Take Photo</button>
-          <button id="next" v-on:click="continueToMarkDesc()">Next</button>
-          <button id="delete" v-on:click="deleteLastPhoto()">deleteLastPhoto</button>
+          <button class="takePhoto btn" @click="capturePhoto()">Take Photo</button>
+          <button class="next btn" @click="continueToMarkDesc()">Next</button>
+          <button class="delete btn" @click="deleteLastPhoto()">deleteLastPhoto</button>
         </div>
         <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
         <ul>
@@ -89,7 +89,7 @@ body {
 .Camera {
   text-align: center;
   color: #2c3e50;
-  margin-top:16px;
+  margin-top:10%;
 }
 .video {
   background-color: #000000;
@@ -102,6 +102,22 @@ li {
   padding: 5px;
 }
 .buttons{
-  margin-bottom:2rem;
+  margin:2rem;
+}
+.btn{
+  width:60px;
+  height: 60px;
+  border-radius:50%;
+}
+.next{
+background-color:rgb(64, 250, 64)
+}
+.takePhoto{
+background-color:#44809e
+
+
+}
+.delete{
+  background-color:red(64, 250, 64)
 }
 </style>

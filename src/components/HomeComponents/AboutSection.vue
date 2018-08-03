@@ -3,21 +3,21 @@
         <div class="flex row-reverse space-between about">
             <div class="info">
                 <h1>Plan faster, easily</h1>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas doloremque pariatur et aliquam</p>
+                <p>Find exciting new locations and adventures for your next travel, using other people trips and reviews.</p>
             </div>
             <div class="img img1"></div>
         </div>
         <div class="flex space-between about about1">
             <div class="info">
-                <h1>Travel Orginaized</h1>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas doloremque pariatur et aliquam</p>
+                <h1>Travel Organized</h1>
+                <p>Optimize your trip routes by choosing the best order to visit each attraction.</p>
             </div>
             <div class="img img2"></div>
         </div>
         <div class="flex row-reverse space-between about">
             <div class="info">
                 <h1>Follow and Lead</h1>
-                <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas doloremque pariatur et aliquam</p>
+                <p>Share your own traveling experiences and help other enjoy at your trip locations or visit cool places other people enjoyed before. </p>
             </div>
             <div class="img img3"></div>
         </div>
@@ -62,6 +62,7 @@ section{
 
 .info{
     width: 40%;
+    margin-bottom:10rem;
 }
 
 h1{

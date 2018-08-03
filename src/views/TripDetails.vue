@@ -43,7 +43,7 @@
     <font-awesome-icon @click="showReviews" class="icon" icon="comments" size="2x" />
   </div>
   <div class="flex all-container">
-      <div v-show="isMapShown" class="map">
+      <div v-show="show==='map'" class="map">
         <trip-map :mapHeight="setMapHeightInMobile"></trip-map>
         <div class="camera-container">
         <font-awesome-icon @click="togglePhotoMode()" class="camera" icon="camera" style="padding:0 1rem;" size="1x" />
@@ -102,6 +102,7 @@ export default {
   },
   data() {
     return {
+      // window:"map", not must
       photoMode: false,
       isMapShown: false,
       isPhotosShwon: true,
@@ -141,6 +142,10 @@ export default {
   methods: {
     togglePhotoMode() {
       this.photoMode = !this.photoMode;
+    },
+    show(window){
+      this.window=window;
+
     },
     showMap() {
       this.isMapShown = true;
@@ -229,12 +234,15 @@ button {
 .createMark {
   position: absolute;
   width: 100%;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
   z-index: 2;
-  background: white;
+  background:#38363371 ;
   height: 100vh;
 }
 .components-container {
-  position: relative;
+  // position: relative;
   width: 50%;
   padding: 1rem 7rem;
 }

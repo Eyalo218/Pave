@@ -1,6 +1,9 @@
 <template>
 <section>
-    <h1>Reviews</h1>
+    <div class="flex space-between">
+        <h1>{{reviews.length}} Trip Reviews</h1>
+        <h1 >Average Rating: {{setCurrTripId}}</h1>
+    </div>
         <ul>
             <li v-for="(review,idx) in reviews" :key="idx">
                 <div class="flex column">
@@ -25,7 +28,7 @@ export default {
     },
     computed:{
         setCurrTripId(){
-            return this.$store.getters.getCurrTrip
+            return this.$store.getters.getCurrTrip.avgReviews
         },
     },
     methods:{
@@ -51,7 +54,8 @@ ul{
     li{
         margin-bottom:1rem;
         color: #363833;
-        background-color:#EDEDED;
+        background-color:#eff1f3;
+        padding:8px 10px;
         border-radius: 5px;
         span{
             font-weight:bold;  
