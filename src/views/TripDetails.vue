@@ -267,7 +267,7 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
-  background: #38363371;
+  background:#3836336e ;
   height: 100vh;
 }
 .components-container {

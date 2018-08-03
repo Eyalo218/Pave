@@ -42,7 +42,7 @@ section{
 }
 
 .about-section {
-    margin-bottom: 1.5rem;
+    margin-bottom: 4rem;
 }
 
 .img{
@@ -66,7 +66,7 @@ section{
 
 .info{
     width: 40%;
-    margin-bottom:10rem;
+    margin-bottom:2rem;
 }
 
 h1{
