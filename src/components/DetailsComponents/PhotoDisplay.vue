@@ -1,19 +1,18 @@
 <template>
 <section class="photos">
-  <!-- <div><carousel :navigationEnabled="true">
+  <div ><carousel :loop="true" :perPage=1 :paginationEnabled="false" :navigationEnabled="true">
     <slide class="label" v-if="getUrls" :key="index" v-for="(url,index) in goodUrls">
       <img :src="url" style="width: 100%;"/>
       </slide>
-    </carousel></div> -->
-    <div ref="image" class="img" :style="{ 'background-image': `url(${currPhoto})` }">
+    </carousel></div>
+    <!-- <div ref="image" class="img" :style="{ 'background-image': `url(${currPhoto})` }">
         <div class="flex space-between arrows">    
               <font-awesome-icon @click="lastPhoto" class="arrow btn btn2" icon="angle-left" size="3x" />  
               <font-awesome-icon @click="nextPhoto" class="arrow btn btn1"  icon="angle-right" size="3x" />
         </div>
-    </div>
+    </div> -->
 </section>
 </template>
-
 <script>
 import { Carousel, Slide } from "vue-carousel";
 import {
@@ -36,6 +35,7 @@ export default {
       currTrip: null
     };
   },
+  // VueCarousel-slide-active
   created() {
     eventBus.$on(SET_TRIP_PHOTOS, trip => {
       this.currTrip = trip;
@@ -155,16 +155,11 @@ export default {
 $main-black: #383633;
 section {
   // padding: 1rem;
-  width:100%;
-  max-width: 450px;
-  min-width: 200px;
+  width: 100%;
+  // max-width: 450px;
+  // min-width: 200px;
 }
-.label {
-  // position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
+
 .img {
   height: 100%;
   border-radius: 5px;
@@ -178,9 +173,9 @@ section {
     transition: all 0.2s;
     opacity: 0.4;
   }
-  align-self:center;
+  align-self: center;
 }
-.photos{
+.photos {
   height: auto;
 }
 .arrows {

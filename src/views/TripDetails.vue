@@ -8,7 +8,6 @@
 <div class="flex">
   <div class="map">
     <trip-map :mapHeight="setMapHeightInMobile"></trip-map>
-    <font-awesome-icon @click="togglePhotoMode()" class="camera" icon="camera-retro" style="padding:0 1rem;" size="2x" />
   </div>
   <div class="components-container">
     <div v-if="photoMode" class="createMark">
@@ -16,13 +15,16 @@
     </div>
     <div class="details">
       <div class="photos">
-       
         <photo-display></photo-display>
-        
       </div>
-      <div v-if="getMarkers.length!==0" class="category-desc-container">
-        <p>
-          <span onselectstart="return false;" unselectable="on" class="category">Category: &nbsp;</span>
+      <div class="buttons-container">
+        <button @click="show('detMarker')" class="trip-det-button" >marker details</button>
+        <button @click="show('reviews')" class="trip-det-button" >reviews</button>
+        <button @click="togglePhotoMode()" class="trip-det-button">take a photo</button>
+      </div>
+      <div v-show="isDetShown" v-if="getMarkers.length!==0" class="category-desc-container">
+        <p> 
+          <span class="category">Category: &nbsp;</span>
           <span>{{getCurrMarker.category}}</span>
         </p>
         <p class="desc">{{getCurrMarker.desc}}</p>
@@ -60,7 +62,7 @@
         <font-awesome-icon @click="showMarkerDesc" class="info" icon="info"  />
           </div>
           <router-link :to="'/'" >
-         <font-awesome-icon class="home-link" icon="arrow-circle-left" size="3x" />
+         <font-awesome-icon class="home-link" icon="arrow-circle-left" size="2x" />
          </router-link>
            <div  :class="{'category-desc-container-shown':isDescShown}" 
            v-if="getMarkers.length!==0" class="category-desc-container">
@@ -106,7 +108,8 @@ export default {
       isMapShown: false,
       isPhotosShwon: true,
       isCommentsShown: false,
-      isDescShown: false
+      isDescShown: false,
+      isDetShown: false
     };
   },
   created() {
@@ -130,7 +133,7 @@ export default {
       if (window.innerWidth >= 800) return true;
     },
     setMapHeightInMobile() {
-      if (window.innerWidth > 1100) return "85vh";
+      if (window.innerWidth > 1100) return "90vh";
       else if (window.innerWidth <= 1100) return "70vh";
     },
     checkMobile() {
@@ -141,6 +144,9 @@ export default {
   methods: {
     togglePhotoMode() {
       this.photoMode = !this.photoMode;
+    },
+    show(category) {
+      if (category === "detMarker") this.isDetShown = true;
     },
     showMap() {
       this.isMapShown = true;
@@ -169,18 +175,28 @@ $mobile-height: 80vh;
 $mobile-width: 80vw;
 .map {
   width: 60%;
+  box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.75);
 }
 .banner {
   padding: 0.5rem;
 }
 .photos {
-  width: 100%;
+  width: 95%;
   height: 300px;
+  margin: 0 auto;
 }
+.buttons-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  padding-top: 1rem;
+}
+
 .home-link {
   margin-top: 0.5rem;
   padding: 0rem 1rem;
   color: $main-black;
+  // opacity: 1;
   font-size: 1.5em;
   &:hover {
     transform: scale(1.15);
@@ -200,9 +216,26 @@ hr {
     transform: scale(1.15);
   }
 }
+.trip-det-button {
+  color: #c9c9c9;
+  background-color: transparent;
+  border: none;
+  font-family: "roboto-bold";
+  font-size: 1rem;
+  width: auto;
+  &:hover {
+    color: #383633;
+    background-color: #ededed;
+    border-radius: 2rem;
+    border: none;
+    // font-size: 1.2rem;
+    cursor: pointer;
+  }
+}
+
 .category-desc-container {
   padding: 2rem 0;
-  padding-left: 0.5rem;
+  margin-left: 1.2rem;
   .category {
     color: $main-black;
     font-size: 1.3rem;
@@ -214,13 +247,13 @@ hr {
   }
   .desc {
     font-size: 0.8rem;
-    // padding: 0.5rem 0;
+    padding: 0.5rem 0;
     width: 80%;
     font-weight: bold;
   }
 }
 button {
-  width: 10%;
+  width: 25%;
   z-index: 2;
   img {
     width: 80%;
@@ -236,7 +269,7 @@ button {
 .components-container {
   position: relative;
   width: 50%;
-  padding: 1rem 7rem;
+  padding: 1rem 2rem;
 }
 // media queries:
 @media (max-width: 1100px) {
@@ -270,8 +303,8 @@ button {
   .home-link {
     // display: none;
     position: absolute;
-    bottom: 5%;
-    left: 7%;
+    bottom: 3%;
+    left: 5%;
     cursor: pointer;
   }
   .icon:hover {
@@ -279,13 +312,13 @@ button {
     transform: scale(1.1);
   }
   .photos {
-    width: $mobile-width;
+    width: 90vw;
     height: $mobile-height;
     box-shadow: 1px 1px 7px 1px black;
     // margin: 0 auto;
   }
   .map {
-    width: $mobile-width;
+    width: 90vw;
     height: $mobile-height;
     position: relative;
   }
@@ -320,7 +353,7 @@ button {
   }
   .category-desc-container-shown {
     z-index: 3;
-    bottom: 75%;
+    bottom: 65%;
     transition: all 1s;
     opacity: 1;
     // z-index: 1;
@@ -346,7 +379,7 @@ button {
     height: $mobile-height;
   }
   .all-container {
-    margin: 0 10%;
+    margin: 0 1rem;
     padding-top: 1rem;
   }
 
@@ -363,11 +396,5 @@ button {
   .slide-leave {
     transform: translateX(100vw);
   }
-}
-.category-desc-container{
-    p{
-        margin-bottom:1.25rem;
-        padding:0 40px;
-    }
 }
 </style>
