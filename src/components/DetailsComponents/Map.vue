@@ -77,6 +77,7 @@ export default {
     displayIconUrl(category) {
       return googleService.getIconUrl(category);
     },
+    displaySelectedIcon() {},
     setCurrTrip(currTripId) {
       if (!currTripId) currTripId = this.$route.params.tripId;
       this.$store.dispatch({ type: "setCurrTrip", currTripId }).then(() => {
@@ -89,12 +90,7 @@ export default {
     },
     setCurrMarker(currMarker, index) {
       this.$store.commit({ type: "setCurrMarker", currMarker });
-      this.$refs[`marker${index}`][0].$markerObject.setAnimation(
-        this.google.maps.Animation.BOUNCE
-      );
-      setTimeout(() => {
-        this.$refs[`marker${index}`][0].$markerObject.setAnimation(null);
-      }, 2100);
+        // this.setselectedIconUrl(index);
       this.$refs.map.$mapObject.panTo(
         googleService.setLatLng(
           currMarker.coords.lat,
@@ -103,6 +99,13 @@ export default {
         )
       );
       eventBus.$emit(MARKER_CLICKED, index);
+    },
+    setselectedIconUrl(index){
+      // overflow hidden
+      document.querySelectorAll('.gmnoprint')[index].style.overflow = '';
+      // document.querySelectorAll('.gmnoprint')[index].style.opacity = 1;
+      document.querySelectorAll('.gmnoprint')[index].style.cssText = ' width: 24px; height: 24px; position: absolute;cursor: pointer; touch-action: none; left: -12px; top: -24px; z-index: 0;';
+      console.log(document.querySelectorAll('.gmnoprint')[index].style);
     },
     setMarkers() {
       let markers = this.trip.markers;

@@ -4,10 +4,17 @@
           <video ref="video" class="video" width="500" height="375" autoplay>
           </video>
         </div>
-        <div class="flex center buttons">
-          <button id="takePhoto" v-on:click="capturePhoto()">Take Photo</button>
-          <button id="next" v-on:click="continueToMarkDesc()">Next</button>
-          <button id="delete" v-on:click="deleteLastPhoto()">deleteLastPhoto</button>
+        <div class="flex space-around buttons">
+           <font-awesome-icon icon="times" size="2x" />
+          <button class="takePhoto btn" @click="capturePhoto()">
+          <font-awesome-icon  icon="camera" size="2x" />
+          </button>
+          <button class="next btn" @click="continueToMarkDesc()">
+          <font-awesome-icon @click="continueToMarkDesc" icon="check" size="2x" />
+          </button>
+          <button class="delete btn" @click="deleteLastPhoto()">
+          <font-awesome-icon @click="deleteLastPhoto" icon="trash-alt" size="2x" />
+          </button>
         </div>
         <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
         <ul>
@@ -20,7 +27,7 @@
 
 <script>
 import cloudinary from "../../service/cloudinaryService.js";
-import {eventBus, PHOTO_TAKEN} from "../../service/eventBus.js";
+import { eventBus, PHOTO_TAKEN } from "../../service/eventBus.js";
 
 export default {
   name: "Camera",
@@ -30,7 +37,7 @@ export default {
       canvas: {},
       photos: [],
       counter: 0,
-      urls:[]
+      urls: []
     };
   },
   mounted() {
@@ -56,15 +63,15 @@ export default {
         this.photos.map(photo => {
           return this.uploadPhoto(photo);
         })
-      ).then((result)=>{
-        result.forEach((result)=>{
+      ).then(result => {
+        result.forEach(result => {
           this.urls.push(result.url);
-        })
-        console.log(this.urls)
+        });
+        console.log(this.urls);
         var marker = {
-          photos:this.urls
-        }
-        eventBus.$emit(PHOTO_TAKEN, marker)
+          photos: this.urls
+        };
+        eventBus.$emit(PHOTO_TAKEN, marker);
       });
     },
     deleteLastPhoto() {
@@ -89,7 +96,7 @@ body {
 .Camera {
   text-align: center;
   color: #2c3e50;
-  margin-top:16px;
+  margin-top: 10%;
 }
 .video {
   background-color: #000000;
@@ -101,7 +108,21 @@ li {
   display: inline;
   padding: 5px;
 }
-.buttons{
-  margin-bottom:2rem;
+.buttons {
+  margin: 2rem;
+}
+.btn {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.next {
+  background-color: rgb(64, 250, 64);
+}
+.takePhoto {
+  background-color: #44809e;
+}
+.delete {
+  background-color: red;
 }
 </style>
