@@ -1,38 +1,45 @@
 <template>
     <section>
       <div v-if="checkMobile">
-    <router-link :to="'/'">
-  <font-awesome-icon class="home-link" icon="arrow-circle-left" size="1x" />
-</router-link>
-
+        <div class="nav-bar">
+         <router-link :to="'/'">
+          <font-awesome-icon class="home-link" icon="arrow-circle-left" size="1x" />
+          </router-link>
+        </div>
 <div class="flex">
   <div class="map">
     <trip-map :mapHeight="setMapHeightInMobile"></trip-map>
   </div>
   <div class="components-container">
+    <transition name="fade">
     <div v-if="photoMode" class="createMark">
       <create-mark></create-mark>
     </div>
+    </transition>
     <div class="details">
       <div class="photos">
         <photo-display></photo-display>
       </div>
       <div class="buttons-container">
-        <button @click="show('detMarker')" class="trip-det-button" >marker details</button>
-        <button @click="show('reviews')" class="trip-det-button" >reviews</button>
+        <button @click="showCategory('markerDetails')"  :class="{'trip-det-button':true,
+        'active-cat-btn':catWindow=== 'markerDetails'}">marker details</button>
+        <button @click="showCategory('reviews')" class="trip-det-button" >comments</button>
         <button @click="togglePhotoMode()" class="trip-det-button">take a photo</button>
       </div>
-      <div v-show="isDetShown" v-if="getMarkers.length!==0" class="category-desc-container">
+      <transition mode="in-out" name="fade">
+      <div key="1" v-show="catWindow === 'markerDetails'" v-if="getMarkers.length!==0" class="category-desc-container">
         <p> 
           <span class="category">Category: &nbsp;</span>
           <span>{{getCurrMarker.category}}</span>
         </p>
         <p class="desc">{{getCurrMarker.desc}}</p>
-        <hr/>
       </div>
-      <div class="reviews">
+      </transition>
+      <transition name="fade">
+      <div key="2" v-show="catWindow === 'reviews'" class="reviews">
         <Reviews></Reviews>
       </div>
+      </transition>
     </div>
   </div>
 </div>
@@ -45,12 +52,13 @@
     <font-awesome-icon @click="showReviews" class="icon" icon="comments" size="2x" />
   </div>
   <div class="flex all-container">
-      <div v-show="show==='map'" class="map">
+      <div v-show="showMobile==='map'" class="map">
         <trip-map :mapHeight="setMapHeightInMobile"></trip-map>
         <div class="camera-container">
         <font-awesome-icon @click="togglePhotoMode()" class="camera" icon="camera" style="padding:0 1rem;" size="1x" />
         </div>
       </div>
+      
         <div v-if="photoMode" class="createMark">
           <create-mark></create-mark>
         </div>
@@ -67,7 +75,7 @@
            <div  :class="{'category-desc-container-shown':isDescShown}" 
            v-if="getMarkers.length!==0" class="category-desc-container">
             <p>
-              <span onselectstart="return false;" unselectable="on" class="category">Category: &nbsp;</span>
+              <span  class="category">Category: &nbsp;</span>
               <span>{{getCurrMarker.category}}</span>
             </p>
             <p class="desc">{{getCurrMarker.desc}}</p>
@@ -104,13 +112,9 @@ export default {
   },
   data() {
     return {
-      // window:"map", not must
-      photoMode: false,
-      isMapShown: false,
-      isPhotosShwon: true,
-      isCommentsShown: false,
-      isDescShown: false,
-      isDetShown: false
+      catWindow: "markerDetails",
+      window: "map",
+      photoMode: false
     };
   },
   created() {
@@ -146,29 +150,11 @@ export default {
     togglePhotoMode() {
       this.photoMode = !this.photoMode;
     },
-    show(window){
-      this.window=window;
+    showMobile(window) {
+      this.window = window;
     },
-    show1(category) {
-      if (category === "detMarker") this.isDetShown = true;
-    },
-    showMap() {
-      this.isMapShown = true;
-      this.isPhotosShwon = false;
-      this.isCommentsShown = false;
-    },
-    showCamera() {
-      this.isMapShown = false;
-      this.isPhotosShwon = true;
-      this.isCommentsShown = false;
-    },
-    showReviews() {
-      this.isMapShown = false;
-      this.isPhotosShwon = false;
-      this.isCommentsShown = true;
-    },
-    showMarkerDesc() {
-      this.isDescShown = !this.isDescShown;
+    showCategory(category) {
+      this.catWindow = category;
     }
   }
 };
@@ -180,6 +166,19 @@ $mobile-width: 80vw;
 .map {
   width: 60%;
   box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.75);
+}
+.nav-bar {
+  background-color: black;
+  height: 25px;
+  opacity: 0.7;
+  margin-bottom: 0.4rem;
+}
+.active-cat-btn {
+  color: #383633;
+  background-color: #ededed;
+  border-radius: 2rem;
+  border: none;
+  cursor: pointer;
 }
 .banner {
   padding: 0.5rem;
@@ -197,11 +196,9 @@ $mobile-width: 80vw;
 }
 
 .home-link {
-  margin-top: 0.5rem;
-  padding: 0rem 1rem;
-  color: $main-black;
-  // opacity: 1;
-  font-size: 1.5em;
+  margin: 0.2rem;
+  color: #47809d;
+  font-size: 1.15em;
   &:hover {
     transform: scale(1.15);
     color: #47809d;
@@ -238,8 +235,8 @@ hr {
 }
 
 .category-desc-container {
-  padding: 2rem 0;
-  margin-left: 1.2rem;
+  padding: 3rem 0;
+  margin-left: 6%;
   .category {
     color: $main-black;
     font-size: 1.3rem;
@@ -266,11 +263,11 @@ button {
 .createMark {
   position: absolute;
   width: 100%;
-  top:50%;
-  left:50%;
-  transform:translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   z-index: 3;
-  background:#38363371 ;
+  background: #38363371;
   height: 100vh;
 }
 .components-container {
@@ -389,19 +386,16 @@ button {
     margin: 0 1rem;
     padding-top: 1rem;
   }
+}
 
-  // vue animations:
-  .slide-enter-active {
-    transition: all 1s;
-  }
-  .slide-leave-active {
-    transition: all 1s;
-  }
-  .slide-enter {
-    transform: translateX(-100vw);
-  }
-  .slide-leave {
-    transform: translateX(100vw);
-  }
+// vue animations:
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 1s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
