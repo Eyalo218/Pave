@@ -55,8 +55,5 @@ export default {
             padding: 0;
         }
     }
-    .prev{
-        cursor: pointer;
-    } 
 
 </style>

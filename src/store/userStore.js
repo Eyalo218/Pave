@@ -38,6 +38,12 @@ export default {
         },
         loggedOut(context) {
             context.commit({type: 'setLoggedOut'})
+        },
+        addPinToUser(context, payload) {
+            payload.user.pins.push(payload.tripId)
+            let user = payload.user
+            return userService.editUser(user)
+                .then(user => user)
         }
     }
 }

@@ -30,6 +30,9 @@ export default {
         userTripsToDisplay(state, { trips }) {
             state.currUserTrips = trips
         },
+        userPinsToDisplay(state, {trips}) {
+            state.currUserTrips = trips
+        },
         updateExplore(state, { currStatus }) {
             state.explore = currStatus
         },
@@ -95,6 +98,12 @@ export default {
                 })
             // context.commit({type: 'updateFilter', searchedText})
             // state.currFilter = searchedText;
+        },
+        getPins(context, {pins}){
+            return Promise.all(pins.map( tripId => tripService.getById(tripId)))
+                .then(trips => {
+                    context.commit({type: 'userPinsToDisplay', trips})
+                })
         }
     }
 }

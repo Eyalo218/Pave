@@ -2,13 +2,13 @@
     <section>
         <div class="trips-container">
             <div class="trips-display-ctr">
-                <button>My trips</button>
-                <button>Pins</button>
+                <button @click="loadUserTrips" :class="{'to-render': myTrips}">My trips</button>
+                <button @click="getPins" :class="{'to-render': !myTrips}">Pins</button>
             </div>
             <div class="trip-display">
             <div class="my-trips">
                 <ul class="trip-render-container flex flex-wrap align-center">
-                    <li class="create-trip flex center align-center">
+                    <li v-if="myTrips" class="create-trip flex center align-center">
                         <div class="create-btn flex center align-center"@click="createTrip = true" >+</div>
                     </li>
                     <li v-for="trip in userTripsToDisplay" class="trip flex column">
@@ -51,9 +51,11 @@ export default {
                 traveledTime: Date.now,
                 views: 0,
                 userId: this.$route.params.userId,
-                isComplete: false
+                isComplete: false,
+                isActive: true,
             },
             createTrip: false,
+            myTrips: true,
         }
     },
     created(){
@@ -79,6 +81,7 @@ export default {
                 })
         },
         loadUserTrips() {
+            this.myTrips = true;
             this.$store.dispatch({type: 'loadTripsByUserId', userId: this.$route.params.userId})
         },
         directToTrip(tripId) {
@@ -88,6 +91,11 @@ export default {
             this.createTrip = false;
             this.newTrip.title = '';
             this.newTrip.desc = '';
+        },
+        getPins() {
+            this.myTrips = false
+            this.$store.dispatch({type: 'getPins', pins: this.userToDisplay.pins})
+                .then(pins => console.log('Pins are in thaa house', pins) ) 
         }
     }
 }
@@ -107,16 +115,26 @@ export default {
             font-size: 1.2rem;
             margin-right: 0.7rem;
             padding: 0.5rem 1rem;
+            cursor: pointer;
+            outline: none;
         }
 
-        button:hover {
+//         button:hover {
+// color: #383633;
+//             background-color: #EDEDED;
+//             border-radius: 2rem;
+//             border: none;
+//             font-size: 1.2rem;
+//             cursor: pointer;
+//         }
+        .to-render{
             color: #383633;
             background-color: #EDEDED;
             border-radius: 2rem;
             border: none;
             font-size: 1.2rem;
             cursor: pointer;
-        }
+    }
     }
     .trip-render-container {
         margin: 0 auto;

@@ -1,12 +1,16 @@
 <template>
     <section>
         <div class="hover-opacity"></div>
-        <div class="h-list-item" @click="toDetails(`${trip._id}`)">
-            <div ><img class="item-img" :src="trip.image"></div>
+        <div class="h-list-item">
+            <div ><img @click="toDetails(`${trip._id}`)" class="item-img" :src="trip.image"></div>
             <div class="flex column txt-container">
-                <div class="location">{{trip.title}}</div>
-                <div class="country">Canada</div>
-                <star-rating v-bind:star-size="15"></star-rating>
+                <div class="location" @click="toDetails(`${trip._id}`)">{{trip.title}}</div>
+                <div class="country" @click="toDetails(`${trip._id}`)">Canada</div>
+                <div class="flex space-between">
+                    <star-rating  class="stars" :show-rating="false" :read-only="true" v-model="rating" @click="setRating" :star-size="13">
+                    </star-rating>
+                    <div><font-awesome-icon  @click="pinTrip(trip._id)" class="pin" icon="thumbtack" size="1x" /></div>
+                </div>
             </div>
         </div>
     </section>
@@ -14,25 +18,40 @@
 
 <script>
 
+import {eventBus} from '../../service/eventBus.js'
+
 export default {
   name: "PreviewExplore",
-  components: {
-  },
+  components: {},
   props: ["trip"],
   data() {
     return {
-      trips: null
+      trips: null,
+      rating: 0,
     };
   },
   created() {},
   computed: {
     tripsForDisplay() {
-      return this.$store.getters.tripsForDisplay;
+        return this.$store.getters.tripsForDisplay;
+    },
+    UserLoggedIn() {
+        return this.$store.getters.loggedIn
     }
   },
   methods: {
     toDetails(tripId) {
       this.$router.push(`/trips/${tripId}`);
+    },
+    setRating(){
+      console.log(this.rating)
+    },
+    pinTrip(tripId) {
+      if(!this.UserLoggedIn) console.log(this.UserLoggedIn)
+      else {
+          this.$store.dispatch({type: 'addPinToUser', user: this.UserLoggedIn, tripId: tripId})
+              .then(user => {console.log(user)})
+      }
     }
   }
 };
@@ -55,10 +74,13 @@ export default {
   .item-img {
     width: 100%;
     height: 12rem;
+    cursor: pointer;
   }
   .location {
     font-family: "roboto-medium";
     font-size: 1rem;
+    cursor: pointer;
+    margin-bottom: 0.4rem;
   }
   .reviews {
     font-family: "roboto-medium";
@@ -66,6 +88,8 @@ export default {
   .country {
     font-size: 0.8rem;
     font-family: "roboto-medium";
+    cursor: pointer;
+    margin-bottom: 0.4rem;
   }
   .review-dot {
     width: 12px;
@@ -77,16 +101,11 @@ export default {
   .card {
     display: inline-block;
   }
-  .hover-opacity {
-      background-color: transparent;
-      position: absolut;
-      width:100%;
-      height: 100%;
+  .pin {
+    color: #44809e;
+    padding-right: 5px;
   }
-  .hover-opacity:hover{
-      cursor: pointer;
-      z-index: 1000;
-      border-radius: 5px;
-      background-color: rgba( 100, 100, 100, 0.5);
+  .pin:hover {
+    cursor: pointer;
   }
 </style>
