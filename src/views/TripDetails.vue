@@ -26,17 +26,15 @@
         <button @click="showCategory('reviews')" class="trip-det-button" >comments</button>
         <button @click="togglePhotoMode()" class="trip-det-button">take a photo</button>
       </div>
-      <transition mode="in-out" name="fade">
-      <div key="1" v-show="catWindow === 'markerDetails'" v-if="getMarkers.length!==0" class="category-desc-container">
+      <transition mode="out-in" name="fade">
+      <div key="1"  v-if="getMarkers.length!==0 && catWindow === 'markerDetails'" class="category-desc-container">
         <p> 
           <span class="category">Category: &nbsp;</span>
           <span>{{getCurrMarker.category}}</span>
         </p>
         <p class="desc">{{getCurrMarker.desc}}</p>
       </div>
-      </transition>
-      <transition name="fade">
-      <div key="2" v-show="catWindow === 'reviews'" class="reviews">
+      <div key="2" v-if="catWindow === 'reviews'" class="reviews">
         <Reviews></Reviews>
       </div>
       </transition>
@@ -46,24 +44,29 @@
 </div>
 <!-- mobile -->
 <div v-if="!checkMobile">
-   <div class="banner flex space-between align-center">
-    <font-awesome-icon @click="showOnMobile('map')"  class="icon" icon="map-marked-alt" size="2x" />
-    <font-awesome-icon @click="showOnMobile('photos')"  class="icon" icon="camera-retro" size="2x" />
-    <font-awesome-icon @click="showOnMobile('reviews')" class="icon" icon="comments" size="2x" />
+   <div :class="{header:true,'header-map': mobileWindow === 'map','header-reviews':mobileWindow === 'reviews' }">
+    <font-awesome-icon @click="showOnMobile('map')" :class="{icon:true,'active-icon-category':mobileWindow === 'map'}"
+     icon="map-marked-alt" size="2x" />
+    <font-awesome-icon @click="showOnMobile('photos')"  :class="{icon:true,'active-icon-category':mobileWindow === 'photos'}"
+     icon="camera-retro" size="2x" />
+    <font-awesome-icon @click="showOnMobile('reviews')" :class="{icon:true,'active-icon-category':mobileWindow === 'reviews'}"
+     icon="comments" size="2x" />
   </div>
   <div class="flex all-container">
-      <div v-show="mobileWindow ==='map'" class="map">
+     <transition name="slide" mode="in-out">
+      <div key="2" v-show="mobileWindow ==='map'" class="map">
         <trip-map :mapHeight="setMapHeightInMobile"></trip-map>
         <div class="camera-container">
         <font-awesome-icon @click="togglePhotoMode()" class="camera" icon="camera" style="padding:0 1rem;" size="1x" />
         </div>
       </div>
-      
+     </transition>
         <div v-if="photoMode" class="createMark">
           <create-mark></create-mark>
         </div>
         <div class="details">
-          <div v-show="mobileWindow ==='photos'" class="photos" >
+           <transition name="fade" mode="in-out">
+          <div key="1" v-show="mobileWindow ==='photos'" class="photos" >
             <!-- :class="{'desc-modal-shown':false}" -->
              <div class="desc-modal">
         </div>
@@ -71,10 +74,11 @@
             <!-- @click="showMarkerDesc" -->
         <font-awesome-icon  class="info" icon="info"  />
           </div>
+           </transition>
           <router-link :to="'/'" >
          <font-awesome-icon class="home-link" icon="arrow-circle-left" size="2x" />
          </router-link>
-           <div  :class="{'category-desc-container-shown':false}" 
+           <div :class="{'category-desc-container-shown':false}" 
           v-show="false" v-if="getMarkers.length!==0" class="category-desc-container">
             <p>
               <span  class="category">Category: &nbsp;</span>
@@ -177,6 +181,9 @@ $mobile-width: 80vw;
   opacity: 0.7;
   margin-bottom: 0.4rem;
 }
+.active-icon-category {
+  color: #47809d;
+}
 .active-cat-btn {
   color: #383633;
   background-color: #ededed;
@@ -184,8 +191,23 @@ $mobile-width: 80vw;
   border: none;
   cursor: pointer;
 }
-.banner {
-  padding: 0.5rem;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 0;
+  // margin: 0 1rem;
+  position: fixed;
+  width: 100%;
+  transition: all 0.5s;
+}
+.header-map {
+  transform: translatex(45vw);
+  transition: all 0.5s;
+}
+.header-reviews {
+  transform: translatex(-45vw);
+  transition: all 0.5s;
 }
 .photos {
   width: 95%;
@@ -315,9 +337,12 @@ button {
     left: 5%;
     cursor: pointer;
   }
-  .icon:hover {
-    cursor: pointer;
-    transform: scale(1.1);
+  .icon {
+    padding: 0 0.5rem;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+    }
   }
   .photos {
     width: 85vw;
@@ -327,6 +352,7 @@ button {
     border-radius: 3px;
   }
   .map {
+    margin: 0;
     width: 90vw;
     height: $mobile-height;
     position: relative;
@@ -388,19 +414,30 @@ button {
     height: $mobile-height;
   }
   .all-container {
-    margin: 0 8%;
-    padding-top: 1rem;
+    margin: 0;
+    padding-top: 3.5rem;
+    justify-content: center;
   }
 }
 
 // vue animations:
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 1s;
+  transition: opacity 0.4s;
 }
-
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
 }
+// .slide-enter-active {
+//   transition: all 0.5s;
+// }
+// .slide-leave-active {
+//   transition: all 0.5s;
+// }
+// .slide-enter,
+// .slide-leave-to {
+//   transform: translateX(-100vw);
+//   opacity: 0;
+// }
 </style>
