@@ -15,8 +15,9 @@
                     </div>
                 </li>
             </ul>
-            <div v-if="comment" class="addComment absolute">
-                najnjnajjjnjnjns
+            <div v-if="comment" class="addComment absolute flex column align-center">
+                <input type="text" class="title" maxlength="15" placeholder="Title">
+                <textarea class="description" cols="25" rows="6" maxlength="150" placeholder="Description"></textarea>
             </div>
         </div>
     </section>
@@ -127,5 +128,22 @@ p{
 }
 section{
     margin-top:1.5rem;
+}
+
+.title {
+    padding: 0.8rem;
+    margin-bottom: 1.2rem;
+    border-radius: 5px;
+    border: 1px solid #EDEDED;
+    width:60%;
+}
+
+.description  {
+    margin-bottom: 1.2rem;
+    padding: 0.8rem;
+    height: 4rem;
+    border-radius: 5px;
+    border: 1px solid #EDEDED;
+    width:60%;
 }
 </style>
