@@ -1,6 +1,6 @@
 <template>
 <section class="photos">
-  <div ><carousel ref="carousel" :loop="true" :perPage=1 :paginationEnabled="false" :navigationEnabled="true">
+  <div ><carousel ref="carousel"  :loop="true" :perPage=1 :paginationEnabled="false" :navigationEnabled="true">
     <slide class="label" v-if="urls" :key="index" v-for="(url,index) in urls">
       <img :src="url" style="width: 100%;"/>
       </slide>

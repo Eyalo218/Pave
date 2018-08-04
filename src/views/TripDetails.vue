@@ -47,12 +47,12 @@
 <!-- mobile -->
 <div v-if="!checkMobile">
    <div class="banner flex space-between align-center">
-    <font-awesome-icon  class="icon" icon="map-marked-alt" size="2x" />
-    <font-awesome-icon  class="icon" icon="camera-retro" size="2x" />
-    <font-awesome-icon  class="icon" icon="comments" size="2x" />
+    <font-awesome-icon @click="showOnMobile('map')"  class="icon" icon="map-marked-alt" size="2x" />
+    <font-awesome-icon @click="showOnMobile('photos')"  class="icon" icon="camera-retro" size="2x" />
+    <font-awesome-icon @click="showOnMobile('reviews')" class="icon" icon="comments" size="2x" />
   </div>
   <div class="flex all-container">
-      <div v-show="showMobile==='map'" class="map">
+      <div v-show="mobileWindow ==='map'" class="map">
         <trip-map :mapHeight="setMapHeightInMobile"></trip-map>
         <div class="camera-container">
         <font-awesome-icon @click="togglePhotoMode()" class="camera" icon="camera" style="padding:0 1rem;" size="1x" />
@@ -63,8 +63,9 @@
           <create-mark></create-mark>
         </div>
         <div class="details">
-          <div v-show="true" class="photos" >
-             <div :class="{'desc-modal-shown':false}" class="desc-modal">
+          <div v-show="mobileWindow ==='photos'" class="photos" >
+            <!-- :class="{'desc-modal-shown':false}" -->
+             <div class="desc-modal">
         </div>
             <photo-display></photo-display>
             <!-- @click="showMarkerDesc" -->
@@ -74,7 +75,7 @@
          <font-awesome-icon class="home-link" icon="arrow-circle-left" size="2x" />
          </router-link>
            <div  :class="{'category-desc-container-shown':false}" 
-           v-if="getMarkers.length!==0" class="category-desc-container">
+          v-show="false" v-if="getMarkers.length!==0" class="category-desc-container">
             <p>
               <span  class="category">Category: &nbsp;</span>
               <span>{{getCurrMarker.category}}</span>
@@ -111,16 +112,15 @@ export default {
   data() {
     return {
       catWindow: "markerDetails",
-      window: "map",
+      mobileWindow: "photos",
       photoMode: false
     };
   },
-  created(){
-    eventBus.$on(CLOSE_CAMERA, this.togglePhotoMode)
+  created() {
+    eventBus.$on(CLOSE_CAMERA, this.togglePhotoMode);
   },
   computed: {
     getCurrTrip() {
-            
       return this.$store.getters.getCurrTrip;
     },
     getCurrMarker() {
@@ -146,12 +146,12 @@ export default {
   },
   methods: {
     togglePhotoMode() {
-      console.log('swalalalalalalalal emit emit emit');
-      
+      console.log("swalalalalalalalal emit emit emit");
+
       this.photoMode = !this.photoMode;
     },
-    showMobile(window) {
-      this.window = window;
+    showOnMobile(mobileWindow) {
+      this.mobileWindow = mobileWindow;
     },
     showCategory(category) {
       this.catWindow = category;
@@ -166,8 +166,8 @@ $mobile-width: 80vw;
 .map {
   width: 60%;
   box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.75);
-  margin-top:0.90rem;
-  margin-left: 1.10rem;
+  margin-top: 0.9rem;
+  margin-left: 1.1rem;
 }
 .nav-bar {
   display: flex;
@@ -271,7 +271,7 @@ button {
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 3;
-  background:#3836336e ;
+  background: #3836336e;
   height: 100vh;
 }
 .components-container {
@@ -320,10 +320,11 @@ button {
     transform: scale(1.1);
   }
   .photos {
-    width: 90vw;
-    height: $mobile-height;
-    box-shadow: 1px 1px 7px 1px black;
-    // margin: 0 auto;
+    width: 85vw;
+    height: 80vh;
+    background-color: #383633;
+    box-shadow: 1px 1px 4px 1px black;
+    border-radius: 3px;
   }
   .map {
     width: 90vw;
@@ -387,7 +388,7 @@ button {
     height: $mobile-height;
   }
   .all-container {
-    margin: 0 1rem;
+    margin: 0 8%;
     padding-top: 1rem;
   }
 }
