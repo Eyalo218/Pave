@@ -92,6 +92,7 @@ export default {
     setCurrMarker(currMarker, index) {
       this.$store.commit({ type: "setCurrMarker", currMarker });
         // this.setselectedIconUrl(index);
+        
       this.$refs.map.$mapObject.panTo(
         googleService.setLatLng(
           currMarker.coords.lat,

@@ -47,9 +47,9 @@
 <!-- mobile -->
 <div v-if="!checkMobile">
    <div class="banner flex space-between align-center">
-    <font-awesome-icon @click="showMap" class="icon" icon="map-marked-alt" size="2x" />
-    <font-awesome-icon @click="showCamera" class="icon" icon="camera-retro" size="2x" />
-    <font-awesome-icon @click="showReviews" class="icon" icon="comments" size="2x" />
+    <font-awesome-icon  class="icon" icon="map-marked-alt" size="2x" />
+    <font-awesome-icon  class="icon" icon="camera-retro" size="2x" />
+    <font-awesome-icon  class="icon" icon="comments" size="2x" />
   </div>
   <div class="flex all-container">
       <div v-show="showMobile==='map'" class="map">
@@ -63,16 +63,17 @@
           <create-mark></create-mark>
         </div>
         <div class="details">
-          <div v-show="isPhotosShwon" class="photos" >
-             <div :class="{'desc-modal-shown':isDescShown}" class="desc-modal">
+          <div v-show="true" class="photos" >
+             <div :class="{'desc-modal-shown':false}" class="desc-modal">
         </div>
             <photo-display></photo-display>
-        <font-awesome-icon @click="showMarkerDesc" class="info" icon="info"  />
+            <!-- @click="showMarkerDesc" -->
+        <font-awesome-icon  class="info" icon="info"  />
           </div>
           <router-link :to="'/'" >
          <font-awesome-icon class="home-link" icon="arrow-circle-left" size="2x" />
          </router-link>
-           <div  :class="{'category-desc-container-shown':isDescShown}" 
+           <div  :class="{'category-desc-container-shown':false}" 
            v-if="getMarkers.length!==0" class="category-desc-container">
             <p>
               <span  class="category">Category: &nbsp;</span>
@@ -80,7 +81,7 @@
             </p>
             <p class="desc">{{getCurrMarker.desc}}</p>
           </div>
-          <div v-show="isCommentsShown" class="reviews">
+          <div v-show="false" class="reviews">
             <Reviews></Reviews>
           </div>
         </div>

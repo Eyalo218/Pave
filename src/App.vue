@@ -4,7 +4,14 @@
   </div>
 </template>
 <style lang="scss">
-.VueCarousel-wrapper{
+.VueCarousel-wrapper {
   height: 300px !important;
+}
+section.photos{
+  display: flex;
+  align-items: center;
+}
+.VueCarousel-inner{
+  align-items: center;
 }
 </style>

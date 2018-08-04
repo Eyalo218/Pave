@@ -70,89 +70,75 @@ export default {
   methods: {
     lastPhoto() {
       const carousel = this.$refs.carousel;
-      console.log(carousel.currentPage);
       let urls = [];
       carousel.$el.querySelectorAll("img").forEach(img => {
         urls.push(img.currentSrc);
       });
-      console.log(urls);
       for (let i = 0; i < this.markersForDisplay.length; i++) {
         for (let j = 0; j < this.markersForDisplay[i].photos.length; j++) {
           let markerPhotos = this.markersForDisplay[i].photos;
-          // TODO: got the curr image by current page, just check the marker for it in i index
           if (urls[carousel.currentPage] === markerPhotos[j]) {
-            console.log("i", i);
-
-            console.log(markerPhotos[j]);
+            let currMarker = this.markersForDisplay[i];
+            let currMarkerIdx = i;
+            this.$store.commit({ type: "setCurrMarker", currMarker });
+            eventBus.$emit(CHANGE_MARKER, {
+              currMarkerIdx,
+              marker: this.markersForDisplay[i]
+            });
           }
         }
       }
-      console.log();
+    },
+    nextPhoto() {
+      const carousel = this.$refs.carousel;
+      let urls = [];
+      carousel.$el.querySelectorAll("img").forEach(img => {
+        urls.push(img.currentSrc);
+      });
+      for (let i = 0; i < this.markersForDisplay.length; i++) {
+        for (let j = 0; j < this.markersForDisplay[i].photos.length; j++) {
+          let markerPhotos = this.markersForDisplay[i].photos;
+          if (urls[carousel.currentPage] === markerPhotos[j]) {
+            let currMarker = this.markersForDisplay[i];
+            let currMarkerIdx = i;
+            this.$store.commit({ type: "setCurrMarker", currMarker });
+            eventBus.$emit(CHANGE_MARKER, {
+              currMarkerIdx,
+              marker: this.markersForDisplay[i]
+            });
+          }
+        }
+      }
 
       // let urls = this.photosUrls;
-      // let newUrls = ("" + urls).split(",");
       // for (var i = 0; i < urls.length; i++) {
       //   for (var j = 0; j < urls[i].length; j++) {
       //     if (urls[i][j] === this.currPhoto) {
-      //       if (i === 0 && j === 0) {
-      //         this.currPhoto = newUrls[newUrls.length - 1];
-      //         let currMarkerIdx = urls.length - 1;
-      //         let currMarker = this.currTrip.markers[currMarkerIdx];
-      //         this.$store.commit({ type: "setCurrMarker", currMarker });
+      //       if (i === urls.length - 1 && j === urls[i].length - 1) {
+      //         let currMarkerIdx = 0;
+      //         this.currPhoto = urls[0][0];
       //         eventBus.$emit(CHANGE_MARKER, {
       //           currMarkerIdx,
       //           marker: this.currTrip.markers[currMarkerIdx]
       //         });
+      //         let currMarker = this.currTrip.markers[currMarkerIdx];
+      //         this.$store.commit({ type: "setCurrMarker", currMarker });
       //         return;
       //       }
-      //       this.currPhoto = urls[i][j - 1]
-      //         ? urls[i][j - 1]
-      //         : urls[i - 1][urls[i - 1].length - 1];
-      //       if (!urls[i][j - 1]) {
-      //         let currMarkerIdx = i - 1;
-      //         let currMarker = this.currTrip.markers[currMarkerIdx];
-      //         this.$store.commit({ type: "setCurrMarker", currMarker });
+      //       this.currPhoto = urls[i][j + 1] ? urls[i][j + 1] : urls[i + 1][0];
+      //       if (!urls[i][j + 1]) {
+      //         let currMarkerIdx = i + 1;
       //         eventBus.$emit(CHANGE_MARKER, {
       //           currMarkerIdx,
       //           marker: this.currTrip.markers[currMarkerIdx]
       //         });
+      //         let currMarker = this.currTrip.markers[currMarkerIdx];
+      //         this.$store.commit({ type: "setCurrMarker", currMarker });
       //       }
-      //       if (!this.currPhoto) this.currPhoto = urls[0][0];
       //       return;
       //     }
       //   }
       // }
-    },
-    nextPhoto() {
-      let urls = this.photosUrls;
-      for (var i = 0; i < urls.length; i++) {
-        for (var j = 0; j < urls[i].length; j++) {
-          if (urls[i][j] === this.currPhoto) {
-            if (i === urls.length - 1 && j === urls[i].length - 1) {
-              let currMarkerIdx = 0;
-              this.currPhoto = urls[0][0];
-              eventBus.$emit(CHANGE_MARKER, {
-                currMarkerIdx,
-                marker: this.currTrip.markers[currMarkerIdx]
-              });
-              let currMarker = this.currTrip.markers[currMarkerIdx];
-              this.$store.commit({ type: "setCurrMarker", currMarker });
-              return;
-            }
-            this.currPhoto = urls[i][j + 1] ? urls[i][j + 1] : urls[i + 1][0];
-            if (!urls[i][j + 1]) {
-              let currMarkerIdx = i + 1;
-              eventBus.$emit(CHANGE_MARKER, {
-                currMarkerIdx,
-                marker: this.currTrip.markers[currMarkerIdx]
-              });
-              let currMarker = this.currTrip.markers[currMarkerIdx];
-              this.$store.commit({ type: "setCurrMarker", currMarker });
-            }
-            return;
-          }
-        }
-      }
     },
     insertPhotosUrls(markers) {
       this.photosUrls = markers.map(marker => {
@@ -161,15 +147,18 @@ export default {
     },
     setFirstPhoto() {
       this.currPhoto = this.photosUrls[0][0];
-      console.log(this.currTrip.markers[0]);
     },
     setPhotosByClickedMarker(markerIdx) {
-      // this.currMarkerIdx = markerIdx;
       let currMarker = this.$store.getters.markersForDisplay[markerIdx];
+      let currMarkerPhotos = currMarker.photos;
+      let photoIdx = this.urls.findIndex(url => {
+        for (let i = 0; i < currMarkerPhotos.length; i++) {
+          return url === currMarkerPhotos[i];
+        }
+      });
       this.$store.commit({ type: "setCurrMarker", currMarker });
       const carousel = this.$refs.carousel;
-      // MARKER HAS TWO PHOTOS >
-      carousel.goToPage(markerIdx + 1);
+      carousel.goToPage(photoIdx);
     }
   }
 };
