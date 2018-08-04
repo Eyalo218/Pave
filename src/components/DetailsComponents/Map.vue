@@ -82,6 +82,7 @@ export default {
       if (!currTripId) currTripId = this.$route.params.tripId;
       this.$store.dispatch({ type: "setCurrTrip", currTripId }).then(() => {
         this.trip = this.$store.state.tripModule.currTrip;
+        
         //TODO:change to !hasMarkers later
         if (this.checkMarkersCount()) return;
         eventBus.$emit(SET_TRIP_PHOTOS, this.trip);

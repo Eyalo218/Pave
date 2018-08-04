@@ -1,18 +1,24 @@
 <template>
 <section>
-    <div class="flex space-between">
-        <h1>{{reviews.length}} Trip Reviews</h1>
-        <h1 >Average Rating: {{setCurrTripId}}</h1>
+    <div class="flex space-between align-center">
+        <h1 v-if="reviews.length">{{reviews.length}} Trip Reviews</h1>
+        <button @click="toggleComment" class="commentBtn">Add Comment</button>
+        <!-- <h1 >Average Rating: {{setCurrTripId}}</h1> -->
     </div>
-        <ul>
-            <li v-for="(review,idx) in reviews" :key="idx">
-                <div class="flex column">
-                <h1>user</h1>
-                <span>{{review.title}}</span> {{review.review}}<!-- {{review.title}} -->
-                <!--review.userId  -->
-                </div>
-            </li>
-        </ul>
+        <div class="relative">
+            <ul>
+                <li v-for="(review,idx) in reviews" :key="idx">
+                    <div class="flex column">
+                    <h1>user</h1>
+                    <span>{{review.title}}</span> {{review.review}}
+                    <!--review.userId  -->
+                    </div>
+                </li>
+            </ul>
+            <div v-if="comment" class="addComment absolute">
+                najnjnajjjnjnjns
+            </div>
+        </div>
     </section>
 </template>
 
@@ -23,7 +29,8 @@ import reviewService from "@/service/reviewService.js";
 export default {
  data(){
         return {
-            reviews:null
+            reviews:[],
+            comment:false
         }
     },
     computed:{
@@ -36,6 +43,9 @@ export default {
             reviewService.getByTripId(this.$route.params.tripId).then(res=>{
                 this.reviews = res;
             })
+        },
+        toggleComment(){
+            this.comment = !this.comment;
         }
     },
     created(){
@@ -46,7 +56,7 @@ export default {
 
 <style lang="scss" scoped>;
 ul{
-    height: 100px;
+    height: 200px;
     overflow-y: scroll;
     padding:0;
     
@@ -70,6 +80,7 @@ h1{
     padding:0;
     margin-bottom: 1.1rem;
 }
+
 p{
     padding:0;
 }
@@ -94,5 +105,27 @@ p{
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
     background: #1c3b4b; 
+}
+
+.commentBtn{
+    height:1.4rem;
+    border-radius: 5px;
+    background-color: #363833;
+    color:#44809e;
+    box-shadow: none;
+    border:none;
+}
+
+.addComment{
+    height:200px;
+    background-color:#ffffff;
+    box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.75);
+    // box-shadow: 0px 1px 10px 2px #4d494d;
+    // box-shadow: 1px 10px 55px 2px #4d494d;
+    width:100%;
+    top:0;
+}
+section{
+    margin-top:1.5rem;
 }
 </style>
