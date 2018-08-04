@@ -90,12 +90,9 @@ import photoDisplay from "@/components/DetailsComponents/PhotoDisplay.vue";
 import Reviews from "@/components/DetailsComponents/Reviews.vue";
 import createMark from "@/components/DetailsComponents/CreateMark.vue";
 // import tripBanner from "@/components/DetailsComponents/TripBanner.vue";
-import { eventBus, CHANGE_MARKER } from "@/service/eventBus.js";
+import { eventBus, CHANGE_MARKER, CLOSE_CAMERA } from "@/service/eventBus.js";
 
 export default {
-  created() {
-    console.log("trip details created");
-  },
   components: {
     tripMap,
     photoDisplay,
@@ -113,9 +110,8 @@ export default {
       isDetShown: false
     };
   },
-  created() {
-    console.log(this.getCurrTrip);
-    // eventBus.$on(CHANGE_MARKER,)
+  created(){
+    eventBus.$on(CLOSE_CAMERA, this.togglePhotoMode)
   },
   computed: {
     getCurrTrip() {
@@ -144,6 +140,8 @@ export default {
   },
   methods: {
     togglePhotoMode() {
+      console.log('swalalalalalalalal emit emit emit');
+      
       this.photoMode = !this.photoMode;
     },
     show(window){
