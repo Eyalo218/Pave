@@ -10,15 +10,16 @@
             <ul>
                 <li v-for="(review,idx) in reviews" :key="idx">
                     <div class="flex column">
-                    <h1>user</h1>
+                    <h1>{{review.user}}</h1>
                     <span>{{review.title}}</span> {{review.review}}
                     <!--review.userId  -->
                     </div>
                 </li>
             </ul>
-            <div v-if="comment" class="addComment absolute flex column align-center">
-                <input type="text" class="title" maxlength="15" placeholder="Title">
-                <textarea class="description" cols="25" rows="6" maxlength="150" placeholder="Description"></textarea>
+            <div v-if="comment" class="addComment absolute flex column  center align-center">
+                <input v-model="title" type="text" class="title" maxlength="15" placeholder="Title">
+                <textarea v-model="description" class="description" cols="25" rows="6" maxlength="150" placeholder="Description"></textarea>
+                <button class="commentBtn" @click="addReview">Add</button>
             </div>
         </div>
     </section>
@@ -32,7 +33,9 @@ export default {
  data(){
         return {
             reviews:[],
-            comment:false
+            comment:false,
+            title: null,
+            description:null, 
         }
     },
     computed:{
@@ -51,6 +54,16 @@ export default {
         },
         toggleComment(){
             this.comment = !this.comment;
+        },
+        addReview(){
+            var review ={} 
+            review.title = this.title;
+            review.review = this.description;
+            review.user = this.$store.getters.loggedIn;
+            review.tripId = this.$route.params.tripId;
+            console.log('user: ', review.user)
+            reviewService.addReview(review)
+            this.toggleComment();
         }
     },
     created(){
@@ -119,6 +132,7 @@ p{
     color:#44809e;
     box-shadow: none;
     border:none;
+    margin-bottom:1rem;
 }
 
 .addComment{
@@ -136,14 +150,14 @@ section{
 
 .title {
     padding: 0.8rem;
-    margin-bottom: 1.2rem;
+    margin: 1.2rem 0;
     border-radius: 5px;
     border: 1px solid #EDEDED;
     width:60%;
 }
 
 .description  {
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
     padding: 0.8rem;
     height: 4rem;
     border-radius: 5px;
