@@ -59,6 +59,7 @@ export default {
     },
     methods: {
         updateExplore(currStatus) {
+
             this.$store.dispatch({type: 'updateExplore', currStatus: currStatus})
         },
         logOut() {

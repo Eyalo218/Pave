@@ -42,6 +42,7 @@ export default {
       this.$store.dispatch({ type: "loadTrips", searchedText }).then(() => {
         this.setTripsForDisplay();
       });
+      this.$store.dispatch({ type: "loadSortedTrips" }).then(() => {});
     },
     setTripsForDisplay() {
       this.trips = this.$store.getters.tripsForDisplay.slice();
@@ -52,44 +53,43 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-  .headline{
-    font-size: 1.5rem;
-  }
-  .trips {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        width:100%;
-        padding:0;
-      }
-  h1 {
-    text-align: center;
-  }
-  .h-list-item,  {
-    width: 45%;
-    margin:5px 5px 3rem 5px;
-  }
-  section .list-container{
-    margin:0 0;
-  }
-  .item-img{
-      width:100%;
-      box-shadow: 1px 2px 5px #262626;
-  }
-    .cover {
-    width: 45%;
-    height: 7rem;
-    background: #0e95f094;
-    position: absolute;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    z-index: 1;
-  }
-  .review-dot {
-    width: 12px;
-  }
-  
+.headline {
+  font-size: 1.5rem;
+}
+.trips {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: 0;
+}
+h1 {
+  text-align: center;
+}
+.h-list-item {
+  width: 45%;
+  margin: 5px 5px 3rem 5px;
+}
+section .list-container {
+  margin: 0 0;
+}
+.item-img {
+  width: 100%;
+  box-shadow: 1px 2px 5px #262626;
+}
+.cover {
+  width: 45%;
+  height: 7rem;
+  background: #0e95f094;
+  position: absolute;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+}
+.review-dot {
+  width: 12px;
+}
 
 @media screen and (min-width: 415px) {
   .list-container {
@@ -98,23 +98,23 @@ export default {
     width: 85%;
     margin: 0 auto;
     margin-bottom: 4rem;
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    margin: 0;
-    padding: 0;
-  }
-  .cover {
-    width: 14.5rem;
-    height: 10rem;
-  }
-  .h-list-item {
-    display: flex;
-    flex-direction: column;
-    margin-bottom: 4rem;
-    width:14.5rem;
-  }
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 0;
+      padding: 0;
+    }
+    .cover {
+      width: 14.5rem;
+      height: 10rem;
+    }
+    .h-list-item {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 4rem;
+      width: 14.5rem;
+    }
     .item-img {
       position: relative;
       width: 14.5rem;
@@ -135,58 +135,58 @@ export default {
     margin-bottom: 2rem;
   }
   .list-container {
-    width:100%;
+    width: 100%;
   }
 }
 
 @media screen and (min-width: 550px) {
-  .trips{
+  .trips {
     display: flex;
     justify-content: space-around;
   }
-
 }
 @media screen and (min-width: 600px) {
-  .trips{
+  .trips {
     display: flex;
     justify-content: space-around;
-     .h-list-item, .cover{
-      width:45%;
+    .h-list-item,
+    .cover {
+      width: 45%;
       height: 10rem;
       min-height: 10rem;
     }
-     .item-img{
-      width:100%
+    .item-img {
+      width: 100%;
     }
   }
 }
 
 @media screen and (min-width: 900px) {
-  .trips{ .item-img{
-      width:100%;
+  .trips {
+    .item-img {
+      width: 100%;
       height: 12rem;
     }
-    .h-list-item, .cover{
+    .h-list-item,
+    .cover {
       height: 12rem;
     }
   }
 }
 
-
 @media screen and (min-width: 1024px) {
-  .trips{
-    .item-img{
-      width:100%;
+  .trips {
+    .item-img {
+      width: 100%;
       height: 12rem;
     }
-    .h-list-item, .cover{
+    .h-list-item,
+    .cover {
       width: 20%;
       height: 12rem;
     }
   }
 }
-
-
 </style>
 
 

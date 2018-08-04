@@ -9,6 +9,7 @@ export const MARKER_CLICKED = 'marker-clicked';
 export const OPEN_EXPLORE = 'open-explore';
 export const CLOSE_EXPLORE = 'close-explore';
 export const PIN_ADDED = 'pin-added';
+export const CLOSE_CAMERA = 'close-explore';
 
 import Vue from 'vue';
 export const eventBus = new Vue();

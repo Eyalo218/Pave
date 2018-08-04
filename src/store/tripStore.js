@@ -6,28 +6,37 @@ import tripService from '../service/tripService.js'
 export default {
     state: {
         trips: [],
-        currTrip: null,
+        activeTrips: [],
         currUserTrips: [],
+        sortedTrips: [],
+        currTrip: null,
         explore: false,
+        sortedByReviews: false,
         currFilter: '',
     },
     mutations: {
         loadTrips(state, { trips }) {
-            state.trips = trips
+            state.trips = trips;
+        },
+        loadActiveTrips(state, { trips }) {
+            state.activeTrips = trips;
+        },
+        loadSortedTrips(state, { trips }) {
+            state.sortedTrips = trips;
         },
         setCurrTrip(state, { trip }) {
             state.currTrip = trip
         },
-        userTripsToDisplay(state, {trips}) {
+        userTripsToDisplay(state, { trips }) {
             state.currUserTrips = trips
         },
         userPinsToDisplay(state, {trips}) {
             state.currUserTrips = trips
         },
-        updateExplore(state, {currStatus}){
+        updateExplore(state, { currStatus }) {
             state.explore = currStatus
         },
-        updateFilter(state, {trips}) {
+        updateFilter(state, { trips }) {
             state.trips = trips
         }
     },
@@ -35,10 +44,17 @@ export default {
         tripsForDisplay(state) {
             return state.trips;
         },
-        getCurrTrip(state){
+        activeTripsForDisplay(state) {
+            return state.activeTrips;
+        },
+        sortedTripsForDisplay(state) {
+            console.log(state.sortedTrips.sort(function (a, b) { return b.avgReviews - a.avgReviews }));
+            return state.sortedTrips.sort(function (a, b) { return b.avgReviews - a.avgReviews })
+        },
+        getCurrTrip(state) {
             return state.currTrip;
         },
-        userTripsToDisplay(state){
+        userTripsToDisplay(state) {
             return state.currUserTrips;
         },
         isExploreOpen(state) {
@@ -52,21 +68,33 @@ export default {
                     context.commit({ type: 'loadTrips', trips })
                 })
         },
+        loadActiveTrips(context) {
+            return tripService.query('', null, true)
+                .then(trips => {
+                    context.commit({ type: 'loadActiveTrips', trips })
+                })
+        },
+        loadSortedTrips(context) {
+            return tripService.query()
+                .then(trips => {
+                    context.commit({ type: 'loadSortedTrips', trips })
+                })
+        },
         setCurrTrip(context, { currTripId }) {
             return tripService.getById(currTripId)
                 .then(trip => context.commit({ type: 'setCurrTrip', trip }))
         },
-        loadTripsByUserId(context, {userId}) {
-            return tripService.query('' ,userId)
+        loadTripsByUserId(context, { userId }) {
+            return tripService.query('', userId)
                 .then(trips => context.commit({ type: 'userTripsToDisplay', trips }))
         },
-        updateExplore(context, {currStatus}){
-            context.commit({type: 'updateExplore', currStatus})
+        updateExplore(context, { currStatus }) {
+            context.commit({ type: 'updateExplore', currStatus })
         },
         setFilter(context, { searchedText }) {
             return tripService.query(searchedText, null)
                 .then(trips => {
-                    context.commit({type: 'updateFilter', trips})
+                    context.commit({ type: 'updateFilter', trips })
                 })
             // context.commit({type: 'updateFilter', searchedText})
             // state.currFilter = searchedText;

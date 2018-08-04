@@ -67,7 +67,9 @@ export default {
       },
       displayTripsByText() {
           let searchedText = this.$store.state.currFilter;
-          this.$store.dispatch({ type: "loadTrips", searchedText }).then(() => {});
+          this.$store.dispatch({ type: "loadTrips", searchedText }).then(() => {
+              
+          });
       },
       logOut() {
           storageService.removeUser('loggedinUser');

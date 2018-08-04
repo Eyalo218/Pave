@@ -1,6 +1,6 @@
 <template>
   <section class="map-cmp">
-    <gmap-map :zoom=18 :center="center" :style="`width:100%; height:${mapHeight}`" ref="map">
+    <gmap-map  :center="center" :style="`width:100%; height:${mapHeight}`" ref="map">
       <gmap-marker
         :key="index"
         v-for="(marker, index) in markersForDisplay"
@@ -82,7 +82,6 @@ export default {
       if (!currTripId) currTripId = this.$route.params.tripId;
       this.$store.dispatch({ type: "setCurrTrip", currTripId }).then(() => {
         this.trip = this.$store.state.tripModule.currTrip;
-        //TODO:change to !hasMarkers later
         if (this.checkMarkersCount()) return;
         eventBus.$emit(SET_TRIP_PHOTOS, this.trip);
         this.setPave();
@@ -91,6 +90,7 @@ export default {
     setCurrMarker(currMarker, index) {
       this.$store.commit({ type: "setCurrMarker", currMarker });
         // this.setselectedIconUrl(index);
+
       this.$refs.map.$mapObject.panTo(
         googleService.setLatLng(
           currMarker.coords.lat,
@@ -116,7 +116,7 @@ export default {
     setBounds() {
       return googleService.getBounds(this.markersForDisplay, this.google);
     },
-    setRoutes() {
+    setRoutes() {      
       if (this.trip.markers.length <= 1) if (!this.checkMarkersCount()) return;
       var directionsService = googleService.getDirecService(this.google);
       var directionsDisplay = googleService.getDirecRender(this.google);
