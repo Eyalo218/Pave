@@ -6,15 +6,17 @@
           </video>
         </div>
           <div class="flex space-around buttons">
-            <font-awesome-icon icon="times" size="2x" />
+            <button class="closeCamera btn" @click="closeCamera()">
+              <font-awesome-icon icon="times" size="2x" />
+            </button>
             <button class="takePhoto btn" @click="capturePhoto()">
                 <font-awesome-icon  icon="camera" size="2x" />
             </button>
             <button class="next btn" @click="continueToMarkDesc()">
-              <font-awesome-icon @click="continueToMarkDesc" icon="check" size="2x" />
+              <font-awesome-icon  icon="check" size="2x" />
             </button>
             <button class="delete btn" @click="deleteLastPhoto()">
-                <font-awesome-icon @click="deleteLastPhoto" icon="trash-alt" size="2x" />
+                <font-awesome-icon icon="trash-alt" size="2x" />
             </button>
         </div>
       </div>
@@ -29,7 +31,7 @@
 
 <script>
 import cloudinary from "../../service/cloudinaryService.js";
-import { eventBus, PHOTO_TAKEN } from "../../service/eventBus.js";
+import { eventBus, PHOTO_TAKEN, CLOSE_CAMERA } from "../../service/eventBus.js";
 
 export default {
   name: "Camera",
@@ -52,6 +54,9 @@ export default {
     }
   },
   methods: {
+    closeCamera(){
+      eventBus.$emit(CLOSE_CAMERA);
+    },
     capturePhoto() {
       this.canvas = this.$refs.canvas;
       var context = this.canvas

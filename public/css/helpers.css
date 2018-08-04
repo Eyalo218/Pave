@@ -43,3 +43,11 @@
 .align-end {
   align-items: flex-end;
 }
+
+.relative{
+  position: relative;
+}
+
+.absolute{
+  position: absolute;
+}

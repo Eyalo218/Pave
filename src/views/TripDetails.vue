@@ -99,12 +99,9 @@ import photoDisplay from "@/components/DetailsComponents/PhotoDisplay.vue";
 import Reviews from "@/components/DetailsComponents/Reviews.vue";
 import createMark from "@/components/DetailsComponents/CreateMark.vue";
 // import tripBanner from "@/components/DetailsComponents/TripBanner.vue";
-import { eventBus, CHANGE_MARKER } from "@/service/eventBus.js";
+import { eventBus, CHANGE_MARKER, CLOSE_CAMERA } from "@/service/eventBus.js";
 
 export default {
-  created() {
-    console.log("trip details created");
-  },
   components: {
     tripMap,
     photoDisplay,
@@ -118,8 +115,8 @@ export default {
       photoMode: false
     };
   },
-  created() {
-    console.log(this.getCurrTrip);
+  created(){
+    eventBus.$on(CLOSE_CAMERA, this.togglePhotoMode)
   },
   computed: {
     getCurrTrip() {
@@ -139,7 +136,7 @@ export default {
       if (window.innerWidth >= 800) return true;
     },
     setMapHeightInMobile() {
-      if (window.innerWidth > 1100) return "90vh";
+      if (window.innerWidth > 1100) return "85vh";
       else if (window.innerWidth <= 1100) return "70vh";
     },
     checkMobile() {
@@ -149,6 +146,8 @@ export default {
   },
   methods: {
     togglePhotoMode() {
+      console.log('swalalalalalalalal emit emit emit');
+      
       this.photoMode = !this.photoMode;
     },
     showMobile(window) {
@@ -167,10 +166,14 @@ $mobile-width: 80vw;
 .map {
   width: 60%;
   box-shadow: 2px 2px 10px 0px rgba(0, 0, 0, 0.75);
+  margin-top:0.90rem;
+  margin-left: 1.10rem;
 }
 .nav-bar {
+  display: flex;
+  align-items: center;
   background-color: black;
-  height: 25px;
+  height: 30px;
   opacity: 0.7;
   margin-bottom: 0.4rem;
 }
