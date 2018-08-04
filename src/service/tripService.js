@@ -2,12 +2,13 @@ const TRIPS_URL = 'http://localhost:3000/trips'
 import axios from 'axios'
 
 
-function query(searchedText = '', userId = null) {
+function query(searchedText = '', userId = null, isComplete = false) {    
     return axios.get(`${TRIPS_URL}`,
-        {
+        {   
             params: {
                 searchedText,
-                userId
+                userId,
+                isComplete
             }
         }
     )

@@ -119,10 +119,10 @@ export default {
   },
   created() {
     console.log(this.getCurrTrip);
-    // eventBus.$on(CHANGE_MARKER,)
   },
   computed: {
     getCurrTrip() {
+            
       return this.$store.getters.getCurrTrip;
     },
     getCurrMarker() {

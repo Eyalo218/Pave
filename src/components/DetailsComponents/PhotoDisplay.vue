@@ -1,7 +1,7 @@
 <template>
 <section class="photos">
-  <div ><carousel :loop="true" :perPage=1 :paginationEnabled="false" :navigationEnabled="true">
-    <slide class="label" v-if="getUrls" :key="index" v-for="(url,index) in goodUrls">
+  <div ><carousel ref="carousel" :loop="true" :perPage=1 :paginationEnabled="false" :navigationEnabled="true">
+    <slide class="label" v-if="urls" :key="index" v-for="(url,index) in urls">
       <img :src="url" style="width: 100%;"/>
       </slide>
     </carousel></div>
@@ -35,6 +35,7 @@ export default {
       currTrip: null
     };
   },
+  // VueCarousel-navigation-button VueCarousel-navigation-next
   // VueCarousel-slide-active
   created() {
     eventBus.$on(SET_TRIP_PHOTOS, trip => {
@@ -44,65 +45,83 @@ export default {
     });
     eventBus.$on(MARKER_CLICKED, this.setPhotosByClickedMarker);
   },
+  mounted() {
+    //  VueCarousel-slide label VueCarousel-slide-active VueCarousel-slide-center
+    console.log(document.querySelectorAll(".VueCarousel-slide"));
+    document
+      .querySelector(".VueCarousel-navigation-next")
+      .addEventListener("click", this.nextPhoto);
+    document
+      .querySelector(".VueCarousel-navigation-prev")
+      .addEventListener("click", this.lastPhoto);
+  },
   computed: {
-    getUrls() {
+    urls() {
       let urls;
       if (this.photosUrls.length !== 0) {
         urls = ("" + this.photosUrls).split(",");
-      }
-      let slideMarkup = "";
-      for (var i = 1; i <= this.photosUrls.length; i++) {
-        slideMarkup += `<slide><img src="${
-          urls[i]
-        }" style="width: 300px; max-width: 100%;"></slide>`;
-      }
-      return slideMarkup;
-      // return this.photosUrls;
-    },
-    goodUrls() {
-      let urls;
-      if (this.photosUrls.length !== 0) {
-        urls = ("" + this.photosUrls).split(",");
-        console.log(urls);
         return urls;
       }
+    },
+    markersForDisplay() {
+      return this.$store.getters.markersForDisplay;
     }
   },
   methods: {
     lastPhoto() {
-      let urls = this.photosUrls;
-      for (var i = 0; i < urls.length; i++) {
-        for (var j = 0; j < urls[i].length; j++) {
-          if (urls[i][j] === this.currPhoto) {
-            if (i === 0 && j === 0) {
-              let newUrls = ("" + urls).split(",");
-              this.currPhoto = newUrls[newUrls.length - 1];
-              let currMarkerIdx = urls.length - 1;
-              let currMarker = this.currTrip.markers[currMarkerIdx];
-              this.$store.commit({ type: "setCurrMarker", currMarker });
-              eventBus.$emit(CHANGE_MARKER, {
-                currMarkerIdx,
-                marker: this.currTrip.markers[currMarkerIdx]
-              });
-              return;
-            }
-            this.currPhoto = urls[i][j - 1]
-              ? urls[i][j - 1]
-              : urls[i - 1][urls[i - 1].length - 1];
-            if (!urls[i][j - 1]) {
-              let currMarkerIdx = i - 1;
-              let currMarker = this.currTrip.markers[currMarkerIdx];
-              this.$store.commit({ type: "setCurrMarker", currMarker });
-              eventBus.$emit(CHANGE_MARKER, {
-                currMarkerIdx,
-                marker: this.currTrip.markers[currMarkerIdx]
-              });
-            }
-            if (!this.currPhoto) this.currPhoto = urls[0][0];
-            return;
+      const carousel = this.$refs.carousel;
+      console.log(carousel.currentPage);
+      let urls = [];
+      carousel.$el.querySelectorAll("img").forEach(img => {
+        urls.push(img.currentSrc);
+      });
+      console.log(urls);
+      for (let i = 0; i < this.markersForDisplay.length; i++) {
+        for (let j = 0; j < this.markersForDisplay[i].photos.length; j++) {
+          let markerPhotos = this.markersForDisplay[i].photos;
+          // TODO: got the curr image by current page, just check the marker for it in i index
+          if (urls[carousel.currentPage] === markerPhotos[j]) {
+            console.log("i", i);
+
+            console.log(markerPhotos[j]);
           }
         }
       }
+      console.log();
+
+      // let urls = this.photosUrls;
+      // let newUrls = ("" + urls).split(",");
+      // for (var i = 0; i < urls.length; i++) {
+      //   for (var j = 0; j < urls[i].length; j++) {
+      //     if (urls[i][j] === this.currPhoto) {
+      //       if (i === 0 && j === 0) {
+      //         this.currPhoto = newUrls[newUrls.length - 1];
+      //         let currMarkerIdx = urls.length - 1;
+      //         let currMarker = this.currTrip.markers[currMarkerIdx];
+      //         this.$store.commit({ type: "setCurrMarker", currMarker });
+      //         eventBus.$emit(CHANGE_MARKER, {
+      //           currMarkerIdx,
+      //           marker: this.currTrip.markers[currMarkerIdx]
+      //         });
+      //         return;
+      //       }
+      //       this.currPhoto = urls[i][j - 1]
+      //         ? urls[i][j - 1]
+      //         : urls[i - 1][urls[i - 1].length - 1];
+      //       if (!urls[i][j - 1]) {
+      //         let currMarkerIdx = i - 1;
+      //         let currMarker = this.currTrip.markers[currMarkerIdx];
+      //         this.$store.commit({ type: "setCurrMarker", currMarker });
+      //         eventBus.$emit(CHANGE_MARKER, {
+      //           currMarkerIdx,
+      //           marker: this.currTrip.markers[currMarkerIdx]
+      //         });
+      //       }
+      //       if (!this.currPhoto) this.currPhoto = urls[0][0];
+      //       return;
+      //     }
+      //   }
+      // }
     },
     nextPhoto() {
       let urls = this.photosUrls;
@@ -145,7 +164,12 @@ export default {
       console.log(this.currTrip.markers[0]);
     },
     setPhotosByClickedMarker(markerIdx) {
-      this.currPhoto = this.photosUrls[markerIdx][0];
+      // this.currMarkerIdx = markerIdx;
+      let currMarker = this.$store.getters.markersForDisplay[markerIdx];
+      this.$store.commit({ type: "setCurrMarker", currMarker });
+      const carousel = this.$refs.carousel;
+      // MARKER HAS TWO PHOTOS >
+      carousel.goToPage(markerIdx + 1);
     }
   }
 };
