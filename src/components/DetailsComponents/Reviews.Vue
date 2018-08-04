@@ -6,6 +6,7 @@
         <!-- <h1 >Average Rating: {{setCurrTripId}}</h1> -->
     </div>
         <div class="relative">
+            {{user}}
             <ul>
                 <li v-for="(review,idx) in reviews" :key="idx">
                     <div class="flex column">
@@ -38,6 +39,9 @@ export default {
         setCurrTripId(){
             return this.$store.getters.getCurrTrip.avgReviews
         },
+        user() {
+            return this.$store.getters.loggedIn.name
+        }
     },
     methods:{
         setReviews(){
