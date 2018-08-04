@@ -16,7 +16,6 @@ export default new Vuex.Store({
         users: [],
         reviews: []
     },
-    mutations: {
-    },
+    mutations: {},
     actions: {}
 })

@@ -7,7 +7,6 @@ const USERS_URL = 'http://localhost:3000/users'
 const STORAGE_KEY = 'loggedinUser';
 
 var loggedinUser = storageService.loadFromStorage(STORAGE_KEY) || null;
-console.log('LOgged:', loggedinUser);
 if (loggedinUser) {
     eventBus.$emit(LOGGED_IN, loggedinUser)
 }
@@ -28,7 +27,6 @@ function login(userCreds) {
     return axios.post(`${USERS_URL}/checkLogin`, userCreds)
         .then(res => {
             const user = res.data;
-            console.log('i got the user::: ', user)
             _setLoggedinUser(user);
             return user;
         })
@@ -45,6 +43,13 @@ function getById(userId) {
     return axios.get(`${USERS_URL}/${userId}`)
             .then(res => res.data)
 }
+
+function editUser(user) {
+    return axios.put(`${USERS_URL}/${user._id}`, user)
+        .then(res => res.data)
+}
+
+
 
 
 function query() {
@@ -65,15 +70,13 @@ function addUser(user) {
         return axios.post(USERS_URL,user)
 }
 
-function editUser(userId) {
-    return axios.put(`${USERS_URL}/${userId}`,user)
-}
 
 export default {
     signup,
     getLoggedinUser,
     login,
-    getById
+    getById,
+    editUser
 }
 
 function _setLoggedinUser(user) {

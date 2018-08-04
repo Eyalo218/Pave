@@ -44,6 +44,12 @@ function getTripsByUserId(userId) {
     return axios.get(`${TRIPS_URL}/${userId}`, trip)
 }
 
+function getpinsByUserPins(userPins) {
+    return userPins.map(tripId => {
+        return axios.get(`${TRIPS_URL}/${tripId}`, trip)
+    })
+}
+
 export default {
     query,
     getById,

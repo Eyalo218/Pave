@@ -62,7 +62,6 @@ export default {
             this.$store.dispatch({type: 'updateExplore', currStatus: currStatus})
         },
         logOut() {
-        storageService.removeUser('loggedinUser');
         this.$store.dispatch({type: 'loggedOut'})
         },
         setFilter() {
