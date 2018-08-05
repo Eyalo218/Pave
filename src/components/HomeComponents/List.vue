@@ -34,14 +34,12 @@ export default {
   },
   components: {},
   created() {
-    this.displayTripsByText();
+    this.displayActiveTrips();
   },
   methods: {
-    displayTripsByText() {
+    displayActiveTrips() {
       let searchedText = "Tel";
-      this.$store.dispatch({ type: "loadTrips", searchedText }).then(() => {
-        this.setTripsForDisplay();
-      });
+      this.$store.dispatch({ type: "loadActiveTrips" }).then(() => {});
       this.$store.dispatch({ type: "loadSortedTrips" }).then(() => {});
     },
     setTripsForDisplay() {
