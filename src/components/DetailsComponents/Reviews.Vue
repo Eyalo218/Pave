@@ -58,10 +58,11 @@ export default {
             var review ={} 
             review.title = this.title;
             review.review = this.description;
-            review.user = this.$store.getters.loggedIn;
+            review.user = this.$store.getters.loggedIn.name;
             review.tripId = this.$route.params.tripId;
             console.log('user: ', review.user)
             reviewService.addReview(review)
+            this.setReviews();
             this.toggleComment();
         }
     },

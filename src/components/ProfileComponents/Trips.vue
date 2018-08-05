@@ -17,7 +17,7 @@
                                 <div class="active" v-if="trip.isActive = true"> Active</div>
                                 <div class="complete" v-else>Complete</div>
                             </div>
-                            <div @click="deleteTrip" class="delete-btn flex align-center center">X</div>
+                            <div @click="deleteTrip(trip._id)" id="delete-btn" class=" flex align-center center">X</div>
                         </div>
                         <div @click="directToTrip(trip._id)" class="trip-title">{{trip.title}}</div>
                     </li>
@@ -103,8 +103,23 @@ export default {
             this.$store.dispatch({type: 'getPins', pins: this.userToDisplay.pins})
                 .then(pins => console.log('Pins are in thaa house', pins) ) 
         },
-        deleteTrip() {
+        deleteTrip(tripId) {
             console.log('delete')
+            if(this.myTrips) {
+                this.$store.dispatch({
+                    type: 'deleteUserTrip', 
+                    deleteFrom: 'trips',
+                    userId: this.$route.params.userId, 
+                    tripId: tripId
+                    })
+            } else {
+                this.$store.dispatch({
+                type: 'deleteUserPins', 
+                deleteFrom: 'pins',
+                userId: this.$route.params.userId, 
+                tripId: tripId
+                })
+            }
         }
     }
 }
@@ -149,7 +164,6 @@ export default {
         margin: 0 auto;
         padding: 0;
         width: 80%;
-
         .create-trip{
             height: 200px;
             width: 300px;
@@ -304,16 +318,28 @@ export default {
                             }
                         }
     }
+    
     .delete-container {
         padding: 0.3rem 0.5rem 0 0.5rem;
     }
 
-    .delete-btn {
+
+    #delete-btn {
+        display: none;
         cursor: pointer;
         font-size: 1.2rem;
         width: 20px;
         height: 20px;
-        border-radius: 30%;
-        background-color: red;
+        border-radius: 20%;
+        color: black;
+        background-color: #9E241F;
+        padding-left: 6px;
+    }
+    #delete-btn:hover {
+        color: #fff;
+    }
+
+    .trip:hover #delete-btn{
+        display: block;
     }
 </style>

@@ -2,7 +2,7 @@
     <div class="camera flex center">
       <div class="card">
         <div>
-          <video ref="video" class="video" width="500" height="375" autoplay>
+          <video ref="video" class="video" :width="cameraWidth" :height="cameraHeight" autoplay>
           </video>
         </div>
           <div class="flex space-around buttons">
@@ -41,7 +41,9 @@ export default {
       canvas: {},
       photos: [],
       counter: 0,
-      urls: []
+      urls: [],
+      cameraWidth:500,
+      cameraHeight:375,
     };
   },
   mounted() {
@@ -91,7 +93,17 @@ export default {
           resolve(result);
         });
       });
+    },
+    SetCameraSize(){
+      if (window.innerWidth<415){
+        // ElVideo = document.querySelector('.video');
+        // console.log(ElVideo)
+        this.cameraWidth=250;
+      }
     }
+  },
+  created(){
+    this.SetCameraSize()
   }
 };
 </script>
@@ -123,6 +135,8 @@ li {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  cursor: pointer;
+  border:none;
 }
 .next {
   background-color: rgb(64, 250, 64);
@@ -141,5 +155,27 @@ li {
 }
 .takenPhotos{
   margin-top:1.2rem;
+}
+@media screen and (max-width: 415px){
+  .video{
+    width:300px;
+    height:500px;
+  }
+  .card{
+    width:100vw;
+    height: 100vh;
+  }
+  .buttons{
+    width:100vw;
+  }
+  .takenPhotos{
+    flex-direction: row;
+    z-index:4;
+    position:absolute;
+    top:75%;
+  }
+  .camera{
+    flex-direction: column;
+  }
 }
 </style>
