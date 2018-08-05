@@ -7,16 +7,17 @@
 .VueCarousel-wrapper {
   height: 300px !important;
 }
-section.photos {
+
+@media (max-width: 800px) {
+  .VueCarousel-wrapper {
+    height: 100% !important;
+  }
+  section.photos {
   display: flex;
   align-items: center;
 }
 .VueCarousel-inner {
   align-items: center;
 }
-@media (max-width: 800px) {
-  .VueCarousel-wrapper {
-    height: 100% !important;
-  }
 }
 </style>
