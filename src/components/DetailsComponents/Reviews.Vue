@@ -6,7 +6,6 @@
         <!-- <h1 >Average Rating: {{setCurrTripId}}</h1> -->
     </div>
         <div class="relative">
-            {{user}}
             <ul>
                 <li v-for="(review,idx) in reviews" :key="idx">
                     <div class="flex column">

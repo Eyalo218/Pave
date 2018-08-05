@@ -13,7 +13,7 @@
                     <div v-if="user" class="links-container flex space-between">
                         <router-link  :to="'/how'"><button>Explore</button></router-link>
                         <button @click="logOut" >Log out</button>
-                        <router-link :to="`/profile/${user._id}`"><button class="user-link" >{{user.name}}</button></router-link>
+                        <router-link :to="`/profile/${user._id}`"><button class="user-link">{{user.name}}</button></router-link>
                     </div>
                     <div v-else class="links-container flex space-between">
                     <!-- <router-link  :to="'/how'"><bottun>How it works</bottun></router-link> -->
