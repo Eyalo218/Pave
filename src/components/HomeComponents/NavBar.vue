@@ -3,7 +3,7 @@
         <nav class="nav-container flex space-between align-center">
             <div class="left-nav flex align-center">
                 <div @click="updateExplore(false)" class="logo">Pave</div>
-                <input v-model="searchedText" @keyup.enter="setFilter" v-if="isExploreOpen" class="search" type="text" placeholder="Seach"/>
+                <input v-model="searchedText" @input="setFilter" v-if="isExploreOpen" class="search" type="text" placeholder="Seach"/>
             </div>
             <div class="right-nav-mobile">
                 <div class="hamburger">
@@ -67,6 +67,7 @@ export default {
         },
         setFilter() {
         let searchedText = this.searchedText;
+        log
         this.$store.dispatch({type:'setFilter',searchedText})
         }
     }

@@ -19,5 +19,13 @@
 .VueCarousel-inner {
   align-items: center;
 }
+@media (min-width: 801px){
+  .VueCarousel-slide{
+    height: 300px;
+  }
+  .VueCarousel-slide img{
+    height: 100%;
+  }
+}
 }
 </style>
