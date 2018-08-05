@@ -7,7 +7,7 @@
                 <div class="call-out"><h3>Explore and share <span class="walks">walks</span></h3><h3>around the world</h3></div>
                 <form @submit.prevent="login" class="form flex column">
                     <input type="text" v-model="loginDetails.name" placeholder="Name">
-                    <input type="text" v-model="loginDetails.password" placeholder="Password">
+                    <input type="password" v-model="loginDetails.password" placeholder="Password">
                     <button class="submit-btn">Continue</button>
                     <p class="terms">By continuing, you agree to Pave's <span class="bold">Terms of Service, Privacy Policy</span></p>
                 </form>
