@@ -171,7 +171,7 @@ export default {
       this.photoMode = !this.photoMode;
     },
     showOnMobile(mobileWindow) {
-      eventBus.$emit('changed-to-map');
+     eventBus.$emit('changed-to-map');
       if (mobileWindow === "map") this.animationName = "slide-from-map";
       else this.animationName = "slide-photos";
       this.mobileWindow = mobileWindow;

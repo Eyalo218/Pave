@@ -1,6 +1,6 @@
 <template>
   <section class="map-cmp">
-    <gmap-map :zoom="18" :center="center" :style="`width:100%; height:${mapHeight}`" ref="map">
+    <gmap-map  :zoom="18" :center="center" :style="`width:100%; height:${mapHeight}`" ref="map">
       <gmap-marker
         :key="index"
         v-for="(marker, index) in markersForDisplay"
@@ -38,6 +38,11 @@ export default {
     };
   },
   created() {
+    eventBus.$on("changed-to-map", () => {
+      this.setZoomOnMobile();
+      console.log('asdasd');
+      
+    });
     eventBus.$on(MARKER_ADDED, currTripId => {
       location.reload();
       this.currTripId = currTripId;
@@ -138,10 +143,9 @@ export default {
     },
     setZoomOnMobile() {
       if (window.innerWidth <= 800) {
-        console.log('asdsadsa');
         
-        this.$refs.map.setZoom(14);
-        // this.$refs.map.fitBounds(this.setBounds());
+        this.$refs.map.$mapObject.setZoom(13); 
+      
       }
     },
     geolocate() {
