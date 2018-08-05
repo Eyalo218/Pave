@@ -6,7 +6,6 @@
         <!-- <h1 >Average Rating: {{setCurrTripId}}</h1> -->
     </div>
         <div class="relative">
-            {{user}}
             <ul>
                 <li v-for="(review,idx) in reviews" :key="idx">
                     <div class="flex column">
@@ -59,10 +58,11 @@ export default {
             var review ={} 
             review.title = this.title;
             review.review = this.description;
-            review.user = this.$store.getters.loggedIn;
+            review.user = this.$store.getters.loggedIn.name;
             review.tripId = this.$route.params.tripId;
             console.log('user: ', review.user)
             reviewService.addReview(review)
+            this.setReviews();
             this.toggleComment();
         }
     },
