@@ -34,7 +34,7 @@ function getByTripId(tripId) {
 
 
 function addReview(review) {
-    return axios.put(`${REVIEW_URL}`, review)
+    return axios.post(`${REVIEW_URL}`, review)
 }
 
 export default {
