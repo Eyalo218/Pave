@@ -53,8 +53,8 @@
      icon="comments" size="2x" />
   </div>
   <div class="flex all-container">
-     <transition name="slide" mode="in-out">
-      <div key="2" v-show="mobileWindow ==='map'" class="map">
+     <transition name="slide-map" >
+      <div v-show="mobileWindow ==='map'" class="map">
         <trip-map :mapHeight="setMapHeightInMobile"></trip-map>
         <div class="camera-container">
         <font-awesome-icon @click="togglePhotoMode()" class="camera" icon="camera" style="padding:0 1rem;" size="1x" />
@@ -65,30 +65,38 @@
           <create-mark></create-mark>
         </div>
         <div class="details">
-           <transition name="fade" mode="in-out">
-          <div key="1" v-show="mobileWindow ==='photos'" class="photos" >
-            <!-- :class="{'desc-modal-shown':false}" -->
-             <div class="desc-modal">
+          <transition  :name="animationName" >
+          <div v-show="mobileWindow ==='photos'" class="photos" >
+            <!--  -->
+             <div :class="{'desc-modal':true,'desc-modal-shown':markerDetShown}">
         </div>
             <photo-display></photo-display>
-            <!-- @click="showMarkerDesc" -->
-        <font-awesome-icon  class="info" icon="info"  />
+            <transition name="fade-info" mode="out-in">
+        <font-awesome-icon key="1" v-if="!markerDetShown" @click="markerDetShown=true" class="info" icon="info"  />
+        <font-awesome-icon key="2" v-if="markerDetShown" @click="markerDetShown=false" class="info" icon="times"  />
+            </transition>
           </div>
-           </transition>
+     </transition>
           <router-link :to="'/'" >
          <font-awesome-icon class="home-link" icon="arrow-circle-left" size="2x" />
          </router-link>
-           <div :class="{'category-desc-container-shown':false}" 
-          v-show="false" v-if="getMarkers.length!==0" class="category-desc-container">
+         <!-- marker details -->
+         <transition name="marker-det-slide">
+           <div :class="{'category-desc-container-shown':true}" 
+          v-show="markerDetShown" v-if="getMarkers.length!==0" class="category-desc-container">
             <p>
               <span  class="category">Category: &nbsp;</span>
               <span>{{getCurrMarker.category}}</span>
             </p>
             <p class="desc">{{getCurrMarker.desc}}</p>
           </div>
-          <div v-show="false" class="reviews">
+         </transition>
+          <transition name="slide-reviews">
+          <div v-show="mobileWindow ==='reviews'" class="reviews">
+            reviews
             <Reviews></Reviews>
           </div>
+          </transition>
         </div>
                
   </div>
@@ -117,7 +125,9 @@ export default {
     return {
       catWindow: "markerDetails",
       mobileWindow: "photos",
-      photoMode: false
+      photoMode: false,
+      animationName: "slide-photos",
+      markerDetShown: false
     };
   },
   created() {
@@ -132,6 +142,12 @@ export default {
         return this.getMarkers[0];
       }
       return this.$store.getters.getCurrMarker;
+    },
+    setTransitionName() {
+      if (this.mobileWindow === "map") {
+        console.log("entered");
+        return "slide-photos-from-map";
+      } else return "slide-photos";
     },
     getMarkers() {
       return this.$store.getters.markersForDisplay;
@@ -155,7 +171,11 @@ export default {
       this.photoMode = !this.photoMode;
     },
     showOnMobile(mobileWindow) {
+      eventBus.$emit('changed-to-map');
+      if (mobileWindow === "map") this.animationName = "slide-from-map";
+      else this.animationName = "slide-photos";
       this.mobileWindow = mobileWindow;
+      console.log(this.animationName);
     },
     showCategory(category) {
       this.catWindow = category;
@@ -312,8 +332,8 @@ button {
     position: relative;
     .info {
       position: absolute;
-      bottom: 2%;
-      right: 4%;
+      bottom: 1.5%;
+      right: 2%;
       z-index: 2;
       color: white;
       cursor: pointer;
@@ -331,6 +351,7 @@ button {
 }
 @media (max-width: 800px) {
   .home-link {
+    font-size: 1.5em;
     // display: none;
     position: absolute;
     bottom: 3%;
@@ -358,8 +379,10 @@ button {
     position: relative;
   }
   .category-desc-container {
+    padding: 0;
     position: absolute;
     bottom: 2%;
+    margin: 2%;
     transition: all 0.5s;
     // padding: 0 2rem;
     z-index: -1;
@@ -429,15 +452,82 @@ button {
 .fade-leave-to {
   opacity: 0;
 }
-// .slide-enter-active {
-//   transition: all 0.5s;
-// }
-// .slide-leave-active {
-//   transition: all 0.5s;
-// }
-// .slide-enter,
-// .slide-leave-to {
-//   transform: translateX(-100vw);
-//   opacity: 0;
-// }
+.fade-info-enter-active,
+.fade-info-leave-active {
+  transition: opacity 0.4s;
+}
+.fade-info-enter,
+.fade-info-leave-to {
+  opacity: 0;
+}
+//map window:
+
+.slide-map-enter-active {
+  transition: all 0.5s;
+}
+.slide-map-leave-active {
+  display: none;
+}
+.slide-map-enter {
+  transform: translateX(-100vw);
+  opacity: 1;
+}
+.slide-map-leave-to {
+  transform: translateX(100vw);
+  opacity: 1;
+}
+
+//photos window:
+.slide-photos-leave-active {
+  display: none;
+}
+.slide-photos-enter-active {
+  transition: all 0.5s;
+}
+.slide-photos-enter {
+  transform: translateX(70vw);
+  opacity: 1;
+}
+
+//slide photos from map
+.slide-from-map-enter {
+  transform: translateX(100vw);
+  opacity: 1;
+}
+.slide-from-map-enter-active {
+  transition: all 0.5s;
+}
+.slide-from-map-leave-active {
+  display: none;
+}
+
+//reviews window:
+.slide-reviews-leave-active {
+  display: none;
+}
+.slide-reviews-enter-active {
+  transition: all 0.5s;
+}
+.slide-reviews-enter {
+  transform: translateX(100vw);
+  opacity: 1;
+}
+.slide-reviews-leave-to {
+  transform: translateX(100vw);
+  opacity: 1;
+}
+
+//marker details
+.marker-det-slide-leave-active,
+.marker-det-slide-enter-active {
+  transition: all 1s;
+}
+.marker-det-slide-enter {
+  transform: translateY(10vh);
+  opacity: 0;
+}
+.marker-det-slide-leave-to {
+  transform: translateY(10vh);
+  opacity: 0;
+}
 </style>

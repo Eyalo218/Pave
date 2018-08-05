@@ -1,6 +1,6 @@
 <template>
   <section class="map-cmp">
-    <gmap-map  :center="center" :style="`width:100%; height:${mapHeight}`" ref="map">
+    <gmap-map :zoom="18" :center="center" :style="`width:100%; height:${mapHeight}`" ref="map">
       <gmap-marker
         :key="index"
         v-for="(marker, index) in markersForDisplay"
@@ -89,7 +89,7 @@ export default {
     },
     setCurrMarker(currMarker, index) {
       this.$store.commit({ type: "setCurrMarker", currMarker });
-        // this.setselectedIconUrl(index);
+      // this.setselectedIconUrl(index);
 
       this.$refs.map.$mapObject.panTo(
         googleService.setLatLng(
@@ -100,12 +100,13 @@ export default {
       );
       eventBus.$emit(MARKER_CLICKED, index);
     },
-    setselectedIconUrl(index){
+    setselectedIconUrl(index) {
       // overflow hidden
-      document.querySelectorAll('.gmnoprint')[index].style.overflow = '';
+      document.querySelectorAll(".gmnoprint")[index].style.overflow = "";
       // document.querySelectorAll('.gmnoprint')[index].style.opacity = 1;
-      document.querySelectorAll('.gmnoprint')[index].style.cssText = ' width: 24px; height: 24px; position: absolute;cursor: pointer; touch-action: none; left: -12px; top: -24px; z-index: 0;';
-      console.log(document.querySelectorAll('.gmnoprint')[index].style);
+      document.querySelectorAll(".gmnoprint")[index].style.cssText =
+        " width: 24px; height: 24px; position: absolute;cursor: pointer; touch-action: none; left: -12px; top: -24px; z-index: 0;";
+      console.log(document.querySelectorAll(".gmnoprint")[index].style);
     },
     setMarkers() {
       let markers = this.trip.markers;
@@ -116,7 +117,7 @@ export default {
     setBounds() {
       return googleService.getBounds(this.markersForDisplay, this.google);
     },
-    setRoutes() {      
+    setRoutes() {
       if (this.trip.markers.length <= 1) if (!this.checkMarkersCount()) return;
       var directionsService = googleService.getDirecService(this.google);
       var directionsDisplay = googleService.getDirecRender(this.google);
@@ -134,6 +135,14 @@ export default {
           this.$refs.map.panToBounds(this.setBounds());
         }
       });
+    },
+    setZoomOnMobile() {
+      if (window.innerWidth <= 800) {
+        console.log('asdsadsa');
+        
+        this.$refs.map.setZoom(14);
+        // this.$refs.map.fitBounds(this.setBounds());
+      }
     },
     geolocate() {
       navigator.geolocation.getCurrentPosition(position => {
