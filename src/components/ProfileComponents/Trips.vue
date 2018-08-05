@@ -12,8 +12,13 @@
                         <div class="create-btn flex center align-center"@click="createTrip = true" >+</div>
                     </li>
                     <li v-for="trip in userTripsToDisplay" class="trip flex column">
-                        <div class="active" v-if="trip.isActive = true"> Active</div>
-                        <div class="complete" v-else>Complete</div>
+                        <div class="delete-container flex space-between">
+                            <div>
+                                <div class="active" v-if="trip.isActive = true"> Active</div>
+                                <div class="complete" v-else>Complete</div>
+                            </div>
+                            <div @click="deleteTrip" class="delete-btn flex align-center center">X</div>
+                        </div>
                         <div @click="directToTrip(trip._id)" class="trip-title">{{trip.title}}</div>
                     </li>
                 </ul>
@@ -93,9 +98,13 @@ export default {
             this.newTrip.desc = '';
         },
         getPins() {
+            console.log('bol')
             this.myTrips = false
             this.$store.dispatch({type: 'getPins', pins: this.userToDisplay.pins})
                 .then(pins => console.log('Pins are in thaa house', pins) ) 
+        },
+        deleteTrip() {
+            console.log('delete')
         }
     }
 }
@@ -175,8 +184,6 @@ export default {
 
             .active{
                 color: #4ec479;
-                padding-top: 0.5rem;
-                padding-left: 0.5rem;
             }
 
             .trip-title {
@@ -296,5 +303,17 @@ export default {
                                 padding: 3rem 3rem 5rem 3rem;
                             }
                         }
+    }
+    .delete-container {
+        padding: 0.3rem 0.5rem 0 0.5rem;
+    }
+
+    .delete-btn {
+        cursor: pointer;
+        font-size: 1.2rem;
+        width: 20px;
+        height: 20px;
+        border-radius: 30%;
+        background-color: red;
     }
 </style>
