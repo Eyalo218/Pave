@@ -123,6 +123,8 @@ li {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  cursor: pointer;
+  border:none;
 }
 .next {
   background-color: rgb(64, 250, 64);
