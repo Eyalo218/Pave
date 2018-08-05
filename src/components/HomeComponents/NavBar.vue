@@ -3,7 +3,7 @@
         <nav class="nav-container flex space-between align-center">
             <div class="left-nav flex align-center">
                 <div @click="updateExplore(false)" class="logo">Pave</div>
-                <input v-model="searchedText" @keyup.enter="setFilter" v-if="isExploreOpen" class="search" type="text" placeholder="Seach"/>
+                <input v-model="searchedText" @input="setFilter" v-if="isExploreOpen" class="search" type="text" placeholder="Seach"/>
             </div>
             <div class="right-nav-mobile">
                 <div class="hamburger">
@@ -13,7 +13,7 @@
                     <div v-if="user" class="links-container flex space-between">
                         <router-link  :to="'/how'"><button>Explore</button></router-link>
                         <button @click="logOut" >Log out</button>
-                        <router-link :to="`/profile/${user._id}`"><button class="user-link" >{{user.name}}</button></router-link>
+                        <router-link :to="`/profile/${user._id}`"><button class="user-link">{{user.name}}</button></router-link>
                     </div>
                     <div v-else class="links-container flex space-between">
                     <!-- <router-link  :to="'/how'"><bottun>How it works</bottun></router-link> -->
@@ -67,6 +67,7 @@ export default {
         },
         setFilter() {
         let searchedText = this.searchedText;
+        log
         this.$store.dispatch({type:'setFilter',searchedText})
         }
     }

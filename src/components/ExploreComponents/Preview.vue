@@ -50,7 +50,7 @@ export default {
       if(!this.UserLoggedIn) console.log(this.UserLoggedIn)
       else {
           this.$store.dispatch({type: 'addPinToUser', user: this.UserLoggedIn, tripId: tripId})
-              .then(user => {console.log(user)})
+              .then(user => {console.log('Hoo', user)})
       }
     }
   }

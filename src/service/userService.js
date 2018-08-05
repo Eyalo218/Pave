@@ -49,6 +49,9 @@ function editUser(user) {
         .then(res => res.data)
 }
 
+function deleteUser(userId) {
+    return axios.delete(`${USERS_URL}/${userId}`)
+}
 
 
 
@@ -62,8 +65,9 @@ function query() {
             })
 }
 
-function deleteUser(userId) {
-    return axios.delete(`${USERS_URL}/${userId}`)
+function deleteFromUser(userDetails) {
+    console.log(userDetails.userId)
+    return axios.delete(`${USERS_URL}/${userDetails.userId}`, userDetails)
 }
 
 function addUser(user) {
@@ -76,7 +80,8 @@ export default {
     getLoggedinUser,
     login,
     getById,
-    editUser
+    editUser,
+    deleteFromUser
 }
 
 function _setLoggedinUser(user) {
