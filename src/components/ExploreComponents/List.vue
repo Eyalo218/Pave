@@ -45,7 +45,7 @@ export default {
     .list-container {
         font-family: 'roboto-medium';
         color: #383633;
-        width: 70%;
+        width: 90%;
         margin: 4rem auto;
         ul {
             display: flex;

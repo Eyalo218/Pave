@@ -37,9 +37,17 @@ export default {
     this.displayActiveTrips();
   },
   methods: {
+<<<<<<< HEAD
     displayActiveTrips() {
       let searchedText = "Tel";
       this.$store.dispatch({ type: "loadActiveTrips" }).then(() => {});
+=======
+    displayTripsByText() {
+      let searchedText = "canada";
+      this.$store.dispatch({ type: "loadTrips", searchedText }).then(() => {
+        this.setTripsForDisplay();
+      });
+>>>>>>> dc82f0d4908e5de292651405b36b2b1e9cb88665
       this.$store.dispatch({ type: "loadSortedTrips" }).then(() => {});
     },
     setTripsForDisplay() {

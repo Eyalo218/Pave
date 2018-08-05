@@ -328,15 +328,12 @@ export default {
         display: none;
         cursor: pointer;
         font-size: 1.2rem;
-        width: 20px;
-        height: 20px;
-        border-radius: 20%;
-        color: black;
-        background-color: #9E241F;
-        padding-left: 6px;
-    }
-    #delete-btn:hover {
+        border-radius: 50%;
         color: #fff;
+    }
+    
+    #delete-btn:hover {
+        color: #9E241F;
     }
 
     .trip:hover #delete-btn{
