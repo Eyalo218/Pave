@@ -89,15 +89,21 @@ export default {
             width: 40%;
         }
         @media (max-width: 680px){
-            width: 60%;
+        width: 70%;
         }
-        @media (max-width: 490px){
-            width: 75%;
+        @media (max-width: 600px){
+        width: 80%;
+        }
+        @media (max-width: 500px){
+        width: 95%;
         }
       .logo {
           text-align: center;
           font-size: 3rem;
           margin: 1rem 0;
+            @media (max-width: 680px){
+            margin-top: 4.5rem;
+      }
       }
       h3 {
         font-size: 1.5rem;

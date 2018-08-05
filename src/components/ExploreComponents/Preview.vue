@@ -7,7 +7,7 @@
                 <div class="location" @click="toDetails(`${trip._id}`)">{{trip.title}}</div>
                 <div class="country" @click="toDetails(`${trip._id}`)">Canada</div>
                 <div class="flex space-between">
-                    <star-rating  class="stars" :show-rating="false" :read-only="true" v-model="rating" @click="setRating" :star-size="13">
+                    <star-rating  class="stars" :value="4" :show-rating="false" v-model="rating" @click="setRating" :star-size="13">
                     </star-rating>
                     <div><font-awesome-icon  @click="pinTrip(trip._id)" class="pin" icon="thumbtack" size="1x" /></div>
                 </div>
@@ -66,7 +66,6 @@ export default {
   box-shadow: 0px 3px 10px 1px rgba(84,81,84,0.78);
   height: 18rem;
   width: 15rem;
-
   .txt-container{
     padding: 0.5rem;
   }
@@ -105,7 +104,14 @@ export default {
     color: #44809e;
     padding-right: 5px;
   }
-  .pin:hover {
+  .pin {
+    color: #44809e;
     cursor: pointer;
+  }
+  .pin:hover {
+    color: #9E241F;
+  }
+  .h-list-item:hover {
+    transform: scale(1.01);
   }
 </style>

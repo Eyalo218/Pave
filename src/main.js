@@ -19,7 +19,7 @@ Vue.component('star-rating', StarRating);
 Vue.use(VueCarousel);
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyBPoPB7y1PWtwusz65fW6LFYJE4ON0t3DA',
+    key: 'AIzaSyCVDAudsag802dc0gnIYxESejAZLgpi6O8',
     libraries: 'places',
   }
 });

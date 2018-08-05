@@ -81,15 +81,15 @@ export default {
             width: 40%;
         }
         @media (max-width: 680px){
-            width: 60%;
-        }
-        @media (max-width: 490px){
-            width: 75%;
+            width: 95%;
         }
       .logo {
           text-align: center;
           font-size: 3rem;
           margin: 1rem 0;
+            @media (max-width: 680px){
+            margin-top: 4.5rem;
+        }
       }
       h3 {
         font-size: 1.5rem;
@@ -107,6 +107,9 @@ export default {
       .form {
         margin: 0 auto;
         width: 55%;
+            @media (max-width: 680px){
+            width: 75%;
+        }
         input {
           border: 1px solid #EDEDED;
           margin-bottom: 10px;
