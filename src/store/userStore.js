@@ -44,6 +44,14 @@ export default {
             let user = payload.user
             return userService.editUser(user)
                 .then(user => user)
+        },
+        deleteUserTrip(context, payload) {
+            console.log('trips ', payload)
+            userService.deleteFromUser(payload)
+        },
+        deleteUserPins(context, payload) {
+            console.log('pins: ', payload)
+            userService.deleteFromUser(payload)
         }
     }
 }
