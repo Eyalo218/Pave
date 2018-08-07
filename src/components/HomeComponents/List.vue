@@ -34,7 +34,7 @@ export default {
   },
   components: {},
   created() {
-    this.displayActiveTrips();
+    this.displayTripsByText();
   },
   methods: {
     displayTripsByText() {

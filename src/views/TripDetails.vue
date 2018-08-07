@@ -75,15 +75,9 @@
         <font-awesome-icon key="1" v-if="!markerDetShown" @click="markerDetShown=true" class="info" icon="info"  />
         <font-awesome-icon key="2" v-if="markerDetShown" @click="markerDetShown=false" class="info" icon="times"  />
             </transition>
-          </div>
-     </transition>
-          <router-link :to="'/'" >
-         <font-awesome-icon class="home-link" icon="arrow-circle-left" size="2x" />
-         </router-link>
-         <!-- marker details -->
-         <transition name="marker-det-slide">
+             <transition name="marker-det-slide">
            <div :class="{'category-desc-container-shown':true}" 
-          v-show="markerDetShown" v-if="getMarkers.length!==0" class="category-desc-container">
+          v-show="true" v-if="getMarkers.length!==0" class="category-desc-container">
             <p>
               <span  class="category">Category: &nbsp;</span>
               <span>{{getCurrMarker.category}}</span>
@@ -91,6 +85,13 @@
             <p class="desc">{{getCurrMarker.desc}}</p>
           </div>
          </transition>
+          </div>
+     </transition>
+          <router-link :to="'/'" >
+         <font-awesome-icon class="home-link" icon="arrow-circle-left" size="2x" />
+         </router-link>
+         <!-- marker details -->
+        
           <transition name="slide-reviews">
           <div v-show="mobileWindow ==='reviews'" class="reviews">
             reviews
@@ -365,10 +366,13 @@ button {
       transform: scale(1.1);
     }
   }
+  // vue-carousel slide img :border-radius 5px,height:50vh
+  // div that has .photos height :55vh
+  // 
   .photos {
     width: 85vw;
-    height: 80vh;
-    background-color: #383633;
+    height: 70vh;
+        // background: rgb(176, 194, 209);
     box-shadow: 1px 1px 4px 1px black;
     border-radius: 3px;
   }
@@ -379,43 +383,43 @@ button {
     position: relative;
   }
   .category-desc-container {
-    padding: 0;
+    padding: 0.25rem;
     position: absolute;
-    bottom: 2%;
-    margin: 2%;
+    margin-left: 1%;
+    top: 72%;
+    z-index: 1;
+    -webkit-transition: all 0.5s;
     transition: all 0.5s;
-    // padding: 0 2rem;
-    z-index: -1;
-    opacity: 0;
-    color: white;
     .category {
-      color: white;
+      color: #47809d;
+      font-weight: 100;
     }
     span {
-      color: white;
+      font-weight: 100;
+      color:$main-black;
+    }
+    .desc{
+      color: $main-black;
+      font-weight: 100;
+      font-size: 0.7rem;
     }
   }
   .desc-modal {
-    position: absolute;
+   position: absolute;
     width: 100%;
-    height: 100%;
+    height: 28.5%;
+    bottom: 0%;
     z-index: 1;
-    opacity: 0;
-    background-color: black;
-    transition: all 0.5s;
-  }
-  .desc-modal-shown {
-    // z-index: 1;
     opacity: 0.5;
+    background-image: url('https://images.pexels.com/photos/21014/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=1080&w=1920');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* background-color: black; */
+    -webkit-transition: all 0.5s;
     transition: all 0.5s;
   }
-  .category-desc-container-shown {
-    z-index: 3;
-    bottom: 65%;
-    transition: all 1s;
-    opacity: 1;
-    // z-index: 1;
-  }
+  
   .camera-container {
     background-color: white;
     border-radius: 50%;

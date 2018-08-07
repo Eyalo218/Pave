@@ -1,4 +1,4 @@
-<template>
+  <template>
   <section class="map-cmp">
     <gmap-map  :zoom="18" :center="center" :style="`width:100%; height:${mapHeight}`" ref="map">
       <gmap-marker

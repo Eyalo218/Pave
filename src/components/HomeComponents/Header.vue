@@ -1,13 +1,13 @@
 <template>
-    <section class="header" :class="{ 'explore-open': isExploreOpen, 'explore-open-flex': isExploreOpen,  }">
+    <section class="header" >
       <navBar></navBar>
-      <!-- <div class="background-carousel">
-        <carousel :autoplay="false" :loop="true" :perPage="1" :paginationEnabled="false" :navigationEnabled="false">
+      <div  :class="{'background-carousel':true, 'explore-open': isExploreOpen, 'explore-open-flex': isExploreOpen}">
+        <carousel :autoplayTimeout="4000" :autoplay="true" :loop="true" :perPage="1" :paginationEnabled="false" :navigationEnabled="false">
     <slide :key="index" v-for="(img,index) in headerImgs">
-      <img :src="img" style="width: 98%;"/>
+      <img :class="{'slide-img':!isExploreOpen, 'explore-open': isExploreOpen}" :src="img.img"/>
       </slide>
-        </carousel>
-        </div> -->
+        </carousel> 
+        </div>
         <div v-if="!isExploreOpen" class="title-input-container">
             <h1>Explore and share walks <br/> around the world</h1>
             <input v-model="searchedText" @keyup.enter="setFilter" placeholder="Take yourself to..." />
@@ -58,11 +58,17 @@ export default {
       return this.$store.getters.isExploreOpen;
     },
     headerImgs() {
-      console.log('asdasd');
-      
       return [
-        "https://images.pexels.com/photos/235648/pexels-photo-235648.jpeg?auto=compress&cs=tinysrgb&h=650&w=9400",
-        "https://images.pexels.com/photos/691637/pexels-photo-691637.jpeg?auto=compress&cs=tinysrgb&h=650&w=940"
+        {img:"https://images.pexels.com/photos/297642/pexels-photo-297642.jpeg?auto=compress&cs=tinysrgb&h=6590&w=4540"
+        ,desc:'Walks',num:'6500+'},
+        {img:"https://images.pexels.com/photos/235648/pexels-photo-235648.jpeg?auto=compress&cs=tinysrgb&h=3456&w=5184"
+        ,desc:'Walks',num:'6500+'},
+        {img:"https://images.pexels.com/photos/269850/pexels-photo-269850.jpeg?auto=compress&cs=tinysrgb&h=5472&w=3648"
+        ,desc:'Walks',num:'6500+'},
+        {img:"https://images.pexels.com/photos/691637/pexels-photo-691637.jpeg?auto=compress&cs=tinysrgb&h=3456&w=5184"
+        ,desc:'Countries',num:'130'},
+        {img:"https://images.pexels.com/photos/386009/pexels-photo-386009.jpeg?auto=compress&cs=tinysrgb&h=3456&w=5184"
+        ,desc:'Users',num:'80K'}
       ];
     }
   },
@@ -88,31 +94,38 @@ export default {
   }
 };
 </script>
-
 <style scoped lang="scss">
 @import "../../../public/css/helpers.css";
 $main-black: #383633;
 section .explore-open {
-  height: 0px;
-  margin: 0;
+  transition:all .3s;
+  height: 0px;  
+  width: 100%;
+  // transform: translateY(-100vh);
+  // margin: 0;
 }
-.background-carousel{
+.background-carousel {
   position: fixed;
   z-index: -1000;
-   height: 100vh;
-   width: 100vw;
-  margin-bottom: 4rem;
-  position: relative;
-}
-.header {
-  margin: 0;
-  background-image: url("../../../public/img/home/homeImg.jpeg");
-  background-size: cover;
-  background-position: center;
   height: 100vh;
   margin-bottom: 4rem;
   position: relative;
-  transition: all ease-in 0.3s;
+  transition: all  0.5s;
+  .slide-img{
+    height: 100vh;
+    width: 100%;
+     transition: all  0.5s;
+  }
+}
+.header {
+  // margin: 0;
+  // background-image: url("../../../public/img/home/homeImg.jpeg");
+  // background-size: cover;
+  // background-position: center;
+  // height: 100vh;
+  // margin-bottom: 4rem;
+  // position: relative;
+  // transition: all ease-in 0.3s;
 }
 
 .home-nav-bar {
