@@ -54,7 +54,7 @@
   </div>
   <div class="flex all-container">
      <transition name="slide-map" >
-      <div v-show="mobileWindow ==='map'" class="map">
+      <div :key="1" v-show="mobileWindow ==='map'" class="map">
         <trip-map :mapHeight="setMapHeightInMobile"></trip-map>
         <div class="camera-container">
         <font-awesome-icon @click="togglePhotoMode()" class="camera" icon="camera" style="padding:0 1rem;" size="1x" />
@@ -65,16 +65,12 @@
           <create-mark></create-mark>
         </div>
         <div class="details">
-          <transition  :name="animationName" >
-          <div v-show="mobileWindow ==='photos'" class="photos" >
+          <transition :name="animationName" >
+          <div :key="2" v-show="mobileWindow ==='photos'" class="photos" >
             <!--  -->
              <div :class="{'desc-modal':true,'desc-modal-shown':markerDetShown}">
         </div>
             <photo-display></photo-display>
-            <transition name="fade-info" mode="out-in">
-        <font-awesome-icon key="1" v-if="!markerDetShown" @click="markerDetShown=true" class="info" icon="info"  />
-        <font-awesome-icon key="2" v-if="markerDetShown" @click="markerDetShown=false" class="info" icon="times"  />
-            </transition>
              <transition name="marker-det-slide">
            <div :class="{'category-desc-container-shown':true}" 
           v-show="true" v-if="getMarkers.length!==0" class="category-desc-container">
@@ -91,9 +87,8 @@
          <font-awesome-icon class="home-link" icon="arrow-circle-left" size="2x" />
          </router-link>
          <!-- marker details -->
-        
           <transition name="slide-reviews">
-          <div v-show="mobileWindow ==='reviews'" class="reviews">
+          <div :key="3" v-show="mobileWindow ==='reviews'" class="reviews">
             reviews
             <Reviews></Reviews>
           </div>
@@ -133,6 +128,9 @@ export default {
   },
   created() {
     eventBus.$on(CLOSE_CAMERA, this.togglePhotoMode);
+    eventBus.$on("switch-to-photos", () => {
+      this.mobileWindow = "photos";
+    });
   },
   computed: {
     getCurrTrip() {
@@ -168,15 +166,15 @@ export default {
   methods: {
     togglePhotoMode() {
       console.log("swalalalalalalalal emit emit emit");
-
       this.photoMode = !this.photoMode;
     },
     showOnMobile(mobileWindow) {
-     eventBus.$emit('changed-to-map');
-      if (mobileWindow === "map") this.animationName = "slide-from-map";
-      else this.animationName = "slide-photos";
+      eventBus.$emit("changed-to-map");
+      setTimeout(() => {
+        if (mobileWindow === "map") this.animationName = "slide-from-map";
+        else this.animationName = "slide-photos";
+      }, 0);
       this.mobileWindow = mobileWindow;
-      console.log(this.animationName);
     },
     showCategory(category) {
       this.catWindow = category;
@@ -294,6 +292,7 @@ hr {
     font-weight: bold;
   }
   .desc {
+
     font-size: 0.8rem;
     padding: 0.5rem 0;
     width: 80%;
@@ -368,11 +367,11 @@ button {
   }
   // vue-carousel slide img :border-radius 5px,height:50vh
   // div that has .photos height :55vh
-  // 
+  //
   .photos {
     width: 85vw;
     height: 70vh;
-        // background: rgb(176, 194, 209);
+    // background: rgb(176, 194, 209);
     box-shadow: 1px 1px 4px 1px black;
     border-radius: 3px;
   }
@@ -396,30 +395,32 @@ button {
     }
     span {
       font-weight: 100;
-      color:$main-black;
+      color: $main-black;
     }
-    .desc{
+    .desc {
+       @media (max-width: 370px){
+      font-size: 0.6rem;
+    }
       color: $main-black;
       font-weight: 100;
       font-size: 0.7rem;
     }
   }
   .desc-modal {
-   position: absolute;
+    position: absolute;
     width: 100%;
-    height: 28.5%;
+    height: 20vh;
     bottom: 0%;
     z-index: 1;
     opacity: 0.5;
-    background-image: url('https://images.pexels.com/photos/21014/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=1080&w=1920');
+    background-image: url("https://images.pexels.com/photos/21014/pexels-photo.jpg?auto=compress&cs=tinysrgb&h=1080&w=1920");
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
-    /* background-color: black; */
     -webkit-transition: all 0.5s;
     transition: all 0.5s;
   }
-  
+
   .camera-container {
     background-color: white;
     border-radius: 50%;
@@ -489,20 +490,8 @@ button {
   transition: all 0.5s;
 }
 .slide-photos-enter {
-  transform: translateX(70vw);
+  transform: translateX(-100vw);
   opacity: 1;
-}
-
-//slide photos from map
-.slide-from-map-enter {
-  transform: translateX(100vw);
-  opacity: 1;
-}
-.slide-from-map-enter-active {
-  transition: all 0.5s;
-}
-.slide-from-map-leave-active {
-  display: none;
 }
 
 //reviews window:
@@ -533,5 +522,22 @@ button {
 .marker-det-slide-leave-to {
   transform: translateY(10vh);
   opacity: 0;
+}
+
+//slide photos from map
+.slide-from-map-enter {
+  transform: translateX(100vw);
+  opacity: 1;
+}
+.slide-from-map-leave-to {
+  transform: translatex(-100vw);
+  opacity: 0;
+}
+
+.slide-from-map-enter-active {
+  transition: all 0.5s;
+}
+.slide-from-map-leave-active {
+  display: none;
 }
 </style>

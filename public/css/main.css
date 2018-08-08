@@ -51,6 +51,12 @@ p{
   .VueCarousel-wrapper {
     height: 100% !important;
   }
+  .header .VueCarousel-wrapper{
+    height: 50vh !important;  
+  }
+ .header .background-carousel .slide-img{
+   height: 50vh !important;
+ }
   section.photos {
   display: flex;
   align-items: start;

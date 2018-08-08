@@ -1,7 +1,7 @@
 <template>
     <section>
         <div class="list-container">
-            <h1 class="headline">Trips around the world</h1>
+            <h1 class="active-trips">Active Trips</h1>
             <ul v-if="trips" class="trips">
                 <li class="h-list-item" v-for="(trip,idx) in trips" :key="idx" >
                     <router-link :to="`trips/${trip._id}`">  
@@ -53,8 +53,14 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.headline {
+.active-trips {
   font-size: 1.5rem;
+  @media(max-width: 800px){
+    font-size: 1.3rem;
+  }
+  @media(max-width: 450px){
+    font-size: 1.1rem;
+  }
 }
 .trips {
   display: flex;

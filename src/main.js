@@ -15,11 +15,11 @@ import VueCarousel from 'vue-carousel';
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('star-rating', StarRating);
-
+// AIzaSyCKdQc3s5TQMELre6x31H6vk_Z1AoPGb7E
 Vue.use(VueCarousel);
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyCKdQc3s5TQMELre6x31H6vk_Z1AoPGb7E',
+    key: '',
     libraries: 'places',
   }
 });

@@ -59,16 +59,36 @@ export default {
     },
     headerImgs() {
       return [
-        {img:"https://images.pexels.com/photos/297642/pexels-photo-297642.jpeg?auto=compress&cs=tinysrgb&h=6590&w=4540"
-        ,desc:'Walks',num:'6500+'},
-        {img:"https://images.pexels.com/photos/235648/pexels-photo-235648.jpeg?auto=compress&cs=tinysrgb&h=3456&w=5184"
-        ,desc:'Walks',num:'6500+'},
-        {img:"https://images.pexels.com/photos/269850/pexels-photo-269850.jpeg?auto=compress&cs=tinysrgb&h=5472&w=3648"
-        ,desc:'Walks',num:'6500+'},
-        {img:"https://images.pexels.com/photos/691637/pexels-photo-691637.jpeg?auto=compress&cs=tinysrgb&h=3456&w=5184"
-        ,desc:'Countries',num:'130'},
-        {img:"https://images.pexels.com/photos/386009/pexels-photo-386009.jpeg?auto=compress&cs=tinysrgb&h=3456&w=5184"
-        ,desc:'Users',num:'80K'}
+        {
+          img:
+            "https://images.pexels.com/photos/297642/pexels-photo-297642.jpeg?auto=compress&cs=tinysrgb&h=6590&w=4540",
+          desc: "Walks",
+          num: "6500+"
+        },
+        {
+          img:
+            "https://images.pexels.com/photos/235648/pexels-photo-235648.jpeg?auto=compress&cs=tinysrgb&h=3456&w=5184",
+          desc: "Walks",
+          num: "6500+"
+        },
+        {
+          img:
+            "https://images.pexels.com/photos/269850/pexels-photo-269850.jpeg?auto=compress&cs=tinysrgb&h=5472&w=3648",
+          desc: "Walks",
+          num: "6500+"
+        },
+        {
+          img:
+            "https://images.pexels.com/photos/691637/pexels-photo-691637.jpeg?auto=compress&cs=tinysrgb&h=3456&w=5184",
+          desc: "Countries",
+          num: "130"
+        },
+        {
+          img:
+            "https://images.pexels.com/photos/386009/pexels-photo-386009.jpeg?auto=compress&cs=tinysrgb&h=3456&w=5184",
+          desc: "Users",
+          num: "80K"
+        }
       ];
     }
   },
@@ -98,8 +118,8 @@ export default {
 @import "../../../public/css/helpers.css";
 $main-black: #383633;
 section .explore-open {
-  transition:all .3s;
-  height: 0px;  
+  transition: all 0.3s;
+  height: 0px;
   width: 100%;
   // transform: translateY(-100vh);
   // margin: 0;
@@ -110,11 +130,15 @@ section .explore-open {
   height: 100vh;
   margin-bottom: 4rem;
   position: relative;
-  transition: all  0.5s;
-  .slide-img{
+  transition: all 0.5s;
+  @media(max-width: 800px){
+    height: 50vh;
+    margin-bottom:1rem;
+  }
+  .slide-img {
     height: 100vh;
     width: 100%;
-     transition: all  0.5s;
+    transition: all 0.5s;
   }
 }
 .header {
@@ -163,6 +187,9 @@ section .explore-open {
   @media (max-width: 520px) {
     width: 82%;
   }
+  @media (max-width: 800px) {
+    top: 22%;
+  }
   h1 {
     color: white;
     font-size: 3rem;
@@ -179,7 +206,7 @@ section .explore-open {
       font-size: 1.9rem;
     }
     @media (max-width: 430px) {
-      font-size: 1.7rem;
+      font-size: 1.3rem;
     }
   }
   input {
@@ -192,11 +219,19 @@ section .explore-open {
     color: $main-black;
     font-family: "roboto-bold";
     font-size: 1rem;
+    @media (max-width: 600px) {
+      margin-top: 1rem;
+      height: 2rem;
+      font-size: 0.7rem;
+    }
   }
   ::placeholder {
     color: $main-black;
     font-family: "roboto-bold";
     font-size: 1rem;
+    @media (max-width: 600px) {
+      font-size: 0.7rem;
+    }
   }
 }
 
@@ -213,6 +248,9 @@ section .explore-open {
     span {
       font-size: 1rem;
       opacity: 0.8;
+      @media(max-width:800px){
+        font-size: 0.7rem;
+      }
     }
     @media (max-width: 960px) {
       font-size: 2rem;
@@ -221,11 +259,17 @@ section .explore-open {
       font-size: 1.7rem;
     }
     @media (max-width: 840px) {
-      display: flex;
-      flex-direction: column;
       padding: 0;
-      font-size: 1.7rem;
+      font-size: 1.4rem;
     }
+    @media( max-width:400px){
+      font-size: 1.2rem;
+    }
+  }
+  @media (max-width: 800px) {
+    bottom: 50%;
+    width: 100%;
+    text-align: center;
   }
 }
 .drop-down {
