@@ -1,60 +1,144 @@
 <template>
     <section>
         <div class="list-container">
-            <h1 class="headline">Trips around the world</h1>
-            <ul v-if="trips" class="trips">
-                <li class="h-list-item" v-for="(trip,idx) in trips" :key="idx" >
+            <h1 class="active-trips-header">Active Trips</h1>
+            <ul v-if="activeTrips" class="trips">
+                <li class="h-list-item" v-for="(trip,idx) in activeTrips" :key="idx" >
+                    <active-pulse v-if="trip.isActive" class="active-pulse"></active-pulse>
                     <router-link :to="`trips/${trip._id}`">  
                             <img class="item-img" :src="`${trip.image}`">
                     </router-link>
                     <div class="trip-info">
                       <div class=title>{{trip.title}}</div>
-                      <div class="rank">Reviews<img class="review-dot" src="../../../public/img/home/dot-and-circle.svg"/></div>
-                      <div class="country">Canada</div>
+                      <div class="rank">
+                    <star-rating class="stars" active-color="#44809e" :rating="trip.avgReviews" :read-only="true" :increment="0.5" :show-rating="false"  :star-size="13">
+                    </star-rating> 
+                      </div>
+                      <div class="country">{{trip.country}}</div>
                     </div>
                 </li>
                 <li li class="h-list-item">
-                    <router-link :to="'/explore'">
-                     <div class="cover">Check all the other trips from Canada ></div>
+                    <a @click="openExplore('active')">
+                     <div class="cover"><p>Show me more &nbsp; <font-awesome-icon icon="angle-right" class="icon" size="1x" />  </p> </div>
+                    </a>
+                      <img class="item-img" src="https://images.pexels.com/photos/546157/pexels-photo-546157.jpeg?auto=compress&cs=tinysrgb&h=650&w=940">
+                </li>
+            </ul>
+            <hr/>
+            <!-- sorted: -->
+           <h1 class="active-trips-header">Highly rated trips</h1>
+            <ul v-if="activeTrips" class="trips">
+                <li class="h-list-item" v-for="(trip,idx) in sortedTrips" :key="idx" >
+                    <active-pulse v-if="trip.isActive" class="active-pulse"></active-pulse>
+                    <router-link :to="`trips/${trip._id}`">  
+                            <img class="item-img" :src="`${trip.image}`">
                     </router-link>
-                      <img class="item-img" src="../../../public/img/home/home-list-demo.jpeg">
+                    <div class="trip-info">
+                      <div class=title>{{trip.title}}</div>
+                      <div class="rank">
+                    <star-rating class="stars" active-color="#44809e" :rating="trip.avgReviews" :read-only="true" :increment="0.5" :show-rating="false"  :star-size="13">
+                    </star-rating> 
+                      </div>
+                      <div class="country">{{trip.country}}</div>
+                    </div>
+                </li>
+                <li li class="h-list-item">
+                    <a  @click="openExplore('active')">
+                     <div class="cover"><p>For all the trips &nbsp; <font-awesome-icon icon="angle-right" class="icon" size="1x" />  </p> </div>
+                    </a>
+                      <img class="item-img" src="https://images.pexels.com/photos/546157/pexels-photo-546157.jpeg?auto=compress&cs=tinysrgb&h=650&w=940">
                 </li>
             </ul>
         </div>
+        <hr/>
     </section>
 </template>
 
 <script>
+import activePulse from "@/components/HomeComponents/ActivePulse.vue";
+import { eventBus, OPEN_EXPLORE } from "../../service/eventBus.js";
 export default {
   name: "ListHome",
   data() {
     return {
-      trips: null
+      activeTrips: null,
+      sortedTrips: null
     };
   },
-  components: {},
-  created() {
-    this.displayTripsByText();
+  components: {
+    activePulse
   },
+  created() {
+    this.loadActiveTrips();
+    this.loadSortedTrips();
+  },
+  computed: {},
   methods: {
-    displayTripsByText() {
-      let searchedText = "canada";
-      this.$store.dispatch({ type: "loadTrips", searchedText }).then(() => {
-        this.setTripsForDisplay();
+    loadActiveTrips() {
+      this.$store.dispatch({ type: "loadActiveTrips" }).then(() => {
+        this.activeTrips = this.setTripsForDisplay(
+          this.$store.getters.activeTripsForDisplay
+        );
       });
-      this.$store.dispatch({ type: "loadSortedTrips" }).then(() => {});
     },
-    setTripsForDisplay() {
-      this.trips = this.$store.getters.tripsForDisplay.slice();
-      console.log(this.trips);
-      this.trips = this.trips.splice(0, 3);
+    loadSortedTrips() {
+      this.$store.dispatch({ type: "loadSortedTrips" }).then(() => {
+        this.sortedTrips = this.setTripsForDisplay(
+          this.$store.getters.sortedTripsForDisplay
+        );
+      });
+    },
+    setTripsForDisplay(trips) {
+      trips = trips.slice();
+      return trips.splice(0, 3);
+    },
+    openExplore(filterBy) {
+      if (filterBy === "active")
+        eventBus.$emit(OPEN_EXPLORE, this.$store.getters.activeTripsForDisplay);
     }
   }
 };
 </script>
 <style lang="scss" scoped>
-.headline {
+$main-black: #383633;
+$main-blue: #44809e;
+hr {
+  margin: 2rem 0;
+  border: 0;
+  height: 1px;
+  background-image: linear-gradient(
+    to right,
+    rgba(201, 194, 194, 0),
+    rgba(201, 194, 194, 0.75),
+    rgba(201, 194, 194, 0)
+  );
+}
+li {
+  transition: transform 0.2s;
+  &:hover {
+    transform: scale(1.02);
+  }
+  position: relative;
+  .active-pulse {
+    position: absolute;
+    top: 2%;
+    left: -11%;
+  }
+}
+section {
+  padding: 0 13%;
+  margin-bottom: 5rem;
+}
+.active-trips-header {
   font-size: 1.5rem;
+  text-align: left;
+  color: $main-black;
+  @media (max-width: 800px) {
+    font-size: 1.3rem;
+  }
+  @media (max-width: 450px) {
+    font-size: 1.1rem;
+  }
 }
 .trips {
   display: flex;
@@ -78,14 +162,23 @@ section .list-container {
   box-shadow: 1px 2px 5px #262626;
 }
 .cover {
-  width: 45%;
-  height: 7rem;
-  background: #0e95f094;
+  // width: 45%;
+  // height: 7rem;
+  cursor: pointer;
+  color: white;
+  background-color: rgba(0, 132, 137, 0.6);
   position: absolute;
-  text-align: center;
   display: flex;
+  justify-content: center;
   align-items: center;
   z-index: 1;
+  p {
+    text-align: center;
+    font-size: 1.2rem;
+    .icon {
+      // padding-top: 10%;
+    }
+  }
 }
 .review-dot {
   width: 12px;
@@ -121,14 +214,15 @@ section .list-container {
       height: 10rem;
     }
     .title {
-      font-size: 1.2rem;
+      font-size: 1rem;
+      padding-top: 0.2rem;
     }
     .rank {
       font-family: "roboto-regular";
     }
     .country {
       font-size: 0.8rem;
-      font-family: "roboto-regular";
+      font-family: "roboto-medium";
     }
   }
   h1 {
@@ -165,11 +259,11 @@ section .list-container {
   .trips {
     .item-img {
       width: 100%;
-      height: 12rem;
+      height: 170px;
     }
     .h-list-item,
     .cover {
-      height: 12rem;
+      height: 170px;
     }
   }
 }
@@ -177,13 +271,52 @@ section .list-container {
 @media screen and (min-width: 1024px) {
   .trips {
     .item-img {
-      width: 100%;
-      height: 12rem;
+      width: 16vw;
+      height: 170px;
     }
     .h-list-item,
     .cover {
-      width: 20%;
-      height: 12rem;
+      width: 16vw;
+      height: 170px;
+    }
+  }
+}
+@media (max-width: 415px) {
+  section{
+    margin-bottom: 3rem;
+  }
+  .active-trips-header {
+    margin-bottom: 0.5rem;
+    padding-left: 1%;
+  }
+  .item-img {
+    height: 90px;
+  }
+  .trips {
+    justify-content: space-between;
+  }
+  .trip-info {
+    margin-top: 0.5rem;
+    .title {
+      font-size: 0.8rem;
+    }
+    .country {
+      font-size: 0.8rem;
+    }
+  }
+  hr{
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+  .h-list-item {
+    .cover {
+      height: 90px;
+      width: 100%;
+      p {
+        text-align: center;
+        font-size: 0.9rem;
+        padding-left: 3%;
+      }
     }
   }
 }

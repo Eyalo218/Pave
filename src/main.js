@@ -15,7 +15,6 @@ import VueCarousel from 'vue-carousel';
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
 Vue.component('star-rating', StarRating);
-
 Vue.use(VueCarousel);
 Vue.use(VueGoogleMaps, {
   load: {

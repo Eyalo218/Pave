@@ -5,13 +5,13 @@ const TRIPS_URL = (process.env.NODE_ENV !== 'development')
  ? '/trips'
  : 'http://localhost:3000/trips';
 
-function query(searchedText = '', userId = null, isComplete = false) {    
+function query(searchedText = '', userId = null, isActive = false) {    
     return axios.get(`${TRIPS_URL}`,
         {   
             params: {
                 searchedText,
                 userId,
-                isComplete
+                isActive
             }
         }
     )

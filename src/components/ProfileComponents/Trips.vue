@@ -263,7 +263,7 @@ export default {
                 border: none;
                 cursor: pointer;
                 font-size: 1.25rem;
-                fomt-family: 'roboto-bold';
+                font-family: 'roboto-bold';
                 padding: 0.5rem;
             }
             .close-btn:hover {
