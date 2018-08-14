@@ -120,7 +120,7 @@ export default {
       //       if (i === urls.length - 1 && j === urls[i].length - 1) {
       //         let currMarkerIdx = 0;
       //         this.currPhoto = urls[0][0];
-      //         eventBus.$emit(CHANGE_MARKER, {
+      //         eventBus.$emit(CHANGE_MARK+ER, {
       //           currMarkerIdx,
       //           marker: this.currTrip.markers[currMarkerIdx]
       //         });
