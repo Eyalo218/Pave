@@ -61,9 +61,17 @@ export default {
     },
     capturePhoto() {
       this.canvas = this.$refs.canvas;
+      var width, height;
+      if(window.innerWidth<500){
+        width=300 ;
+        height= 500;
+      }else{
+        width=480;
+        height=640;
+      }
       var context = this.canvas
         .getContext("2d")
-        .drawImage(this.video, 0, 0, 640, 480);
+        .drawImage(this.video, 0, 0, height, width);
       this.photos.push(canvas.toDataURL("image/png"));
     },
     continueToMarkDesc() {
