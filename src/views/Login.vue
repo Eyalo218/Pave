@@ -7,7 +7,7 @@
                 <div class="call-out"><h3>Explore and share <span class="walks">walks</span></h3><h3>around the world</h3></div>
                 <form @submit.prevent="login" class="form flex column">
                     <input type="text" v-model="loginDetails.name" placeholder="Name">
-                    <input type="text" v-model="loginDetails.password" placeholder="Password">
+                    <input type="password" v-model="loginDetails.password" placeholder="Password">
                     <button class="submit-btn">Continue</button>
                     <p class="terms">By continuing, you agree to Pave's <span class="bold">Terms of Service, Privacy Policy</span></p>
                 </form>
@@ -81,15 +81,15 @@ export default {
             width: 40%;
         }
         @media (max-width: 680px){
-            width: 60%;
-        }
-        @media (max-width: 490px){
-            width: 75%;
+            width: 95%;
         }
       .logo {
           text-align: center;
           font-size: 3rem;
           margin: 1rem 0;
+            @media (max-width: 680px){
+            margin-top: 4.5rem;
+        }
       }
       h3 {
         font-size: 1.5rem;
@@ -107,6 +107,9 @@ export default {
       .form {
         margin: 0 auto;
         width: 55%;
+            @media (max-width: 680px){
+            width: 75%;
+        }
         input {
           border: 1px solid #EDEDED;
           margin-bottom: 10px;

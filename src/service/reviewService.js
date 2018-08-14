@@ -1,6 +1,9 @@
-const REVIEW_URL = 'http://localhost:3000/reviews'
 import axios from 'axios'
+// const REVIEW_URL = 'http://localhost:3000/reviews'
 
+const REVIEW_URL = (process.env.NODE_ENV !== 'development')
+ ? '/reviews'
+ : 'http://localhost:3000/reviews';
 
 // function query() {
 //     return axios.get(`${TRIPS_URL}`,

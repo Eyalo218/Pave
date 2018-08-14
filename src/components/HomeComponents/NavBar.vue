@@ -75,9 +75,11 @@ export default {
 </script>
 <style lang="scss" scoped>
 .nav-container {
-    background-color: #383633;
+    position: absolute;
+    width: 100%;
+    background-color:black;
+    opacity: 0.6;
     padding: 0.6rem 0;
-
     .logo {
         padding-left: 1.3rem;
         font-family: 'Chalkduster';

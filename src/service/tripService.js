@@ -1,6 +1,9 @@
-const TRIPS_URL = 'http://localhost:3000/trips'
+// const TRIPS_URL = 'http://localhost:3000/trips'
 import axios from 'axios'
 
+const TRIPS_URL = (process.env.NODE_ENV !== 'development')
+ ? '/trips'
+ : 'http://localhost:3000/trips';
 
 function query(searchedText = '', userId = null, isComplete = false) {    
     return axios.get(`${TRIPS_URL}`,

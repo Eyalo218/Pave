@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     displayTripsByText() {
-      let searchedText = "Tel";
+      let searchedText = "canada";
       this.$store.dispatch({ type: "loadTrips", searchedText }).then(() => {
         this.setTripsForDisplay();
       });

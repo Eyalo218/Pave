@@ -1,9 +1,12 @@
 import axios from 'axios'
 import storageService from './storageService.js'
-import {eventBus, LOGGED_IN} from './eventBus'
+import { eventBus, LOGGED_IN } from './eventBus'
 
+const USERS_URL = (process.env.NODE_ENV !== 'development')
+    ? '/users'
+    : 'http://localhost:3000/users';
 
-const USERS_URL = 'http://localhost:3000/users'
+// const USERS_URL = 'http://localhost:3000/users'
 const STORAGE_KEY = 'loggedinUser';
 
 var loggedinUser = storageService.loadFromStorage(STORAGE_KEY) || null;
@@ -41,7 +44,7 @@ function getLoggedinUser() {
 // Get user by ID
 function getById(userId) {
     return axios.get(`${USERS_URL}/${userId}`)
-            .then(res => res.data)
+        .then(res => res.data)
 }
 
 function editUser(user) {
@@ -58,11 +61,11 @@ function deleteUser(userId) {
 function query() {
 
     return axios.get(`${USERS_URL}`)
-            .then(res => {
-                return {
-                    users: res.data
-                }
-            })
+        .then(res => {
+            return {
+                users: res.data
+            }
+        })
 }
 
 function deleteFromUser(userDetails) {
@@ -71,7 +74,7 @@ function deleteFromUser(userDetails) {
 }
 
 function addUser(user) {
-        return axios.post(USERS_URL,user)
+    return axios.post(USERS_URL, user)
 }
 
 
