@@ -6,7 +6,7 @@
             <div ><img @click="toDetails(`${trip._id}`)" class="item-img" :src="trip.image"></div>
             <div class="flex column txt-container">
                 <div class="location" @click="toDetails(`${trip._id}`)">{{trip.title}}</div>
-                <div class="country" @click="toDetails(`${trip._id}`)">Canada</div>
+                <div class="country" @click="toDetails(`${trip._id}`)">{{trip.country}}</div>
                 <div class="flex space-between">
                      <star-rating class="stars" active-color="#44809e" :rating="trip.avgReviews" :read-only="true" :increment="0.5" :show-rating="false"  :star-size="13">
                     </star-rating> 
