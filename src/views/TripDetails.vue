@@ -156,7 +156,7 @@ export default {
     },
     setMapHeightInMobile() {
       if (window.innerWidth > 1100) return "85vh";
-      else if (window.innerWidth <= 1100) return "70vh";
+      else if (window.innerWidth <= 1100) return "60vh";
     },
     checkMobile() {
       if (window.innerWidth <= 800) return false;
@@ -221,11 +221,11 @@ $mobile-width: 80vw;
   transition: all 0.5s;
 }
 .header-map {
-  transform: translatex(45vw);
+  transform: translatex(43vw);
   transition: all 0.5s;
 }
 .header-reviews {
-  transform: translatex(-45vw);
+  transform: translatex(-43vw);
   transition: all 0.5s;
 }
 .photos {
@@ -297,6 +297,7 @@ hr {
     padding: 0.5rem 0;
     width: 80%;
     font-weight: bold;
+    line-height: 2rem;
   }
 }
 button {
@@ -378,7 +379,7 @@ button {
   .map {
     margin: 0;
     width: 90vw;
-    height: $mobile-height;
+    height: 70vh;
     position: relative;
   }
   .category-desc-container {

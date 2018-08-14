@@ -10,7 +10,10 @@
         </div>
         <div v-if="!isExploreOpen" class="title-input-container">
             <h1>Explore and share walks <br/> around the world</h1>
+            <div class="input-container">
+              <font-awesome-icon @click="setFilter" class="icon" icon="search" />            
             <input v-model="searchedText" @keyup.enter="setFilter" placeholder="Take yourself to..." />
+            </div>
         </div>
         <div class="app-data" v-if="!isExploreOpen">
             <p>6500+ <span>walks</span> 130 <span>countries</span> 80k+ <span>users</span></p>
@@ -46,7 +49,9 @@ export default {
     };
   },
   created() {
-    eventBus.$on(OPEN_EXPLORE, () => (this.isExploreOpen = true));
+    eventBus.$on(OPEN_EXPLORE, () => {
+      this.setFilter();
+    });
     eventBus.$on(CLOSE_EXPLORE, () => (this.isExploreOpen = false));
     this.checkIfUserInStorage();
   },
@@ -131,9 +136,9 @@ section .explore-open {
   margin-bottom: 4rem;
   position: relative;
   transition: all 0.5s;
-  @media(max-width: 800px){
+  @media (max-width: 800px) {
     height: 50vh;
-    margin-bottom:1rem;
+    margin-bottom: 1rem;
   }
   .slide-img {
     height: 100vh;
@@ -141,17 +146,19 @@ section .explore-open {
     transition: all 0.5s;
   }
 }
-.header {
-  // margin: 0;
-  // background-image: url("../../../public/img/home/homeImg.jpeg");
-  // background-size: cover;
-  // background-position: center;
-  // height: 100vh;
-  // margin-bottom: 4rem;
-  // position: relative;
-  // transition: all ease-in 0.3s;
+.input-container {
+  position: relative;
+  .icon {
+    position: absolute;
+    top: 60%;
+    left: 1.5%;
+    font-size: 0.9em;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.1);
+    }
+  }
 }
-
 .home-nav-bar {
   padding: 0.5rem 1.5rem 1.5rem 1.5rem;
   @media (max-width: 740px) {
@@ -179,6 +186,7 @@ section .explore-open {
 }
 
 .title-input-container {
+  // z-index: -2;
   position: absolute;
   top: 35%;
   left: 50%;
@@ -213,10 +221,10 @@ section .explore-open {
     border: none;
     margin-top: 2rem;
     height: 3rem;
-    width: 100%;
+    width: 60vw;
     border-radius: 0.3rem;
-    padding-left: 1rem;
-    color: $main-black;
+    padding-left: 2.5rem;
+    color: #383633;
     font-family: "roboto-bold";
     font-size: 1rem;
     @media (max-width: 600px) {
@@ -248,7 +256,7 @@ section .explore-open {
     span {
       font-size: 1rem;
       opacity: 0.8;
-      @media(max-width:800px){
+      @media (max-width: 800px) {
         font-size: 0.7rem;
       }
     }
@@ -262,7 +270,7 @@ section .explore-open {
       padding: 0;
       font-size: 1.4rem;
     }
-    @media( max-width:400px){
+    @media (max-width: 400px) {
       font-size: 1.2rem;
     }
   }
@@ -338,6 +346,22 @@ section .explore-open {
   &:focus {
     outline: none !important;
     box-shadow: 1px 1px 2px 3px #85bef3;
+  }
+}
+@media (max-width: 415px) {
+  .title-input-container {
+    input {
+      padding-left: 1.5rem;
+    }
+  }
+  .input-container {
+    margin: 0;
+    margin-top: 0;
+    .icon {
+      font-size: 0.7rem;
+      top: 55%;
+      left: 2.5%;
+    }
   }
 }
 .logo-search-container {

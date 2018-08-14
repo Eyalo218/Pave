@@ -30,7 +30,7 @@ export default {
         userTripsToDisplay(state, { trips }) {
             state.currUserTrips = trips
         },
-        userPinsToDisplay(state, {trips}) {
+        userPinsToDisplay(state, { trips }) {
             state.currUserTrips = trips
             console.log('In Tha state ', state.currUserTrips)
         },
@@ -49,7 +49,6 @@ export default {
             return state.activeTrips;
         },
         sortedTripsForDisplay(state) {
-            console.log(state.sortedTrips.sort(function (a, b) { return b.avgReviews - a.avgReviews }));
             return state.sortedTrips.sort(function (a, b) { return b.avgReviews - a.avgReviews })
         },
         getCurrTrip(state) {
@@ -100,11 +99,11 @@ export default {
             // context.commit({type: 'updateFilter', searchedText})
             // state.currFilter = searchedText;
         },
-        getPins(context, {pins}){
+        getPins(context, { pins }) {
             console.log('pines ', pins)
-            return Promise.all(pins.map( tripId => tripService.getById(tripId)))
+            return Promise.all(pins.map(tripId => tripService.getById(tripId)))
                 .then(trips => {
-                    context.commit({type: 'userPinsToDisplay', trips})
+                    context.commit({ type: 'userPinsToDisplay', trips })
                     console.log('crhipes, ', trips)
                 })
         }

@@ -1,6 +1,8 @@
 <template>
 <section class="photos">
-  <div ><carousel ref="carousel"  :loop="true" :perPage=1 :paginationEnabled="false" :navigationEnabled="true">
+  <div>
+    <h1 v-show="!urls">No images yet!</h1>
+    <carousel v-show="urls" ref="carousel"  :loop="true" :perPageCustom="[[1,1]]" :paginationEnabled="false" :navigationEnabled="true">
     <slide class="label" v-if="urls" :key="index" v-for="(url,index) in urls">
       <img :src="url" style="width: 100%;"/>
       </slide>
@@ -60,6 +62,7 @@ export default {
       let urls;
       if (this.photosUrls.length !== 0) {
         urls = ("" + this.photosUrls).split(",");
+        
         return urls;
       }
     },
@@ -172,7 +175,11 @@ section {
   // max-width: 450px;
   // min-width: 200px;
 }
-
+h1{
+  width: 100%;
+  text-align: center;
+  padding-top: 2%;
+}
 .img {
   height: 100%;
   border-radius: 5px;

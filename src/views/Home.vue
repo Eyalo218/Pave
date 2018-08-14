@@ -54,7 +54,7 @@ export default {
         }
     },
     created() {
-        eventBus.$on(OPEN_EXPLORE, () => this.explore = true)
+        // eventBus.$on(OPEN_EXPLORE, () => this.explore = true)
         eventBus.$on(CLOSE_EXPLORE, () => this.explore = false)
     },
     computed: {
