@@ -297,7 +297,7 @@ hr {
     padding: 0.5rem 0;
     width: 80%;
     font-weight: bold;
-    line-height: 2rem;
+    line-height: 1.5rem;
   }
 }
 button {
