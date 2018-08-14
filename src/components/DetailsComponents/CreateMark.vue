@@ -130,4 +130,10 @@ export default {
 }
 }
 
+@media screen and (max-width: 415px){
+  .input {
+    width:400px;
+  }
+}
+
 </style>
