@@ -130,4 +130,14 @@ export default {
 }
 }
 
+@media screen and (max-width: 415px){
+  .input-container {
+    width:100vw;
+    height: 100vh;
+    .card{
+      width:90%;
+    }
+  }
+}
+
 </style>
