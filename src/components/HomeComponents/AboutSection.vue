@@ -37,7 +37,7 @@ export default {
 @import '../../../public/css/main.css';
 
 section{
-    width:95%;
+    width:73%;
     margin: 2rem auto;
 }
 

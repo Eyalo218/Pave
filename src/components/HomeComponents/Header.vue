@@ -201,6 +201,7 @@ section .explore-open {
   h1 {
     color: white;
     font-size: 3rem;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
     @media (max-width: 920px) {
       font-size: 2.5rem;
     }
@@ -227,6 +228,7 @@ section .explore-open {
     color: #383633;
     font-family: "roboto-bold";
     font-size: 1rem;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
     @media (max-width: 600px) {
       margin-top: 1rem;
       height: 2rem;
@@ -253,6 +255,7 @@ section .explore-open {
     font-family: "roboto-medium";
     font-size: 2.5rem;
     padding-bottom: 1rem;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.4);
     span {
       font-size: 1rem;
       opacity: 0.8;

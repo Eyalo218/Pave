@@ -34,15 +34,12 @@ export default {
       origin: null,
       dest: null,
       center: { lat: 0, lng: 0 },
-      currTripId: null,
-      lastMarkerEl:null,
-      lastCategory:null,
+      currTripId: null
     };
   },
   created() {
     eventBus.$on("changed-to-map", () => {
       this.setZoomOnMobile();
-      console.log("asdasd");
     });
     eventBus.$on(MARKER_ADDED, currTripId => {
       location.reload();
@@ -59,7 +56,6 @@ export default {
     });
     this.setCurrTrip(this.currTripId);
   },
-  mounted() {},
   computed: {
     google() {
       if (!gmapApi()) location.reload();
@@ -83,7 +79,6 @@ export default {
     displayIconUrl(category) {
       return googleService.getIconUrl(category);
     },
-    displaySelectedIcon() {},
     setCurrTrip(currTripId) {
       if (!currTripId) currTripId = this.$route.params.tripId;
       this.$store.dispatch({ type: "setCurrTrip", currTripId }).then(() => {
@@ -105,16 +100,6 @@ export default {
       );
       eventBus.$emit(MARKER_CLICKED, index);
       this.switchToPhotosOnMobile();
-    },
-    setselectedIconUrl(index) {
-      // this.lastMarker.setIcon(googleService.getIconUrl(this.$store.getters.getCurrMarker.category))
-        // let currMarker = this.$refs[`marker${index}`][0].$markerObject;
-        // currMarker.setIcon(googleService.getSelectedIconUrl(this.$store.getters.getCurrMarker.category));
-        // this.lastMarker = currMarker;
-      // document.querySelectorAll('.gmnoprint')[index].style.opacity = 1;
-      // document.querySelectorAll(".gmnoprint")[index].style.cssText =
-        // " width: 24px; height: 24px; position: absolute;cursor: pointer; touch-action: none; left: -12px; top: -24px; z-index: 0;";
-      // console.log(document.querySelectorAll(".gmnoprint")[index].style);
     },
     setMarkers() {
       let markers = this.trip.markers;
@@ -149,7 +134,6 @@ export default {
     },
     switchToPhotosOnMobile() {
       if (window.innerWidth > 800) return;
-      
       eventBus.$emit("switch-to-photos");
     },
     geolocate() {

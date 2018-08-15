@@ -81,23 +81,24 @@ $main-blue: #44809e;
   position: absolute;
   width: 100%;
   z-index: 1;
-  opacity: 0.7;
-  @media (max-width: 740px){
+  // opacity: 0.7;
+  @media (max-width: 740px) {
     opacity: 0.9;
+    background-color: #383633;
   }
 }
 .nav-container {
   z-index: 4;
   // position: absolute;
   width: 100%;
-  background-color: #383633;
+  // background-color: #383633;
   height: 50px;
   .links-container {
   }
   .logo {
     padding-left: 1.3rem;
     font-family: "Chalkduster";
-    font-size: 1.8rem;
+    font-size: 2.1rem;
     cursor: pointer;
     color: $main-blue;
     margin-right: 5rem;
@@ -171,8 +172,19 @@ $main-blue: #44809e;
         margin-top: 12.5px;
         transition: all 150ms ease-in-out;
         border-bottom: solid 0px $main-blue;
-        &:hover {
+        // &:hover {
+        //   border-bottom: solid 3px $main-blue;
+        // }
+        &::after {
+          margin-top: 0.5rem;
+          display: block;
+          content: "";
           border-bottom: solid 3px $main-blue;
+          transform: scaleX(0);
+          transition: transform 250ms ease-in-out;
+        }
+        &:hover:after {
+          transform: scaleX(1);
         }
         &:hover > button {
           color: $main-blue;
@@ -184,7 +196,7 @@ $main-blue: #44809e;
         font-size: 1rem;
         border: none;
         background: transparent;
-        color: #efefef;
+        color: white;
         cursor: pointer;
         transition: all 150ms ease-in-out;
       }
@@ -226,22 +238,23 @@ $main-blue: #44809e;
 // vue animations:
 .drop-down-enter-active {
   transition: all 0.7s;
+  opacity: 1;
 }
 .drop-down-leave-active {
   transition: all 0.7s;
 }
 .drop-down-enter {
-  transform: translateY(-110px);
+  opacity: 0;
   z-index: -100;
 }
 .drop-down-leave-to {
-  transform: translateY(-110px);
+  opacity: 0;
 }
 
-.switch-hamburger-enter-active{
+.switch-hamburger-enter-active {
   transition: all 1s;
 }
-.switch-hamburger-enter{
+.switch-hamburger-enter {
   opacity: 0;
 }
 </style>
