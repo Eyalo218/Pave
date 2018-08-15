@@ -1,9 +1,10 @@
 <template>
-    <section class="wrapper">
+    <section :class="{'wrapper-in-black':isExploreOpen}" class="wrapper">
         <nav class="nav-container flex space-between align-center">
             <div class="left-nav flex align-center">
                 <div @click="updateExplore(false)" class="logo">Pave</div>
-                <input v-model="searchedText" @input="setFilter" v-if="isExploreOpen" class="search" type="text" placeholder="Seach"/>
+                <input v-model="searchedText" @input="setFilter" v-if="isExploreOpen"
+                 class="search" type="text" placeholder="Seach"/>
             </div>
                 <div class="hamburger">
                   <transition name="switch-hamburger" mode="out-in">
@@ -16,7 +17,7 @@
                         <a><button @click="logOut" >Log out</button></a>
                         <router-link :to="`/profile/${user._id}`"><button class="user-link">{{user.name}}</button></router-link>
                     </div>
-                    <div v-else class="links-container">
+                    <div v-else :class="{'nav-in-black':isExploreOpen}" class="links-container">
                     <!-- <router-link  :to="'/how'"><bottun>How it works</bottun></router-link> -->
                         <router-link  :to="'/signup'"><button>Sign up</button></router-link>
                         <router-link  :to="'/login'"><button>Log in</button></router-link>
@@ -87,6 +88,10 @@ $main-blue: #44809e;
     background-color: #383633;
   }
 }
+.wrapper-in-black{
+  background-color: #383633;
+  opacity: 0.7;
+}
 .nav-container {
   z-index: 4;
   // position: absolute;
@@ -151,6 +156,26 @@ $main-blue: #44809e;
     color: black;
     cursor: pointer;
     font-size: 1.5em;
+  }
+  hr {
+    margin: 2rem 0;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(
+      to right,
+      rgba(201, 194, 194, 0),
+      rgba(201, 194, 194, 0.75),
+      rgba(201, 194, 194, 0)
+    );
+  }
+  .nav-in-black {
+    
+    a {
+      button {
+        font-family: roboto-medium;
+        // color: #383633;
+      }
+    }
   }
   .links-container {
     display: none;
