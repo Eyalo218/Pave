@@ -20,7 +20,7 @@
             </button>
         </div>
       </div>
-        <canvas ref="canvas" id="canvas" width="640" height="480"></canvas>
+        <canvas ref="canvas" id="canvas" :width="width" :height="height"></canvas>
         <ul class="takenPhotos flex column">
             <li v-for="(photo, index) in photos" :key="index">
                 <img v-bind:src="photo" height="100" />
@@ -44,6 +44,8 @@ export default {
       urls: [],
       cameraWidth:500,
       cameraHeight:375,
+      width:null,
+      height:null,
     };
   },
   mounted() {
@@ -61,13 +63,12 @@ export default {
     },
     capturePhoto() {
       this.canvas = this.$refs.canvas;
-      var width, height;
       if(window.innerWidth<500){
-        width=300 ;
-        height= 500;
+        this.width=300 ;
+        this.height= 500;
       }else{
-        width=480;
-        height=640;
+        this.width=480;
+        this.height=640;
       }
       var context = this.canvas
         .getContext("2d")
