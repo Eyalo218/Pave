@@ -43,20 +43,22 @@ export default {
 
 <style lang="scss" scoped>
 .list-container {
-  font-family: "roboto-medium";
-  color: #383633;
-  width: 90%;
-  margin: 4rem auto;
-  ul {
-    display: flex;
-    flex-wrap: wrap;
-    // justify-content: space-around;
-    margin: 0;
-    padding: 0;
-    li {
-      margin-left: 1.5rem;
-    }
-  }
+  @media(max-width: 1300px) {
+      font-family: "roboto-medium";
+      color: #383633;
+      width: 90%;
+      margin: 4rem auto;
+      ul {
+        display: flex;
+        flex-wrap: wrap;
+        // justify-content: space-around;
+        margin: 0;
+        padding: 0;
+        li {
+          margin-left: 1.5rem;
+        }
+      }
+      }
   @media (max-width: 700px) {
     ul {
       justify-content: center;
