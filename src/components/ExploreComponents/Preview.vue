@@ -79,7 +79,7 @@ export default {
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
-  box-shadow: 0px 3px 10px 1px rgba(84, 81, 84, 0.78);
+  border: 1px solid lightgrey;
   height: 18rem;
   width: 15rem;
   .txt-container {
