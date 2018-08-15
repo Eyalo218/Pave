@@ -43,7 +43,6 @@ export default {
 
 <style lang="scss" scoped>
 .list-container {
-  @media(max-width: 1300px) {
       font-family: "roboto-medium";
       color: #383633;
       width: 90%;
@@ -58,6 +57,8 @@ export default {
           margin-left: 1.5rem;
         }
       }
+      @media(min-width: 1300px) {
+         width: 80%;
       }
   @media (max-width: 700px) {
     ul {
