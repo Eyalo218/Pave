@@ -44,8 +44,8 @@ export default {
       urls: [],
       cameraWidth:500,
       cameraHeight:375,
-      width:null,
-      height:null,
+      width:480,
+      height:640,
     };
   },
   mounted() {
@@ -66,9 +66,6 @@ export default {
       if(window.innerWidth<500){
         this.width=300 ;
         this.height= 500;
-      }else{
-        this.width=480;
-        this.height=640;
       }
       var context = this.canvas
         .getContext("2d")
