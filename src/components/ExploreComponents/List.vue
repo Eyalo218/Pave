@@ -47,6 +47,7 @@ export default {
       color: #383633;
       width: 90%;
       margin: 4rem auto;
+      padding-left: 5rem;
       ul {
         display: flex;
         flex-wrap: wrap;
