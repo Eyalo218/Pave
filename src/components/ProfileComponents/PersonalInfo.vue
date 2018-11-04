@@ -2,12 +2,12 @@
     <section class="personal-info-container">
         <div v-if="userToDisplay" class="personalInfo">
             <div class="column">
-                <div class="user-name">{{userToDisplay.name}}</div>
-                <div class="edit-profile">
+                <div class="user-name">Hello,{{userToDisplay.name}}</div>
+                <!-- <div class="edit-profile">
                     <router-link :to="`/editProfile/${userToDisplay._id}`">
                         <p>Edit</p>
                     </router-link>
-                </div>
+                </div> -->
             </div>
             <div class="profile-img"></div>
         </div>

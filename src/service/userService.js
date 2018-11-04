@@ -19,7 +19,6 @@ function signup(userDetails) {
     console.log('front-end service got user signup ', userDetails)
     return axios.post(`${USERS_URL}/signup`, userDetails)
         .then(res => {
-            _setLoggedinUser(res.data)
             return res.data
         })
         .catch(err => console.log('Problem talking to server', err))
@@ -29,6 +28,7 @@ function signup(userDetails) {
 function login(userCreds) {
     return axios.post(`${USERS_URL}/checkLogin`, userCreds)
         .then(res => {
+            console.log(user);
             const user = res.data;
             _setLoggedinUser(user);
             return user;
@@ -49,7 +49,10 @@ function getById(userId) {
 
 function editUser(user) {
     return axios.put(`${USERS_URL}/${user._id}`, user)
-        .then(res => res.data)
+        .then(res => {
+            console.log(res.data);
+            return res.data
+        })
 }
 
 function deleteUser(userId) {

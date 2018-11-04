@@ -20,7 +20,7 @@
             </button>
         </div>
       </div>
-        <canvas ref="canvas" id="canvas" :width="width" :height="height"></canvas>
+        <canvas ref="canvas" id="canvas" :width="640" :height="480"></canvas>
         <ul class="takenPhotos flex column">
             <li v-for="(photo, index) in photos" :key="index">
                 <img v-bind:src="photo" height="100" />
@@ -42,10 +42,10 @@ export default {
       photos: [],
       counter: 0,
       urls: [],
-      cameraWidth:500,
-      cameraHeight:375,
-      width:null,
-      height:null,
+      cameraWidth: 500,
+      cameraHeight: 375
+      // width:640,
+      // height:480,
     };
   },
   mounted() {
@@ -58,14 +58,18 @@ export default {
     }
   },
   methods: {
-    closeCamera(){
+    closeCamera() {
       eventBus.$emit(CLOSE_CAMERA);
     },
     capturePhoto() {
       this.canvas = this.$refs.canvas;
+      // if(window.innerWidth<500){
+      //   this.width=300 ;
+      //   this.height= 500;
+      // }
       var context = this.canvas
         .getContext("2d")
-        .drawImage(this.video, 0, 0, height, width);
+        .drawImage(this.video, 0, 0, 640, 480);
       this.photos.push(canvas.toDataURL("image/png"));
     },
     continueToMarkDesc() {
@@ -96,16 +100,16 @@ export default {
         });
       });
     },
-    SetCameraSize(){
-      if (window.innerWidth<415){
+    SetCameraSize() {
+      if (window.innerWidth < 415) {
         // ElVideo = document.querySelector('.video');
         // console.log(ElVideo)
-        this.cameraWidth=250;
+        this.cameraWidth = 250;
       }
     }
   },
-  created(){
-    this.SetCameraSize()
+  created() {
+    this.SetCameraSize();
   }
 };
 </script>
@@ -131,14 +135,14 @@ li {
 }
 .buttons {
   margin: 1.2rem auto 0 auto;
-  width:500px;
+  width: 500px;
 }
 .btn {
   width: 40px;
   height: 40px;
   border-radius: 50%;
   cursor: pointer;
-  border:none;
+  border: none;
 }
 .next {
   background-color: rgb(64, 250, 64);
@@ -149,34 +153,34 @@ li {
 .delete {
   background-color: red;
 }
-.card{
-  background:#ffffff;
-  box-shadow: 0px 0px 20px -2px rgba(38,38,38,1);
-  width:520px;
-  padding:1rem 1rem;
+.card {
+  background: #ffffff;
+  box-shadow: 0px 0px 20px -2px rgba(38, 38, 38, 1);
+  width: 520px;
+  padding: 1rem 1rem;
 }
-.takenPhotos{
-  margin-top:1.2rem;
+.takenPhotos {
+  margin-top: 1.2rem;
 }
-@media screen and (max-width: 415px){
-  .video{
-    width:300px;
-    height:500px;
+@media screen and (max-width: 415px) {
+  .video {
+    width: 300px;
+    height: 500px;
   }
-  .card{
-    width:100vw;
+  .card {
+    width: 100vw;
     height: 100vh;
   }
-  .buttons{
-    width:100vw;
+  .buttons {
+    width: 100vw;
   }
-  .takenPhotos{
+  .takenPhotos {
     flex-direction: row;
-    z-index:4;
-    position:absolute;
-    top:75%;
+    z-index: 4;
+    position: absolute;
+    top: 75%;
   }
-  .camera{
+  .camera {
     flex-direction: column;
   }
 }

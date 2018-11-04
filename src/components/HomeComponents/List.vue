@@ -118,6 +118,9 @@ li {
   &:hover {
     transform: scale(1.02);
   }
+  &:hover .title{
+    color: $main-blue;
+  }
   position: relative;
   .active-pulse {
     position: absolute;
@@ -159,7 +162,7 @@ section .list-container {
 }
 .item-img {
   width: 100%;
-  box-shadow: 1px 2px 5px #262626;
+  // box-shadow: 1px 2px 5px #262626;
 }
 .cover {
   // width: 45%;

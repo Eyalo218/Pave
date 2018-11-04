@@ -2,11 +2,11 @@
     <section>
         <div class="hover-opacity"></div>
         <div class="h-list-item">
-            <active-pulse v-if="trip.isActive" class="active-pulse"></active-pulse>
+            <Active-pulse v-if="trip.isActive" class="active-pulse"></Active-pulse>
             <div ><img @click="toDetails(`${trip._id}`)" class="item-img" :src="trip.image"></div>
             <div class="flex column txt-container">
                 <div class="location" @click="toDetails(`${trip._id}`)">{{trip.title}}</div>
-                <div class="country" @click="toDetails(`${trip._id}`)">Canada</div>
+                <div class="country" @click="toDetails(`${trip._id}`)">{{trip.country}}</div>
                 <div class="flex space-between">
                      <star-rating class="stars" active-color="#44809e" :rating="trip.avgReviews" :read-only="true" :increment="0.5" :show-rating="false"  :star-size="13">
                     </star-rating> 
@@ -18,13 +18,13 @@
 </template>
 
 <script>
-import { eventBus } from "../../service/eventBus.js";
-import activePulse from "@/components/HomeComponents/ActivePulse.vue";
+import { eventBus, PINNED_TRIP } from "../../service/eventBus.js";
+import ActivePulse from "@/components/HomeComponents/ActivePulse.vue";
 
 export default {
   name: "PreviewExplore",
   components: {
-    activePulse
+    ActivePulse
   },
   props: ["trip"],
   data() {
@@ -33,7 +33,9 @@ export default {
       rating: 0
     };
   },
-  created() {},
+  created() {
+    //  eventBus.$on(PHOTO_TAKEN, this.toggleScreen);
+  },
   computed: {
     tripsForDisplay() {
       return this.$store.getters.tripsForDisplay;
@@ -50,17 +52,16 @@ export default {
       console.log(this.rating);
     },
     pinTrip(tripId) {
-      if (!this.UserLoggedIn) console.log(this.UserLoggedIn);
+      if (!this.UserLoggedIn) alert("log in");
       else {
-        this.$store
-          .dispatch({
-            type: "addPinToUser",
-            user: this.UserLoggedIn,
-            tripId: tripId
-          })
-          .then(user => {
-            console.log("Hoo", user);
-          });
+        eventBus.$emit(PINNED_TRIP);
+        console.log(this.UserLoggedIn.pins[0]);
+        console.log(tripId);
+        this.$store.dispatch({
+          type: "addPinToUser",
+          user: this.UserLoggedIn,
+          tripId: tripId
+        });
       }
     }
   }
@@ -75,11 +76,11 @@ export default {
     position: absolute;
     top: 2%;
     left: 1%;
-  } 
+  }
   display: flex;
   flex-direction: column;
   margin-bottom: 1rem;
-  box-shadow: 0px 3px 10px 1px rgba(84, 81, 84, 0.78);
+  border: 1px solid lightgrey;
   height: 18rem;
   width: 15rem;
   .txt-container {

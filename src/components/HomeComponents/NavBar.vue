@@ -1,9 +1,10 @@
 <template>
-    <section class="wrapper">
+    <section :class="{'wrapper-in-black':isExploreOpen}" class="wrapper">
         <nav class="nav-container flex space-between align-center">
             <div class="left-nav flex align-center">
                 <div @click="updateExplore(false)" class="logo">Pave</div>
-                <input v-model="searchedText" @input="setFilter" v-if="isExploreOpen" class="search" type="text" placeholder="Seach"/>
+                <input :value="getCurrFilter" @input="setFilter($event)" v-if="isExploreOpen"
+                 class="search" type="text" placeholder="Seach"/>
             </div>
                 <div class="hamburger">
                   <transition name="switch-hamburger" mode="out-in">
@@ -16,7 +17,7 @@
                         <a><button @click="logOut" >Log out</button></a>
                         <router-link :to="`/profile/${user._id}`"><button class="user-link">{{user.name}}</button></router-link>
                     </div>
-                    <div v-else class="links-container">
+                    <div v-else :class="{'nav-in-black':isExploreOpen}" class="links-container">
                     <!-- <router-link  :to="'/how'"><bottun>How it works</bottun></router-link> -->
                         <router-link  :to="'/signup'"><button>Sign up</button></router-link>
                         <router-link  :to="'/login'"><button>Log in</button></router-link>
@@ -48,7 +49,6 @@ export default {
   data() {
     return {
       dropDownOpen: false,
-      searchedText: ""
     };
   },
   components: {},
@@ -59,6 +59,9 @@ export default {
     },
     isExploreOpen() {
       return this.$store.getters.isExploreOpen;
+    },
+    getCurrFilter() {
+      return this.$store.getters.getCurrFilter;
     }
   },
   methods: {
@@ -68,8 +71,8 @@ export default {
     logOut() {
       this.$store.dispatch({ type: "loggedOut" });
     },
-    setFilter() {
-      let searchedText = this.searchedText;
+    setFilter(ev) {
+      let searchedText = ev.target.value;
       this.$store.dispatch({ type: "setFilter", searchedText });
     }
   }
@@ -81,23 +84,25 @@ $main-blue: #44809e;
   position: absolute;
   width: 100%;
   z-index: 1;
-  opacity: 0.7;
-  @media (max-width: 740px){
+  // opacity: 0.7;
+  @media (max-width: 740px) {
     opacity: 0.9;
+    background-color: #383633;
   }
+}
+.wrapper-in-black {
+  background-color: #383633;
+  opacity: 0.7;
 }
 .nav-container {
   z-index: 4;
-  // position: absolute;
   width: 100%;
-  background-color: #383633;
   height: 50px;
-  .links-container {
-  }
   .logo {
     padding-left: 1.3rem;
-    font-family: "Chalkduster";
-    font-size: 1.8rem;
+    font-family: "PoiretOne-Regular";
+    font-size: 2.1rem;
+    font-weight: bold;
     cursor: pointer;
     color: $main-blue;
     margin-right: 5rem;
@@ -117,6 +122,7 @@ $main-blue: #44809e;
     font-size: 1rem;
     background-color: #efefef;
     border: none;
+    font-family: "roboto-bold";
     &:focus {
       outline: none !important;
       box-shadow: 1px 1px 2px 3px #85bef3;
@@ -151,6 +157,25 @@ $main-blue: #44809e;
     cursor: pointer;
     font-size: 1.5em;
   }
+  hr {
+    margin: 2rem 0;
+    border: 0;
+    height: 1px;
+    background-image: linear-gradient(
+      to right,
+      rgba(201, 194, 194, 0),
+      rgba(201, 194, 194, 0.75),
+      rgba(201, 194, 194, 0)
+    );
+  }
+  .nav-in-black {
+    a {
+      button {
+        font-family: roboto-medium;
+        // color: #383633;
+      }
+    }
+  }
   .links-container {
     display: none;
     font-family: "roboto-medium";
@@ -171,8 +196,19 @@ $main-blue: #44809e;
         margin-top: 12.5px;
         transition: all 150ms ease-in-out;
         border-bottom: solid 0px $main-blue;
-        &:hover {
+        // &:hover {
+        //   border-bottom: solid 3px $main-blue;
+        // }
+        &::after {
+          margin-top: 0.5rem;
+          display: block;
+          content: "";
           border-bottom: solid 3px $main-blue;
+          transform: scaleX(0);
+          transition: transform 250ms ease-in-out;
+        }
+        &:hover:after {
+          transform: scaleX(1);
         }
         &:hover > button {
           color: $main-blue;
@@ -184,7 +220,7 @@ $main-blue: #44809e;
         font-size: 1rem;
         border: none;
         background: transparent;
-        color: #efefef;
+        color: white;
         cursor: pointer;
         transition: all 150ms ease-in-out;
       }
@@ -226,22 +262,23 @@ $main-blue: #44809e;
 // vue animations:
 .drop-down-enter-active {
   transition: all 0.7s;
+  opacity: 1;
 }
 .drop-down-leave-active {
   transition: all 0.7s;
 }
 .drop-down-enter {
-  transform: translateY(-110px);
+  opacity: 0;
   z-index: -100;
 }
 .drop-down-leave-to {
-  transform: translateY(-110px);
+  opacity: 0;
 }
 
-.switch-hamburger-enter-active{
+.switch-hamburger-enter-active {
   transition: all 1s;
 }
-.switch-hamburger-enter{
+.switch-hamburger-enter {
   opacity: 0;
 }
 </style>
