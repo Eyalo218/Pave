@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       isOpen: false,
-      searchedText: "",
+      searchedText: this.$store.getters.getCurrFilter,
       toggle: false
       // user: userService.getLoggedinUser() ? userService.getLoggedinUser() : null
     };
@@ -105,9 +105,11 @@ export default {
       // this.$router.push('/explore');
     },
     checkIfUserInStorage() {
-      let user = storageService.loadFromStorage("loggedInUser");
-      if (user) {
-        this.$store.dispatch({ type: "loggedIn", user });
+      let localStorageUser = storageService.loadFromStorage("loggedInUser");
+      if (localStorageUser) {
+        userService.getById(localStorageUser._id).then(user => {
+          this.$store.dispatch({ type: "loggedIn", user });
+        });
       }
     },
     closeExplore() {

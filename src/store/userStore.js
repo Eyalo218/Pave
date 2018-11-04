@@ -8,12 +8,12 @@ export default {
         currUserTrips: null,
     },
     mutations: {
-        setCurrUser(state, {user}) {
+        setCurrUser(state, { user }) {
             state.currUser = user
         },
-        setLoggedIn(state, {user}) {
+        setLoggedIn(state, { user }) {
             state.currUserLogged = user;
-            storageService.saveToStorage('loggedInUser', user)
+            storageService.saveToStorage('loggedInUser', user);
         },
         setLoggedOut(state, payload) {
             state.currUserLogged = null;
@@ -22,26 +22,27 @@ export default {
     },
     getters: {
         userToDisplay(state) {
-          return state.currUser
+            return state.currUser
         },
         loggedIn(state) {
-            return state.currUserLogged 
+            return state.currUserLogged
         }
     },
     actions: {
-        loadUserById(context, {id}) {
+        loadUserById(context, { id }) {
             userService.getById(id)
                 .then(user => context.commit({ type: 'setCurrUser', user }))
         },
-        loggedIn(context, {user}) {
+        loggedIn(context, { user }) {
             context.commit({ type: 'setLoggedIn', user })
         },
         loggedOut(context) {
-            context.commit({type: 'setLoggedOut'})
+            context.commit({ type: 'setLoggedOut' })
         },
-        addPinToUser(context, payload) {
-            payload.user.pins.push(payload.tripId)
-            let user = payload.user
+        addPinToUser(context, { user, tripId }) {
+            console.log(user);
+            user.pins.push(tripId);
+            console.log(user.pins);
             return userService.editUser(user)
                 .then(user => user)
         },

@@ -44,160 +44,161 @@ export default {
   components: {},
   data() {
     return {
-        searchedText: "",
-        dropDownOpen: false,
-        toggleHam: false
+      searchedText: "",
+      dropDownOpen: false,
+      toggleHam: false
     };
   },
   created() {
-    this.validate()
+    this.validate();
     this.searchedText = this.$store.state.currFilter;
     // eventBus.$on(LOGGED_IN, user => (this.user = user));
   },
   computed: {
-      user() {
-          return this.$store.getters.loggedIn
-      }
+    user() {
+      return this.$store.getters.loggedIn;
+    }
   },
   methods: {
-      setFilter() {
-          let searchedText = this.searchedText;
-          this.$store.dispatch({ type: "setFilter", searchedText });
-          this.$store.dispatch({type: 'updateExplore', currStatus : true})
-        //   eventBus.$emit(OPEN_EXPLORE)
-          this.$router.push('/')
-      },
-      logOut() {
-          // storageService.removeUser('loggedinUser');
-          this.$store.dispatch({type: 'loggedOut'})
-          this.$router.push('/')
-      },
-      validate() {
-        if(!this.user) this.$router.push('/')
-      },
-      toHome() {
-          this.$store.dispatch({type: 'updateExplore', currStatus : false})
-          this.$router.push('/')
-      },
-      // displayTripsByText() {
-      //   let searchedText = this.$store.state.currFilter;
-      //   this.$store.dispatch({ type: "loadTrips", searchedText }).then(() => {
-          
-      //   });
-      // }
+    setFilter() {
+      let searchedText = this.searchedText;
+      this.$store.dispatch({ type: "setFilter", searchedText });
+      this.$store.dispatch({ type: "updateExplore", currStatus: true });
+      //   eventBus.$emit(OPEN_EXPLORE)
+      this.$router.push("/");
+    },
+    logOut() {
+      // storageService.removeUser('loggedinUser');
+      this.$store.dispatch({ type: "loggedOut" });
+      this.$router.push("/");
+    },
+    validate() {
+      if (!this.user) this.$router.push("/");
+    },
+    toHome() {
+      this.$store.dispatch({ type: "updateExplore", currStatus: false });
+      this.$router.push("/");
+    }
+    // displayTripsByText() {
+    //   let searchedText = this.$store.state.currFilter;
+    //   this.$store.dispatch({ type: "loadTrips", searchedText }).then(() => {
+
+    //   });
+    // }
   }
 };
 </script>
 
 
 <style lang="scss" scoped>
-
 .nav-container {
-    background-color: #383633;
-    padding: 0.6rem 0;
-
-    .logo {
-        padding-left: 1.3rem;
-        font-family: 'Chalkduster';
-        font-size: 1.8rem;
-        cursor: pointer;
-        color: #44809e;
-        margin-right: 5rem;
-        background: transparent;
-        border: none;
-        @media(max-width: 740px) {
-            margin-right: 3rem;
-        }
-            @media(max-width: 650px) {
-                margin-right: 2.0rem;
-            }
+  background-color: #383633;
+  padding: 0.6rem 0;
+  opacity: 0.8;
+  .logo {
+    padding-left: 1.3rem;
+    font-family: "PoiretOne-Regular";
+    font-size: 1.8rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #44809e;
+    margin-right: 5rem;
+    background: transparent;
+    border: none;
+    @media (max-width: 740px) {
+      margin-right: 3rem;
     }
-    .search {
-        width: 30rem;
-        height: 1.8rem;
-        padding: 0.25rem 1.8rem;
-        border-radius: 5px;
-        font-size: 1rem;
-        background-color: #efefef;
-        border: none;
-        &:focus {
-          outline: none !important;
-          box-shadow: 1px 1px 2px 3px #85bef3;
-        }
-        @media(max-width: 1150px){
-            width: 25rem;
-        }
-            @media(max-width: 1000px){
-                width: 20rem;
-            }
-                @media(max-width: 910px){
-                    width: 15rem;
-                }
-                    @media(max-width: 810px){
-                        width: 10rem;
-                    }
-                        @media(max-width: 740px){
-                            width: 15rem;
-                            height: 1.5rem;
-                        }
-                            @media(max-width: 650px){
-                                width: 10rem;
-                            }
-                                @media(max-width: 450px){
-                                    width: 6rem;
-                                }
+    @media (max-width: 650px) {
+      margin-right: 2rem;
     }
-    .hamburger{
-        padding-right: 1.3rem;
-        width: 1.25rem;
-        color: #fff;
-        cursor: pointer;
+  }
+  .search {
+    width: 30rem;
+    height: 1.8rem;
+    padding: 0.25rem 1.8rem;
+    border-radius: 5px;
+    font-size: 1rem;
+    background-color: #efefef;
+    font-family:'roboto-medium';
+    border: none;
+    &:focus {
+      outline: none !important;
+      box-shadow: 1px 1px 2px 3px #85bef3;
+    }
+    @media (max-width: 1150px) {
+      width: 25rem;
+    }
+    @media (max-width: 1000px) {
+      width: 20rem;
+    }
+    @media (max-width: 910px) {
+      width: 15rem;
+    }
+    @media (max-width: 810px) {
+      width: 10rem;
+    }
+    @media (max-width: 740px) {
+      width: 15rem;
+      height: 1.5rem;
+    }
+    @media (max-width: 650px) {
+      width: 10rem;
+    }
+    @media (max-width: 450px) {
+      width: 6rem;
+    }
+  }
+  .hamburger {
+    padding-right: 1.3rem;
+    width: 1.25rem;
+    color: #fff;
+    cursor: pointer;
+  }
+  .links-container {
+    display: none;
+    font-family: "roboto-medium";
+    font-size: 1.2rem;
+  }
+  @media (min-width: 740px) {
+    .hamburger {
+      display: none;
     }
     .links-container {
-        display: none;
-        font-family: 'roboto-medium';
-        font-size: 1.2rem;
+      display: inline-block;
+      button {
+        font-family: "roboto-regular";
+        font-size: 1.1rem;
+        padding-left: 1.6rem;
+        border: none;
+        background: transparent;
+        color: #efefef;
+        cursor: pointer;
+      }
+      button:hover {
+        color: #44809e;
+      }
+      .user-link {
+        margin-right: 1.3rem;
+      }
     }
-    @media(min-width: 740px) {
-        .hamburger{
-            display: none;
-        }
-        .links-container {
-            display: inline-block;
-            button {
-                font-family: 'roboto-regular';
-                font-size: 1.2rem;
-                padding-left: 1.6rem;
-                border: none;
-                background: transparent;
-                color: #efefef;
-                cursor: pointer;
-            }
-            button:hover {
-                color: #44809e;
-            }
-            .user-link {
-                margin-right: 1.3rem;
-            }
-        }
-    }
+  }
 }
 .drop-down {
-    background-color: #383633;
-    button {
-        font-size: 1rem;
-        font-family: 'roboto-medium';
-        color: #fff;
-        background: transparent;
-        border: none;
-        margin-bottom: 0.6rem;
-        cursor: pointer;
-    }
-    button:hover {
-        color: #44809e;
-    }
-    @media(min-width: 740px) {
-        display: none;
-    }
+  background-color: #383633;
+  button {
+    font-size: 1rem;
+    font-family: "roboto-medium";
+    color: #fff;
+    background: transparent;
+    border: none;
+    margin-bottom: 0.6rem;
+    cursor: pointer;
+  }
+  button:hover {
+    color: #44809e;
+  }
+  @media (min-width: 740px) {
+    display: none;
+  }
 }
 </style>

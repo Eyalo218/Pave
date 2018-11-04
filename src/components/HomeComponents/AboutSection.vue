@@ -70,9 +70,10 @@ section{
 }
 
 h1{
-    margin-bottom: 1.5rem;
-    font-family: 'roboto-medium';
+   margin-bottom: 1.5rem;
     font-size: 1.70rem;
+    font-family: "PoiretOne-Regular";
+    color: #44809e;
 }
 
 p{

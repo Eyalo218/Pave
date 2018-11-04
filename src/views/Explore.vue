@@ -1,5 +1,6 @@
 <template>
     <section>
+      <div class="pinned-trip-modal-open"></div>
         <control-panel></control-panel>
         <related-searches></related-searches>
         <trip-list></trip-list>
@@ -10,7 +11,7 @@
 import tripList from "../components/ExploreComponents/List.vue";
 import controlPanel from "../components/ExploreComponents/ControlPanel.vue";
 import relatedSearches from "../components/ExploreComponents/relatedSearches.vue";
-
+import { eventBus, PINNED_TRIP } from "../service/eventBus.js";
 export default {
   components: {
     tripList,
@@ -20,11 +21,14 @@ export default {
   data() {
     return {};
   },
-  created() {},
+  created() {
+    console.log('created');
+  },
   computed: {},
-  methods: {}
+  methods: {
+  }
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 </style>

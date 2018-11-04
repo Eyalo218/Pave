@@ -3,7 +3,7 @@
         <nav class="nav-container flex space-between align-center">
             <div class="left-nav flex align-center">
                 <div @click="updateExplore(false)" class="logo">Pave</div>
-                <input v-model="searchedText" @input="setFilter" v-if="isExploreOpen"
+                <input :value="getCurrFilter" @input="setFilter($event)" v-if="isExploreOpen"
                  class="search" type="text" placeholder="Seach"/>
             </div>
                 <div class="hamburger">
@@ -49,7 +49,6 @@ export default {
   data() {
     return {
       dropDownOpen: false,
-      searchedText: ""
     };
   },
   components: {},
@@ -60,6 +59,9 @@ export default {
     },
     isExploreOpen() {
       return this.$store.getters.isExploreOpen;
+    },
+    getCurrFilter() {
+      return this.$store.getters.getCurrFilter;
     }
   },
   methods: {
@@ -69,8 +71,8 @@ export default {
     logOut() {
       this.$store.dispatch({ type: "loggedOut" });
     },
-    setFilter() {
-      let searchedText = this.searchedText;
+    setFilter(ev) {
+      let searchedText = ev.target.value;
       this.$store.dispatch({ type: "setFilter", searchedText });
     }
   }
@@ -88,22 +90,19 @@ $main-blue: #44809e;
     background-color: #383633;
   }
 }
-.wrapper-in-black{
+.wrapper-in-black {
   background-color: #383633;
   opacity: 0.7;
 }
 .nav-container {
   z-index: 4;
-  // position: absolute;
   width: 100%;
-  // background-color: #383633;
   height: 50px;
-  .links-container {
-  }
   .logo {
     padding-left: 1.3rem;
-    font-family: "Chalkduster";
+    font-family: "PoiretOne-Regular";
     font-size: 2.1rem;
+    font-weight: bold;
     cursor: pointer;
     color: $main-blue;
     margin-right: 5rem;
@@ -123,6 +122,7 @@ $main-blue: #44809e;
     font-size: 1rem;
     background-color: #efefef;
     border: none;
+    font-family: "roboto-bold";
     &:focus {
       outline: none !important;
       box-shadow: 1px 1px 2px 3px #85bef3;
@@ -169,7 +169,6 @@ $main-blue: #44809e;
     );
   }
   .nav-in-black {
-    
     a {
       button {
         font-family: roboto-medium;

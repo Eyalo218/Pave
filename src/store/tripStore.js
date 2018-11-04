@@ -39,7 +39,10 @@ export default {
         },
         updateFilter(state, { trips }) {
             state.trips = trips
-        }
+        },
+        updateSearchedText(state, { searchedText }) {
+            state.currFilter = searchedText;
+        },
     },
     getters: {
         tripsForDisplay(state) {
@@ -53,6 +56,9 @@ export default {
         },
         getCurrTrip(state) {
             return state.currTrip;
+        },
+        getCurrFilter(state){
+            return state.currFilter;
         },
         userTripsToDisplay(state) {
             return state.currUserTrips;
@@ -95,12 +101,12 @@ export default {
             return tripService.query(searchedText, null)
                 .then(trips => {
                     context.commit({ type: 'updateFilter', trips })
+                    context.commit({ type: 'updateSearchedText', searchedText })
                 })
             // context.commit({type: 'updateFilter', searchedText})
             // state.currFilter = searchedText;
         },
         getPins(context, { pins }) {
-            console.log('pines ', pins)
             return Promise.all(pins.map(tripId => tripService.getById(tripId)))
                 .then(trips => {
                     context.commit({ type: 'userPinsToDisplay', trips })
