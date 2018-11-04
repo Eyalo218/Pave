@@ -5,7 +5,7 @@
           <video ref="video" class="video" :width="cameraWidth" :height="cameraHeight" autoplay>
           </video>
         </div>
-          <div class="flex space-around buttons">
+        <div class="flex space-around buttons">
             <button class="closeCamera btn" @click="closeCamera()">
               <font-awesome-icon icon="times" size="2x" />
             </button>
@@ -63,13 +63,6 @@ export default {
     },
     capturePhoto() {
       this.canvas = this.$refs.canvas;
-      if(window.innerWidth<500){
-        this.width=300 ;
-        this.height= 500;
-      }else{
-        this.width=480;
-        this.height=640;
-      }
       var context = this.canvas
         .getContext("2d")
         .drawImage(this.video, 0, 0, height, width);
